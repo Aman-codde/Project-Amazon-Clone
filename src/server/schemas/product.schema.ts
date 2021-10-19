@@ -1,0 +1,14 @@
+import mongoose from 'mongoose';
+import { Product } from '../../shared/models/product.model';
+
+const {Schema,model} = mongoose;
+
+const productSchema = new Schema<Product>({
+    product_name: {type: String, required: true},
+    price: {type: Number, required: true},
+    quantity: {type: Number, required: true},
+    imgUrl: {type: String},
+    categories:[{type: mongoose.Types.ObjectId, ref: 'Category'}]
+})
+
+export const ProductModel = model<Product>('Product',productSchema)
