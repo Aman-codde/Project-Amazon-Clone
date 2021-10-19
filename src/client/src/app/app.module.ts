@@ -17,6 +17,7 @@ import { PageUsersComponent } from './pages/page-users/page-users.component';
 import { ProductInputComponent } from './components/product-input/product-input.component';
 import { ProductEffects } from './store/effects/product/product.effects';
 import * as fromProduct from './store/reducers/product/product.reducer';
+import { ProductsListComponent } from './components/products-list/products-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import * as fromProduct from './store/reducers/product/product.reducer';
     UsersListComponent,
     UserInputComponent,
     PageUsersComponent,
-    ProductInputComponent
+    ProductInputComponent,
+    ProductsListComponent
   ],
   imports: [
     BrowserModule,
