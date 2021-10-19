@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store';
+import { createProduct } from 'src/app/store/actions/product/product.actions';
 
 @Component({
   selector: 'app-product-input',
@@ -9,7 +12,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProductInputComponent implements OnInit {
   addProductForm: FormGroup;
 
-  constructor(private fb: FormBuilder) 
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>) 
   { 
     this.addProductForm = this.fb.group({
       product_name : ['', Validators.required],
@@ -22,4 +27,8 @@ export class ProductInputComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  addProduct() {
+    this.store.dispatch(createProduct({data: this.addProductForm.value}));
+    this.addProductForm.reset();
+  }
 }
