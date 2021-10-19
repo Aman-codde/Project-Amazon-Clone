@@ -1,0 +1,20 @@
+<div>
+    <h2>Add Product Form</h2>
+    <form [formGroup]="addProductForm">
+        <label for="name">Product Name:</label>
+        <input type="text" formControlName="product_name">
+
+        <label for="price">Price:</label>
+        <input type="number" formControlName="price">
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" formControlName="quantity">
+
+        <label for="image">Image Url:</label>
+        <input type="text" formControlName="imageUrl">
+
+        <p>Complete the form to enable button</p>
+        <button [disabled]="addProductForm.invalid" >Add Product</button>
+    </form>
+</div>
+
