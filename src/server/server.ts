@@ -35,6 +35,20 @@ app.post('/create-product', function(req,res) {
     .catch(err => res.status(501).json({error: err}))
 })
 
+//get all products using categories as query params
+app.post('/products', function(req,res) {
+    const query: any = {} ; // fetch all products
+    if(req.body.categories) {
+        query.categories = [{ $in: [req.body.categories] }]
+    }
+    console.log("query: ",query)
+    ProductModel
+    .find()
+    .then((data) => res.json({data}))
+    .catch( err => res.status(501).json(err))
+})
+
+
 
 app.get('/users', function(req,res){
     UserModel.find()
