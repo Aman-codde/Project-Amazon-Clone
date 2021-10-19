@@ -2,7 +2,6 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import { PostModel } from './schemas/post.schema.js';
 import { UserModel } from './schemas/user.schema.js'
 import mongoose from 'mongoose';
 
@@ -10,7 +9,7 @@ const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
 
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect('mongodb://localhost:27017/amazonCloneDB')
 .then(() => {
     console.log('Connected to DB Successfully');
 })
@@ -23,15 +22,6 @@ app.use(express.json());
 
 app.get('/', function(req, res) {
    res.json({message:'test'});
-});
-
-app.get('/posts', function(req,res){
-    PostModel.find()
-    .then(data => res.json({data}))
-    .catch(err => {
-        res.status(501)
-        res.json({errors: err});
-    })
 });
 
 app.get('/users', function(req,res){
@@ -59,21 +49,6 @@ app.post('/create-user', function(req,res){
     })
 });
 
-app.post('/create-post', function(req,res){
-    const {title, body} = req.body;
-    const post = new PostModel({
-        title,
-        body,
-    });
-    post.save()
-    .then((data) => {
-        res.json({data});
-    })
-    .catch(err => {
-        res.status(501);
-        res.json({errors: err});
-    })
-});
 
 app.delete('/delete-user/:id', function(req, res) {
     const _id = req.params.id;
