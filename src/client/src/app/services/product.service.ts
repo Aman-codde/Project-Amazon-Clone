@@ -15,4 +15,9 @@ export class ProductService {
     //return this.api.post<Product[],Product>('create-product',product);
     return this.api.post<{data: Product},Product>('create-product',product);
   }
+
+  getProducts(categories: string) {
+    return this.api.post<{data:Product[]},{categories: string}>('products',{categories});
+  }
+
 }

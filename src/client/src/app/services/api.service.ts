@@ -14,6 +14,7 @@ export class ApiService {
     return this.http.get<T>(this.baseUrl + resourceName);
   }
   post<T,D>(resourceName: string, data: D) {
+    console.log(this.http.post<T>(this.baseUrl + resourceName, data));
     return this.http.post<T>(this.baseUrl + resourceName, data);
   }
 
