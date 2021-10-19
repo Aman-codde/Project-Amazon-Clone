@@ -10,7 +10,7 @@ export class ProductService {
   constructor(private api: ApiService) 
   { }
 
-  postProducts(product: Product) {
+  postProduct(product: Product) {
     console.log("product service data: ", product);
     //return this.api.post<Product[],Product>('create-product',product);
     return this.api.post<{data: Product},Product>('create-product',product);
