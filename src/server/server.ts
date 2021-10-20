@@ -39,10 +39,9 @@ app.post('/create-product', function(req,res) {
 //get all products using categories as query params
 app.post('/products', function(req,res) {
     const query: any = {} ; // fetch all products
-    //req.body._id = "615f60a443300769147787b0";
     console.log('req.body', req.body);
     if(req.body.categories) {
-        query.categories = [{ $in: [req.body.categories] }]
+        query.categories = { $in: [req.body.categories] }
     }
     if(req.body._id) {
         console.log("hi");
