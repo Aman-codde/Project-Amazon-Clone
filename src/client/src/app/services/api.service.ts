@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-  baseUrl:string = 'http://localhost:3501/';
+  baseUrl:string = 'http://localhost:3506/';
   constructor(private http: HttpClient) 
   { }
 
@@ -14,7 +14,6 @@ export class ApiService {
     return this.http.get<T>(this.baseUrl + resourceName);
   }
   post<T,D>(resourceName: string, data: D) {
-    console.log(this.http.post<T>(this.baseUrl + resourceName, data));
     return this.http.post<T>(this.baseUrl + resourceName, data);
   }
 
