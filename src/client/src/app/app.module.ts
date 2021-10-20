@@ -18,6 +18,10 @@ import { ProductInputComponent } from './components/product-input/product-input.
 import { ProductEffects } from './store/effects/product/product.effects';
 import * as fromProduct from './store/reducers/product/product.reducer';
 import { ProductsListComponent } from './components/products-list/products-list.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CategoriesListComponent } from './components/categories-list/categories-list.component';
+import { CategoryEffects } from './store/effects/category/category.effects';
+import * as fromCategory from './store/reducers/category/category.reducer';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,9 @@ import { ProductsListComponent } from './components/products-list/products-list.
     UserInputComponent,
     PageUsersComponent,
     ProductInputComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    ProductDetailsComponent,
+    CategoriesListComponent
   ],
   imports: [
     BrowserModule,
@@ -37,8 +43,9 @@ import { ProductsListComponent } from './components/products-list/products-list.
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
-    EffectsModule.forRoot([UserEffects, ProductEffects]),
+    EffectsModule.forRoot([UserEffects, ProductEffects, CategoryEffects]),
     StoreModule.forFeature(fromProduct.productFeatureKey, fromProduct.reducer),
+    StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
   ],
   providers: [],
   bootstrap: [AppComponent]
