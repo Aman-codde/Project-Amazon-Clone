@@ -1,0 +1,30 @@
+.cart {
+    padding: 10px 25px;
+    border-radius: 20px;
+    background-color: rgb(223, 223, 51);
+}
+
+.buy {
+    padding: 10px 25px;
+    border-radius: 20px;
+    background-color: orange;
+}
+
+.productName {
+    font-size: large;
+    font-weight: bold;
+}
+
+.price {
+    color:rgb(175, 58, 47);
+    font-weight: bold;
+    font-size: large;
+}
+
+.cart:hover {
+    cursor: pointer;
+}
+
+.buy:hover {
+    cursor: pointer;
+}
