@@ -4,9 +4,10 @@ import cors from 'cors';
 import { UserModel } from './schemas/user.schema.js'
 import mongoose from 'mongoose';
 import { ProductModel } from './schemas/product.schema.js';
+import { CategoryModel } from './schemas/category.schema.js';
 
 const app = express();
-const PORT = 3501;
+const PORT = 3506;
 
 mongoose.connect('mongodb://localhost:27017/amazonCloneDB')
 .then(() => {
@@ -38,20 +39,44 @@ app.post('/create-product', function(req,res) {
 //get all products using categories as query params
 app.post('/products', function(req,res) {
     const query: any = {} ; // fetch all products
+    //req.body._id = "615f60a443300769147787b0";
+    console.log('req.body', req.body);
     if(req.body.categories) {
         query.categories = [{ $in: [req.body.categories] }]
     }
+    if(req.body._id) {
+        console.log("hi");
+        query._id = req.body._id;
+    }
     console.log("query: ",query)
     ProductModel
-    .find()
+    .find(query)
     .then((data) => res.json({data}))
     .catch( err => res.status(501).json(err))
 })
 
+//show category collection 
+app.get('/categories', function(req,res) {
+    CategoryModel
+    .find()
+    .populate(
+             {path: 'parent_category', 
+             populate: [
+                 {path: 'parent_category',
+                 populate: [{path: 'parent_category'}]
+                 }
+             ]})
+    .then( data => {
+        console.log("get categories: ",{data})
+        res.json({data})
+    })
+    .catch(err => res.status(501).json(err))
+})
 
 
 app.get('/users', function(req,res){
-    UserModel.find()
+    UserModel
+    .find()
     .then(data => res.json({data}))
     .catch(err => {
         res.status(501)
