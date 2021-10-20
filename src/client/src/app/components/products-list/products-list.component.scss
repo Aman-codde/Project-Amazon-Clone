@@ -1,0 +1,31 @@
+div {
+    display: inline-block;
+    padding: 20px;
+    margin: 2px;
+    //border: 1px solid black;
+    text-align: left;
+}
+
+img {
+    border-radius: 8px;
+    width: 200px;
+}
+
+.price {
+    color:rgb(175, 58, 47);
+}
+
+.productName {
+    color: blue;
+    text-decoration: underline;
+}
+
+.productName:hover {
+    cursor: pointer;
+}
+
+button {
+    padding: 10px 25px;
+    border-radius: 20px;
+    background-color: rgb(223, 223, 51);
+}
