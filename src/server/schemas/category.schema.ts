@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from 'mongoose';
+import mongoose from 'mongoose';
 import { Category } from '../../shared/models/category.model.js';
 
 const {model,Schema} = mongoose;
