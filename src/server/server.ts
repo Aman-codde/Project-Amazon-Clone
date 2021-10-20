@@ -7,7 +7,7 @@ import { ProductModel } from './schemas/product.schema.js';
 import { CategoryModel } from './schemas/category.schema.js';
 
 const app = express();
-const PORT = 3506;
+const PORT = 3501;
 
 mongoose.connect('mongodb://localhost:27017/amazonCloneDB')
 .then(() => {

@@ -17,12 +17,16 @@ export class ProductService {
     return this.api.post<{data: Product},Product>('create-product',product);
   }
 
-  /*getProducts(categories: string) {
+  getProducts(categories: string) {
     return this.api.post<{data:Product[]},{categories: string}>('products',{categories}).pipe(tap(d => console.log("product list: ",d)));
+  }
+
+  /*getProducts(params: string) {
+    return this.api.post<{data:Product[]},{_id: string}>('products',{_id: params});
   }*/
 
-  getProducts(params: string) {
+  /*getProduct(params: string) {
     return this.api.post<{data:Product[]},{_id: string}>('products',{_id: params});
-  }
+  }*/
 
 }
