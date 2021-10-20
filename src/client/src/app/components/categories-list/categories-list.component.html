@@ -1,11 +1,8 @@
 <h3>List of Categories</h3> 
-{{($categories |async) | json}}
 <ng-container *ngIf="($categories | async) as categories">
     <ol>
         <ng-container *ngFor = "let category of categories">
-            hi
-            {{category | json }}
-            <!--<li *ngIf="!category.parent_category" >
+            <li *ngIf="!category.parent_category" >
                 <span [routerLink]="['/products']" [queryParams]="{categories: category._id}">{{category.category_name}}</span>
                 <ol>
                     <ng-container *ngFor= "let subCategory of categories">
@@ -29,7 +26,7 @@
                         </li>
                     </ng-container>
                 </ol>
-            </li>-->
+            </li>
         </ng-container>
     </ol>
 </ng-container>
