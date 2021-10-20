@@ -22,7 +22,6 @@ export class CategoriesListComponent implements OnInit {
     private route: ActivatedRoute
     ) { 
     this.$categories = this.store.select(categoriesSelector)
-    //this.$categories = this.categoryService.getCategories()
   }
 
   ngOnInit(): void {
