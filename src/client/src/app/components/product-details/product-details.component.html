@@ -1,0 +1,13 @@
+<p>product-details works!</p>
+
+<div *ngFor="let product of (selectedProduct$ | async)!">
+    <div>
+        <img src={{product.imgUrl}}>
+        <p class="productName">
+            {{product.product_name}}
+        </p>
+        <p class="price">$ <strong>{{product.price}}</strong><p>
+        <p class="qty">qty: {{product.quantity}}</p>
+        <button>Add to cart or Buy Now </button>
+    </div>
+</div>
