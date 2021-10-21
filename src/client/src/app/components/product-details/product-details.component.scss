@@ -1,9 +1,26 @@
 img {
     border-radius: 8px;
-    width: 200px;
+    width: 200px
 }
 
+.item-div {
+  margin: auto;
+  margin-top: 50px;
+  width: 60%;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 10px;
+}
 
+.image-div {
+    display: inline-block;
+    margin: 10px;
+}
+
+.details-div{
+    display: inline-block;
+    margin: 0px;
+}
 
 .productName {
     font-size: large;
@@ -16,7 +33,7 @@ img {
     font-size: large;
 }
 
-.qtyLabel {
+.qty{
     color: green;
     font-size: large;
 }
