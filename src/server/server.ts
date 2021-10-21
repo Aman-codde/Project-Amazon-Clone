@@ -54,6 +54,15 @@ app.post('/products', function(req,res) {
     .catch( err => res.status(501).json(err))
 })
 
+// show particular product by id 
+app.post('/product/:id', function(req,res) {
+    console.log(req.params);
+    ProductModel
+    .findById(req.params.id)
+    .then(data => res.json(data))
+    .catch(err => {err})
+})
+
 //show category collection 
 app.get('/categories', function(req,res) {
     CategoryModel
