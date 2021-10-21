@@ -32,3 +32,25 @@ export const loadProductsFailure = createAction(
   '[Product] Load Products Failure',
   props<{err: Error}>()
 )
+
+//show one product
+export const loadProduct = createAction(
+  '[Product] Load Product',
+  props<{data: string}>()
+);
+
+export const loadProductSuccess = createAction(
+  '[Product] Load Product Success',
+  props<{ data: Product }>()
+);
+
+export const loadProductFailure = createAction(
+  '[Product] Load Product Failure',
+  props<{ error: Error }>()
+);
+
+// selected product 
+export const selectProductAction = createAction(
+  '[Product] Select Product',
+  props<{ data: Product | null }>()
+)

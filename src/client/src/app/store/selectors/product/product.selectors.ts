@@ -7,5 +7,13 @@ const productFeatureSelector = createFeatureSelector<AppState, fromProduct.State
 export const productsSelector = createSelector(
     productFeatureSelector,
     (state) => state.products
-)
+);
+
+export const productSelector = createSelector(
+    productFeatureSelector, (state) => state.product
+);
+
+export const selectedProductSelector = createSelector(
+    productFeatureSelector, (state) => state.selectedProduct
+);
 

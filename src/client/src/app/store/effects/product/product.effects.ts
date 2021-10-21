@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { ProductService } from 'src/app/services/product.service';
-import { createProduct, createProductFailure, createProductSuccess, loadProducts, loadProductsFailure, loadProductsSuccess } from '../../actions/product/product.actions';
+import { createProduct, createProductFailure, createProductSuccess, loadProduct,loadProductSuccess, loadProductFailure, loadProducts, loadProductsFailure, loadProductsSuccess } from '../../actions/product/product.actions';
 
 
 
@@ -36,6 +36,21 @@ export class ProductEffects {
         )
       )
   );
+
+  //for one product
+  loadProduct$ = createEffect(() => 
+    this.actions$
+    .pipe(
+      ofType(loadProduct),
+      mergeMap((action) => this.productService.getProduct(action.data)
+      .pipe(
+        map(data => loadProductSuccess({data})),
+        catchError(err => of(loadProductFailure({error: err})))
+      )
+      )
+    )
+  )
+
   constructor(
     private actions$: Actions,
     private productService: ProductService
