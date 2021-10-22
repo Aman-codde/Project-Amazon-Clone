@@ -2,8 +2,8 @@
 <div *ngFor="let product of (products$ | async)!">
     <div>
         <img src={{product.imgUrl}}>
-        <p (click)="goToProduct(product?._id)" class="productName">
-            {{product.product_name}}
+        <p (click) = "selectProduct(product,selectedProduct)" class="productName">
+                {{product.product_name}}
         </p>
         <p class="price">$ <strong>{{product.price}}</strong><p>
     </div>

@@ -26,13 +26,11 @@ export const reducer = createReducer(
     return {...state,products}
   }),
   on(loadProductsSuccess, (state, action) => {
-    //console.log(action.data)
     return {...state, products: action.data}
   }),
   on(loadProductSuccess, (state, action) => {
     return {...state, product: action.data}
   }),
-
   on(selectProductAction, (state,action) => {
     return  {...state, selectedProduct: action.data}
   })

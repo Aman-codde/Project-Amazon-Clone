@@ -13,7 +13,7 @@ export const productSelector = createSelector(
     productFeatureSelector, (state) => state.product
 );
 
-export const selectedProductSelector = createSelector(
-    productFeatureSelector, (state) => state.selectedProduct
-);
+ export const selectedProductSelector = createSelector(
+     productFeatureSelector, (state) => state.selectedProduct
+ );
 

@@ -1,13 +1,12 @@
 
-<!--<div *ngFor="let product of (selectedProduct$ | async)!">-->
-    <div class="item-div">
-        <div class="image-div">
-            <img src={{selectedProduct?.imgUrl}}>
-        </div>
-        <div class="details-div">
-        <p class="productName">
-                {{selectedProduct?.product_name}}
-        </p>
+<div class="item-div">
+    <div class="image-div">
+        <img src={{selectedProduct?.imgUrl}}>
+    </div>
+    <div class="details-div">
+    <p class="productName">
+        {{selectedProduct?.product_name}}
+    </p>
         <p class="price">$ <strong>{{selectedProduct?.price}}</strong><p>
         <p class="qty">In Stock: {{selectedProduct?.quantity}}</p>
         <button class="cart">Add to cart</button>
@@ -15,5 +14,4 @@
         <button class="buy">Buy Now</button>
         </div>
         
-    </div>
-<!--</div>-->
+</div>

@@ -44,7 +44,8 @@ export class ProductEffects {
       ofType(loadProduct),
       mergeMap((action) => this.productService.getProduct(action.data)
       .pipe(
-        map(data => loadProductSuccess({data})),
+        tap(d => console.log("action.data =",d)),
+        map(data => loadProductSuccess(data)),
         catchError(err => of(loadProductFailure({error: err})))
       )
       )

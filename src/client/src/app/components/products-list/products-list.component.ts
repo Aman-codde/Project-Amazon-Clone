@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { ProductService } from 'src/app/services/product.service';
 import { AppState } from 'src/app/store';
-import { loadProducts } from 'src/app/store/actions/product/product.actions';
+import { loadProducts, selectProductAction } from 'src/app/store/actions/product/product.actions';
 import { productsSelector } from 'src/app/store/selectors/product/product.selectors';
 import { Product } from '../../../../../shared/models/product.model';
 
@@ -15,6 +14,7 @@ import { Product } from '../../../../../shared/models/product.model';
 })
 export class ProductsListComponent implements OnInit {
   products$: Observable<Product[]>;
+  selectedProduct : Product| null = null; // new
 
   constructor(
     private store: Store<AppState>,
@@ -22,7 +22,7 @@ export class ProductsListComponent implements OnInit {
     private router: Router
   ) 
   { 
-    this.products$ = this.store.select(productsSelector)
+    this.products$ = this.store.select(productsSelector);
   }
     
   ngOnInit(): void {
@@ -33,15 +33,16 @@ export class ProductsListComponent implements OnInit {
     
   }
 
-  goToProduct(id: any) {
-    //console.log('goToProduct',id)
-    this.router.navigate(['/products/id'], {queryParams: {_id: id}})
-    //return this.router.navigate(['/products',id])
+  selectProduct(product: Product, selectedProduct: Product | null) {
+    this.store.dispatch(selectProductAction(
+      {data: this.isSelected(selectedProduct, product)? null: product}))
+    return this.router.navigate(['/product/',product._id])
   }
 
-  /*getId(id: any) {
-    console.log('getId',id)
-    this.router.navigate(['/products'], {queryParams: {_id: id}})
-  }*/
+  isSelected(selectedProduct: Product | null, product: Product){
+    return selectedProduct?._id === product._id;
+  }
+
+  
 
 }
