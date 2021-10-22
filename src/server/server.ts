@@ -39,7 +39,6 @@ app.post('/create-product', function(req,res) {
 //get all products using categories as query params
 app.post('/products', function(req,res) {
     const query: any = {} ; // fetch all products
-    console.log('req.body', req.body);
     if(req.body.categories) {
         query.categories = { $in: [req.body.categories] }
     }
@@ -47,7 +46,6 @@ app.post('/products', function(req,res) {
         console.log("hi");
         query._id = req.body._id;
     }
-    console.log("query: ",query)
     ProductModel
     .find(query)
     .then((data) => res.json({data}))
@@ -56,11 +54,14 @@ app.post('/products', function(req,res) {
 
 // show particular product by id 
 app.post('/product/:id', function(req,res) {
-    console.log(req.params);
+    console.log("ProductId: ",req.params.id);
     ProductModel
     .findById(req.params.id)
     .then(data => res.json(data))
-    .catch(err => {err})
+    .catch(err => {
+        console.log("error in app post", err)
+        res.status(501).json(err)
+    })
 })
 
 //show category collection 
@@ -75,7 +76,6 @@ app.get('/categories', function(req,res) {
                  }
              ]})
     .then( data => {
-        console.log("get categories: ",{data})
         res.json({data})
     })
     .catch(err => res.status(501).json(err))
