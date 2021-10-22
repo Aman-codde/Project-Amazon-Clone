@@ -10,7 +10,8 @@
         <p class="price">$ <strong>{{selectedProduct?.price}}</strong><p>
         <p class="qty">
             {{(checkQuantity()) ? 'In Stock:' : 'Out of Stock'}} 
-            {{selectedProduct?.quantity}} 
+            <span *ngIf="checkQuantity()">{{selectedProduct?.quantity}} 
+            </span>
         </p>
         <button class="cart" [disabled]="!checkQuantity()">Add to cart</button>
         <br><br>

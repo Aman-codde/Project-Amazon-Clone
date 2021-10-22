@@ -16,6 +16,8 @@ import { Category } from '../../../../../shared/models/category.model';
 })
 export class CategoriesListComponent implements OnInit {
   $categories: Observable<Category[]>;
+  showMe: boolean = false;
+
   constructor(
     private store: Store<AppState>,
     private categoryService : CategoryService,
@@ -31,6 +33,10 @@ export class CategoriesListComponent implements OnInit {
     })
 
     this.store.dispatch(loadCategories());
+  }
+
+  toggleOnClick() {
+    this.showMe = !this.showMe;
   }
 
 }
