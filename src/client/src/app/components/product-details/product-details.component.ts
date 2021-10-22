@@ -33,5 +33,12 @@ export class ProductDetailsComponent implements OnInit {
     this.store.dispatch(loadProduct({data: id}))
 
   }
+
+  checkQuantity(){
+    if(this.selectedProduct?.quantity == 0)
+      return false;
+    else
+      return true;
+  }
   
 }

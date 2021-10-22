@@ -8,10 +8,13 @@
         {{selectedProduct?.product_name}}
     </p>
         <p class="price">$ <strong>{{selectedProduct?.price}}</strong><p>
-        <p class="qty">In Stock: {{selectedProduct?.quantity}}</p>
-        <button class="cart">Add to cart</button>
+        <p class="qty">
+            {{(checkQuantity()) ? 'In Stock:' : 'Out of Stock'}} 
+            {{selectedProduct?.quantity}} 
+        </p>
+        <button class="cart" [disabled]="!checkQuantity()">Add to cart</button>
         <br><br>
-        <button class="buy">Buy Now</button>
+        <button class="buy" [disabled]="!checkQuantity()">Buy Now</button>
         </div>
         
 </div>
