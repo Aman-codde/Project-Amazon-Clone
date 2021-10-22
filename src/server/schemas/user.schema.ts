@@ -1,11 +1,21 @@
 import mongoose from 'mongoose';
-import type { User } from '../../shared/models/user.model';
-const {Schema, model} = mongoose
+import { User } from '../../shared/models/user.model.js';
+
+const {Schema, model} = mongoose;
 
 const userSchema = new Schema<User>({
-    name: {type: String, required: true},
-    username: {type: String, required: true},
+    id: {type: String},
+    firstName: {type: String, required: true},
+    lastName: {type: String},
     email: {type: String, required: true},
+    hashedPassword: {type: String, required:true}
 })
 
-export const UserModel = model<User>('User',userSchema)
+userSchema.pre('save', function(next) { 
+    //this.id = this.email;
+    this.id = `${this.email ? this.email : ''}`;
+    next();
+});
+
+export const UserModel = model<User>('User', userSchema);
+    

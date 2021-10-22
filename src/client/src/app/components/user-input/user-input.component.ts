@@ -20,18 +20,21 @@ import { User } from '../../../../../shared/models/user.model';
   styleUrls: ['./user-input.component.scss'],
 })
 export class UserInputComponent implements OnInit, OnChanges {
+  
+  
   addUser: FormGroup;
   @Input() selectedUser: User | null = null;
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.addUser = this.fb.group({
-      name: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: [''],
       email: [
         '',
-        Validators.compose([Validators.required, Validators.minLength(3)]),
+        Validators.compose([Validators.required, Validators.minLength(7)]),
       ],
-      username: [
+      password: [
         '',
-        Validators.compose([Validators.required, Validators.minLength(3)]),
+        Validators.compose([Validators.required, Validators.minLength(5)]),
       ],
     });
   }
@@ -41,9 +44,9 @@ export class UserInputComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.selectedUser?.currentValue) {
       const user = changes?.selectedUser?.currentValue;
-      this.addUser.get('name')?.setValue(user.name);
+      this.addUser.get('firstName')?.setValue(user.firstName);
+      this.addUser.get('lastName')?.setValue(user.lastName);
       this.addUser.get('email')?.setValue(user.email);
-      this.addUser.get('username')?.setValue(user.username);
       this.addUser.updateValueAndValidity();
     }
   }

@@ -93,10 +93,10 @@ app.get('/users', function(req,res){
 });
 
 app.post('/create-user', function(req,res){
-    const {name, email, username} = req.body;
+    const {firstName, lastName, email} = req.body;
     const user = new UserModel({
-        name,
-        username,
+        firstName,
+        lastName,
         email,
     });
     user
@@ -125,7 +125,7 @@ app.put('/update-user/:id', function(req, res) {
     .findByIdAndUpdate(
         req.params.id,
         {
-            $set: { name: req.body.name, email: req.body.email },
+            $set: { firstName: req.body.firstName, email: req.body.email },
         },
         {
             new: true,
