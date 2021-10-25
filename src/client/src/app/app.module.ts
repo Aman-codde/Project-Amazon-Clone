@@ -22,6 +22,7 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { CategoriesListComponent } from './components/categories-list/categories-list.component';
 import { CategoryEffects } from './store/effects/category/category.effects';
 import * as fromCategory from './store/reducers/category/category.reducer';
+import { CartListComponent } from './components/cart-list/cart-list.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import * as fromCategory from './store/reducers/category/category.reducer';
     ProductInputComponent,
     ProductsListComponent,
     ProductDetailsComponent,
-    CategoriesListComponent
+    CategoriesListComponent,
+    CartListComponent
   ],
   imports: [
     BrowserModule,
