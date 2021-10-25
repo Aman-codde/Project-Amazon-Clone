@@ -221,12 +221,14 @@ app.get('/cart', function(req,res) {
 //1. get cart from userid, 2. add productid to cart
 //(userid,productid) from frontend
 app.put('/update-cart/:userId', function(req,res){
-    const userId = req.params.userId;
+    const _id = req.params.userId;
+    console.log("Add userId: ",_id);
     console.log(req.body);
-    const productId = "615f210d43300769147787a5";
+    const productId = req.body._id;
+    console.log("Add productId: ",productId)
     CartModel
     .findOneAndUpdate(
-        {user: userId},
+        {user: _id},
         {$push: {products: productId}},
         {$new: true}
     )
