@@ -1,0 +1,16 @@
+
+<!--{{cart$ | async|  json }}-->
+
+<ol>
+    <h1>All Carts</h1>
+    <li *ngFor = "let cart of (cart$| async)">
+        User: {{cart.user?._id}}
+        <br>
+        Products: 
+            <ol>
+                <li *ngFor="let product of cart.products">
+                    {{product}}
+                </li>
+            </ol>
+    </li>
+</ol>
