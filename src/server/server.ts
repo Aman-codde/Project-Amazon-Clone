@@ -5,6 +5,7 @@ import { UserModel } from './schemas/user.schema.js'
 import mongoose from 'mongoose';
 import { ProductModel } from './schemas/product.schema.js';
 import { CategoryModel } from './schemas/category.schema.js';
+import { CartModel } from './schemas/cart.schema.js';
 
 const app = express();
 const PORT = 3501;
@@ -50,6 +51,53 @@ app.post('/products', function(req,res) {
     .find(query)
     .then((data) => res.json({data}))
     .catch( err => res.status(501).json(err))
+})
+
+function productsSort(direction: number) {
+    return ProductModel
+    .find()
+    .sort({price: direction});
+}
+
+//get all products with price low to high
+app.get('/productsByPriceDesc', function(req,res) {
+    productsSort(-1)
+    .then(data => {
+        console.log("sort by price: ",data);
+        res.json({data});
+    })
+})
+//get all products with price high to low
+app.get('/productsByPriceAsc', function(req,res) {
+    productsSort(1)
+    .then(data => {
+        console.log("sort by price: ",data);
+        res.json({data});
+    })
+})
+
+//get products by price(upto$10,$10-$20,$20 & above)
+app.get('/productsByPriceChoice/:choice', function(req,res) {
+    let choice = Number(req.params.choice);
+    let query = {}
+    switch(choice){
+        case 1:
+            query = {price: {$gte:1, $lte:10} }
+            break;
+        case 2:
+            query = {price: {$gte:10, $lte:20} }
+            break;
+        case 3:
+            query = {price: {$gte: 20}}
+    }
+    ProductModel
+    .find(query)
+    .sort({price: 1})
+    .then(data => {
+        console.log(`Price range from ${query}:  ${data}`)
+        res.json({data})
+    })
+    .catch(err => {err})
 })
 
 // show particular product by id 
@@ -140,6 +188,68 @@ app.put('/update-user/:id', function(req, res) {
         }
     )
 })
+
+//create cart
+// create cart when add to cart or user login
+app.post('/create-cart', function(req,res) {
+    const userId = "615ee77596fadd70d45456a2";
+    //const productId = "615f210d43300769147787a5";
+    const cart = new CartModel({
+        user: userId,
+        products: []
+        //products: {$push: [{productId}]}
+    });
+    cart
+    .save()
+    .then(data => {
+        console.log(data);
+        res.json(data);
+    })
+    .catch( err=> res.json({err}));
+})
+
+// show cart collection
+app.get('/cart', function(req,res) {
+    CartModel
+    .find()
+    .populate('user')
+    .then( data => res.json(data))
+    .catch( err => res.json(err));
+})
+
+//update cart(push product to cart)
+//1. get cart from userid, 2. add productid to cart
+//(userid,productid) from frontend
+app.put('/update-cart/:userId', function(req,res){
+    const _id = req.params.userId;
+    console.log("Add userId: ",_id);
+    console.log(req.body);
+    const productId = req.body._id;
+    console.log("Add productId: ",productId)
+    CartModel
+    .findOneAndUpdate(
+        {user: _id},
+        {$push: {products: productId}},
+        {$new: true}
+    )
+    .then(data => res.json(data))
+    .catch(err => res.json(err))
+})
+
+// delete product from cart
+app.put('/deletefrom-cart/:cartId',function(req,res) {
+    const cartId = req.params.cartId;
+    const productId = '615f210d43300769147787a5'
+    CartModel
+    .findOneAndUpdate(
+        {_id: cartId},
+        {$pull: {'products': productId} },
+        {new: true}
+    )
+    .then(data => res.json(data))
+    .catch(err => res.json(err))
+})
+
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost:${PORT}`);
