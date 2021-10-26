@@ -1,6 +1,7 @@
 
 import express from 'express';
 import cors from 'cors';
+import bcrypt from 'bcrypt';
 import { UserModel } from './schemas/user.schema.js'
 import mongoose from 'mongoose';
 import { ProductModel } from './schemas/product.schema.js';
@@ -9,6 +10,7 @@ import { CartModel } from './schemas/cart.schema.js';
 
 const app = express();
 const PORT = 3501;
+const saltRounds = 10;
 
 mongoose.connect('mongodb://localhost:27017/amazonCloneDB')
 .then(() => {
@@ -141,19 +143,27 @@ app.get('/users', function(req,res){
 });
 
 app.post('/create-user', function(req,res){
-    const {firstName, lastName, email} = req.body;
-    const user = new UserModel({
-        firstName,
-        lastName,
-        email,
-    });
-    user
-    .save()
-    .then((data) => {
-        res.json({data});
-    })
-    .catch(err => {
-        res.status(501).json({errors: err});
+    const {firstName, lastName, email, password} = req.body;
+    
+    // generate salt string
+    bcrypt.genSalt(saltRounds,function(err,salt) {
+        console.log("Salt value = ", salt);
+
+        // encrypted value using hash along with salt string
+        bcrypt.hash(password,salt,function(err, hash) {
+            console.log("Ecrypted/ hash password = ", hash);
+
+            const new_user = new UserModel({
+                firstName,
+                lastName,
+                email,
+                hashedPassword: hash
+            });
+            new_user
+            .save()
+            .then(data => res.json({data}))
+            .catch(err => res.status(501).json({err}))
+        })
     })
 });
 
