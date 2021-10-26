@@ -21,6 +21,7 @@
             <label for="confirmPassword">Re-enter Password</label>
             <input type="password" placeholder="re-enter password">
         </div>-->
+        <p>Complete the form to enable button</p>
         <div class="form-group">
             <button (click)='postUser(selectedUser)' [disabled]='addUser.invalid'>{{(selectedUser) ? 'Update User' : 'Create Account'}}</button>
         </div>
