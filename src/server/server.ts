@@ -208,7 +208,7 @@ app.post('/create-cart', function(req,res) {
     .catch( err=> res.json({err}));
 })
 
-// show cart collection
+// show cart collection(requirement: particular cart for logged in user)
 app.get('/cart', function(req,res) {
     CartModel
     .find()
