@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev-server": "concurrently npm:dev-server:*",
-    "dev-server:compile": "rm -rf ./dist/ &&tsc -w",
+    "dev-server:compile": "rm -rf ./dist/server/ && rm -rf ./dist/shared/ && tsc -w",
     "dev-server:run": "nodemon"
   },
   "nodemonConfig": {
@@ -26,7 +26,9 @@
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/dotenv": "^8.2.0",
     "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.0.7",
     "socket.io": "^4.1.2"
