@@ -9,36 +9,37 @@ import { CategoryModel } from './schemas/category.schema.js';
 import { CartModel } from './schemas/cart.schema.js';
 import path from 'path';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import jwt from 'jsonwebtoken';
+import {authHandler} from './middleware/auth.middleware.js';
 
 dotenv.config();
-//console.log(process.env.MONGO_URI);
+const access_secret =  process.env.ACCESS_TOKEN_SECRET as string;
 
 const app = express();
 const PORT = 3000;
 const saltRounds = 10;
 const __dirname = path.resolve();
 
-
 const clientPath = path.join(__dirname, '/dist/client');
-
-
-
 
 //mongoose.connect('mongodb://localhost:27017/amazonCloneDB')
 mongoose.connect(`${process.env.MONGO_URI}`)
 .then(() => {
     console.log('Connected to DB Successfully');
-    ProductModel.find().then(data => console.log(data));
+    //ProductModel.find().then(data => console.log(data));
 })
 .catch(err => console.log('Failed to Connect to DB', err))
 
 
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: ['http://locahost:4200','http://localhost:3000','http://localhost:8080']
+}));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(clientPath));
 
-
-  
 
 /* app.get('/', function(req, res) {
 //    res.json({message:'test'});
@@ -51,7 +52,7 @@ app.post('/api/create-product', function(req,res) {
     new_product
     .save()
     .then(data => {
-        console.log({data});
+        console.log("Product created: ",{data});
         res.json({data})
     })
     .catch(err => res.status(501).json({error: err}))
@@ -152,7 +153,7 @@ app.get('/api/categories', function(req,res) {
 
 app.get('/api/users', function(req,res){
     UserModel
-    .find()
+    .find({}, '-hashedPassword')
     .then(data => res.json({data}))
     .catch(err => {
         res.status(501)
@@ -190,7 +191,7 @@ app.delete('/api/delete-user/:id', function(req, res) {
     UserModel
     .findByIdAndDelete(_id)
     .then((data) => {
-        console.log(data);
+        console.log("Deleted user: ",data);
         res.json({data});
     });
 })
@@ -217,8 +218,48 @@ app.put('/api/update-user/:id', function(req, res) {
     )
 })
 
+//login
+app.post('/api/login', function(req,res) {
+    UserModel
+    .findOne({email: req.body.email})
+    .then((user:any) => {
+        // if no user found with given email
+        if(!user) {
+            console.log('Invalid Email');
+            return res.sendStatus(500);;
+        }
+        bcrypt.compare(req.body.password,`${user?.hashedPassword}`, function(err, result){
+            // if password matches
+            if(result) {
+                const access_token = jwt.sign({user},access_secret);// generates json web token as a string
+
+                res.cookie('jwt',access_token,{ httpOnly: true, maxAge: 60*1000})
+                res.json({message: 'login route', user, access_token})
+                //res.json({user})
+            }
+            // if password does NOT matches
+            else {
+                console.log("Invalid password");
+                res.sendStatus(403);
+            }
+        }) 
+    })
+    .catch((err) => {
+        return res.sendStatus(404);
+    })
+})
+
+// check login
+app.post('/api/check-login', authHandler, function(req,res) {
+    res.json({message: 'yes'});
+})
+
+app.get('/api/logout', function(req,res) {
+    res.cookie('jwt','',{httpOnly: true, maxAge:0});
+})
+
 //create cart
-// create cart when add to cart or user login
+// create cart when clicked on "add to cart" 
 app.post('/api/create-cart', function(req,res) {
     const userId = "615ee77596fadd70d45456a2";
     //const productId = "615f210d43300769147787a5";
@@ -230,7 +271,7 @@ app.post('/api/create-cart', function(req,res) {
     cart
     .save()
     .then(data => {
-        console.log(data);
+        console.log("Cart",data);
         res.json(data);
     })
     .catch( err=> res.json({err}));
@@ -239,9 +280,13 @@ app.post('/api/create-cart', function(req,res) {
 // show cart collection(requirement: particular cart for logged in user)
 app.get('/api/cart', function(req,res) {
     CartModel
-    .find()
-    .populate('user')
-    .then( data => res.json(data))
+    .find()// find({email: from authhandler})
+    .populate('user','firstName email')
+    .populate('products','-categories')
+    .then( data => {
+        console.log("Cart: ",data);
+        res.json(data)
+    })
     .catch( err => res.json(err));
 })
 
