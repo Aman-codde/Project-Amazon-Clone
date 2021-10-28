@@ -7,27 +7,45 @@ import mongoose from 'mongoose';
 import { ProductModel } from './schemas/product.schema.js';
 import { CategoryModel } from './schemas/category.schema.js';
 import { CartModel } from './schemas/cart.schema.js';
+import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
+//console.log(process.env.MONGO_URI);
 
 const app = express();
-const PORT = 3501;
+const PORT = 3000;
 const saltRounds = 10;
+const __dirname = path.resolve();
 
-mongoose.connect('mongodb://localhost:27017/amazonCloneDB')
+
+const clientPath = path.join(__dirname, '/dist/client');
+
+
+
+
+//mongoose.connect('mongodb://localhost:27017/amazonCloneDB')
+mongoose.connect(`${process.env.MONGO_URI}`)
 .then(() => {
     console.log('Connected to DB Successfully');
+    ProductModel.find().then(data => console.log(data));
 })
 .catch(err => console.log('Failed to Connect to DB', err))
 
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(clientPath));
 
-app.get('/', function(req, res) {
-   res.json({message:'test'});
-});
+
+  
+
+/* app.get('/', function(req, res) {
+//    res.json({message:'test'});
+ });*/
 
 // create/add new product
-app.post('/create-product', function(req,res) {
+app.post('/api/create-product', function(req,res) {
     const new_product = new ProductModel(req.body);
     console.log("new product: ", new_product)
     new_product
@@ -40,7 +58,7 @@ app.post('/create-product', function(req,res) {
 })
 
 //get all products using categories as query params
-app.post('/products', function(req,res) {
+app.post('/api/products', function(req,res) {
     const query: any = {} ; // fetch all products
     if(req.body.categories) {
         query.categories = { $in: [req.body.categories] }
@@ -62,7 +80,7 @@ function productsSort(direction: number) {
 }
 
 //get all products with price low to high
-app.get('/productsByPriceDesc', function(req,res) {
+app.get('/api/productsByPriceDesc', function(req,res) {
     productsSort(-1)
     .then(data => {
         console.log("sort by price: ",data);
@@ -70,7 +88,7 @@ app.get('/productsByPriceDesc', function(req,res) {
     })
 })
 //get all products with price high to low
-app.get('/productsByPriceAsc', function(req,res) {
+app.get('/api/productsByPriceAsc', function(req,res) {
     productsSort(1)
     .then(data => {
         console.log("sort by price: ",data);
@@ -79,7 +97,7 @@ app.get('/productsByPriceAsc', function(req,res) {
 })
 
 //get products by price(upto$10,$10-$20,$20 & above)
-app.get('/productsByPriceChoice/:choice', function(req,res) {
+app.get('/api/productsByPriceChoice/:choice', function(req,res) {
     let choice = Number(req.params.choice);
     let query = {}
     switch(choice){
@@ -103,7 +121,7 @@ app.get('/productsByPriceChoice/:choice', function(req,res) {
 })
 
 // show particular product by id 
-app.post('/product/:id', function(req,res) {
+app.post('/api/product/:id', function(req,res) {
     console.log("ProductId: ",req.params.id);
     ProductModel
     .findById(req.params.id)
@@ -115,7 +133,7 @@ app.post('/product/:id', function(req,res) {
 })
 
 //show category collection 
-app.get('/categories', function(req,res) {
+app.get('/api/categories', function(req,res) {
     CategoryModel
     .find()
     .populate(
@@ -132,7 +150,7 @@ app.get('/categories', function(req,res) {
 })
 
 
-app.get('/users', function(req,res){
+app.get('/api/users', function(req,res){
     UserModel
     .find()
     .then(data => res.json({data}))
@@ -142,7 +160,7 @@ app.get('/users', function(req,res){
     })
 });
 
-app.post('/create-user', function(req,res){
+app.post('/api/create-user', function(req,res){
     const {firstName, lastName, email, password} = req.body;
     
     // generate salt string
@@ -167,7 +185,7 @@ app.post('/create-user', function(req,res){
     })
 });
 
-app.delete('/delete-user/:id', function(req, res) {
+app.delete('/api/delete-user/:id', function(req, res) {
     const _id = req.params.id;
     UserModel
     .findByIdAndDelete(_id)
@@ -177,7 +195,7 @@ app.delete('/delete-user/:id', function(req, res) {
     });
 })
 
-app.put('/update-user/:id', function(req, res) {
+app.put('/api/update-user/:id', function(req, res) {
     console.log("Update user");
     UserModel
     .findByIdAndUpdate(
@@ -201,7 +219,7 @@ app.put('/update-user/:id', function(req, res) {
 
 //create cart
 // create cart when add to cart or user login
-app.post('/create-cart', function(req,res) {
+app.post('/api/create-cart', function(req,res) {
     const userId = "615ee77596fadd70d45456a2";
     //const productId = "615f210d43300769147787a5";
     const cart = new CartModel({
@@ -219,7 +237,7 @@ app.post('/create-cart', function(req,res) {
 })
 
 // show cart collection(requirement: particular cart for logged in user)
-app.get('/cart', function(req,res) {
+app.get('/api/cart', function(req,res) {
     CartModel
     .find()
     .populate('user')
@@ -230,7 +248,7 @@ app.get('/cart', function(req,res) {
 //update cart(push product to cart)
 //1. get cart from userid, 2. add productid to cart
 //(userid,productid) from frontend
-app.put('/update-cart/:userId', function(req,res){
+app.put('/api/update-cart/:userId', function(req,res){
     const _id = req.params.userId;
     console.log("Add userId: ",_id);
     console.log(req.body);
@@ -247,7 +265,7 @@ app.put('/update-cart/:userId', function(req,res){
 })
 
 // delete product from cart
-app.put('/deletefrom-cart/:cartId',function(req,res) {
+app.put('/api/deletefrom-cart/:cartId',function(req,res) {
     const cartId = req.params.cartId;
     const productId = '615f210d43300769147787a5'
     CartModel
@@ -260,6 +278,16 @@ app.put('/deletefrom-cart/:cartId',function(req,res) {
     .catch(err => res.json(err))
 })
 
+
+app.all("/api/*", function(req,res) {
+    res.sendStatus(404);
+})
+
+app.get('*', function(req, res) {
+    const filePath = path.join(__dirname,'/dist/client/index.html');
+    console.log(filePath);
+    res.sendFile(filePath);
+ });
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost:${PORT}`);
