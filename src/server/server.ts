@@ -262,7 +262,6 @@ app.get('/api/logout', function(req,res) {
 // create cart when clicked on "add to cart" 
 app.post('/api/create-cart', function(req,res) {
     const userId = "615ee77596fadd70d45456a2";
-    //const productId = "615f210d43300769147787a5";
     const cart = new CartModel({
         user: userId,
         products: []
@@ -282,7 +281,7 @@ app.get('/api/cart', function(req,res) {
     CartModel
     .find()// find({email: from authhandler})
     .populate('user','firstName email')
-    .populate('products','-categories')
+    .populate({path: 'products'})
     .then( data => {
         console.log("Cart: ",data);
         res.json(data)

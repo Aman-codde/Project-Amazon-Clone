@@ -18,5 +18,7 @@ export class CartListComponent implements OnInit {
   ngOnInit(): void {
      
   }
-
+  deleteFromCart(id: any) {
+    console.log("product id to be deleted from cart = ",id);
+  }
 }
