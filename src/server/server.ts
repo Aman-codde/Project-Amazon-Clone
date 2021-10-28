@@ -17,7 +17,7 @@ dotenv.config();
 const access_secret =  process.env.ACCESS_TOKEN_SECRET as string;
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;;
 const saltRounds = 10;
 const __dirname = path.resolve();
 
