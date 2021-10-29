@@ -12,7 +12,7 @@ export interface User {
     firstName: string,
     lastName?:string,
     email:string,// how to use id as email _id: email
-    hashedPassword: string,
+    password: string,
     billingAddress?: Address,
     shippingAddress?: Address
 }

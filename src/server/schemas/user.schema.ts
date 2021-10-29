@@ -8,7 +8,7 @@ const userSchema = new Schema<User>({
     firstName: {type: String, required: true},
     lastName: {type: String},
     email: {type: String, required: true},
-    hashedPassword: {type: String, required:true}
+    password: {type: String, required:true}
 })
 
 userSchema.pre('save', function(next) { 

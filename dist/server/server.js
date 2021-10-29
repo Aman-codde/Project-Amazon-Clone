@@ -135,7 +135,7 @@ app.get('/api/categories', function (req, res) {
 });
 app.get('/api/users', function (req, res) {
     UserModel
-        .find({}, '-hashedPassword')
+        .find({}, '-password')
         .then(data => res.json({ data }))
         .catch(err => {
         res.status(501);
@@ -154,7 +154,7 @@ app.post('/api/create-user', function (req, res) {
                 firstName,
                 lastName,
                 email,
-                hashedPassword: hash
+                password: hash
             });
             new_user
                 .save()
@@ -199,7 +199,7 @@ app.post('/api/login', function (req, res) {
             return res.sendStatus(500);
             ;
         }
-        bcrypt.compare(req.body.password, `${user?.hashedPassword}`, function (err, result) {
+        bcrypt.compare(req.body.password, `${user?.password}`, function (err, result) {
             // if password matches
             if (result) {
                 const access_token = jwt.sign({ user }, access_secret); // generates json web token as a string
@@ -246,8 +246,18 @@ app.post('/api/create-cart', function (req, res) {
 app.get('/api/cart', function (req, res) {
     CartModel
         .find() // find({email: from authhandler})
-        .populate('user', 'firstName email')
-        .populate({ path: 'products' })
+        //.populate('user','firstName email')
+        .populate(['products'])
+        .then(data => {
+        console.log("Cart: ", data);
+        res.json(data);
+    })
+        .catch(err => res.json(err));
+});
+// count products in cart
+app.get('/api/cart', function (req, res) {
+    CartModel
+        .aggregate([{ $project: { count: { $size: "$products" } } }])
         .then(data => {
         console.log("Cart: ", data);
         res.json(data);
@@ -269,9 +279,10 @@ app.put('/api/update-cart/:userId', function (req, res) {
         .catch(err => res.json(err));
 });
 // delete product from cart
-app.put('/api/deletefrom-cart/:cartId', function (req, res) {
-    const cartId = req.params.cartId;
-    const productId = '615f210d43300769147787a5';
+app.delete('/api/delete-from-cart/:productId', function (req, res) {
+    const cartId = "617454b89ca441fe8b1c5361";
+    //console.log('pr: ',cartId);
+    const productId = req.params.productId;
     CartModel
         .findOneAndUpdate({ _id: cartId }, { $pull: { 'products': productId } }, { new: true })
         .then(data => res.json(data))
