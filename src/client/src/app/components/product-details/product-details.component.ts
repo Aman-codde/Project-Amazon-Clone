@@ -53,9 +53,9 @@ export class ProductDetailsComponent implements OnInit {
     // if existing user(if userid found in  the cart collection)
       // 2. pass userid and add product to card
     //this.cartService.selectUser("615ee77596fadd70d45456a2");
-    const userId = "615ee77596fadd70d45456a2";
+    //const userId = "615ee77596fadd70d45456a2";
     const product = this.selectedProduct!;
-    this.cartService.updateCart(userId, product).subscribe();
+    this.cartService.updateCart(product).subscribe();
   }
   
 }

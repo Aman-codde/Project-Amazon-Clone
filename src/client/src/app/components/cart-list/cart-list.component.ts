@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { CartService } from 'src/app/services/cart.service';
 import { Cart } from '../../../../../shared/models/cart.model';
 
 @Component({
@@ -10,7 +11,10 @@ import { Cart } from '../../../../../shared/models/cart.model';
 })
 export class CartListComponent implements OnInit {
   cart$ : Observable<Cart[]>
-  constructor(private apiService: ApiService) 
+  constructor(
+    private apiService: ApiService,
+    private cartService: CartService
+    ) 
   { 
     this.cart$ = this.apiService.get<Cart[]>('cart')
   }
@@ -18,7 +22,9 @@ export class CartListComponent implements OnInit {
   ngOnInit(): void {
      
   }
-  deleteFromCart(id: any) {
+
+  deleteProductFromCart(id: any) {
     console.log("product id to be deleted from cart = ",id);
+    this.cartService.deleteFromCart(id);
   }
 }

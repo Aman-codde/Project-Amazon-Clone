@@ -17,13 +17,18 @@ export class CartService {
   //postCart(create cart )
 
   //updateCart
-  updateCart(userId: string, product: Product) {
+  updateCart(product: Product) {
     console.log("update cart() is called in cart services");
-    console.log(userId,product);
-    return this.api.put<User,Product>('update-cart/' + userId, product)
+    //console.log(user,product);
+    return this.api.put<User,Product>('update-cart', product)
   }
 
   // delete productId from cart
+  deleteFromCart(productId: any) {
+    console.log("delete cart() is called in cart services");
+    console.log(productId);
+    return this.api.delete<Product>('delete-from-cart/'+productId).subscribe();
+  }
 
   selectUser(id: string) {
     this.selectedUserId = id;  

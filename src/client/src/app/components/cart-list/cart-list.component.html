@@ -10,7 +10,7 @@
             <ol>
                 <li *ngFor="let product of cart.products">
                     {{product?._id}}
-                    <button (click)="deleteFromCart(product?._id)">Delete</button>
+                    <button (click)="deleteProductFromCart(product?._id)">Delete</button>
                 </li>
             </ol>
     </li>
