@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import { UserModel } from './schemas/user.schema.js'
-import mongoose from 'mongoose';
+import mongoose, { isValidObjectId } from 'mongoose';
 import { ProductModel } from './schemas/product.schema.js';
 import { CategoryModel } from './schemas/category.schema.js';
 import { CartModel } from './schemas/cart.schema.js';
@@ -156,6 +156,7 @@ app.get('/api/users', function(req,res){
     })
 });
 
+// create new user and also assign a new cart to the person
 app.post('/api/create-user', function(req,res){
     const {firstName, lastName, email, password} = req.body;
     
@@ -177,10 +178,9 @@ app.post('/api/create-user', function(req,res){
             .save()
             .then(data => res.json({data}))
             .then(() => {
-                const cart = new CartModel({
+                const cart = new CartModel({ // new cart with userid assigned and no products
                     user: new_user._id,
                     products: []
-                    //products: {$push: [{productId}]}
                 });
                 cart
                 .save()
@@ -237,7 +237,7 @@ app.post('/api/login', function(req,res) {
             if(result) {
                 const access_token = jwt.sign({user},access_secret);// generates json web token as a string
 
-                res.cookie('jwt',access_token,{ httpOnly: true, maxAge: 60*1000})
+                res.cookie('jwt',access_token,{ httpOnly: true, maxAge: 60*60*1000})
                 res.json({message: 'login route', user, access_token})
                 //res.json({user})
             }
@@ -262,48 +262,18 @@ app.get('/api/logout', function(req,res) {
     res.cookie('jwt','',{httpOnly: true, maxAge:0});
 })
 
-//create cart
-// create cart when clicked on "add to cart" 
-app.post('/api/create-cart', authHandler,function(req:any,res) {
-    const user = req.user;
-    console.log("create cart of user = ",user);
-    const cart = new CartModel({
-        user: user._id,
-        products: []
-        //products: {$push: [{productId}]}
-    });
-    cart
-    .save()
-    .then(data => {
-        console.log("Cart",data);
-        res.json(data);
-    })
-    .catch( err=> res.json({err}));
-})
-
 // show cart collection(requirement: particular cart for logged in user)
 app.get('/api/cart',authHandler ,function(req: any,res) {
     const loggedUser = req.user;
     console.log("logged user:",loggedUser._id);
     const userId = loggedUser._id;
     CartModel
-    .findOne({user:userId})
+    .findOne({user:userId}, "count total_amount")
     .populate('user','firstName email')
     .populate('products', '-categories')
-    .then( data => {
+    .then(data => {
         console.log("Cart: ",data);
-        res.json(data)
-    })
-    .catch( err => res.json(err));
-})
-
-// count products in cart
-app.get('/api/cart', function(req,res) {
-    CartModel
-    .aggregate([{$project: { count: { $size:"$products" }}}])
-    .then( data => {
-        console.log("Cart: ",data);
-        res.json(data)
+        res.json(data);
     })
     .catch( err => res.json(err));
 })
@@ -328,13 +298,12 @@ app.put('/api/update-cart', authHandler ,function(req:any,res){
 })
 
 // delete product from cart
-app.delete('/api/delete-from-cart/:productId',function(req,res) {
-    const cartId = "617454b89ca441fe8b1c5361";
-    
+app.delete('/api/delete-from-cart/:productId', authHandler,function(req:any,res) {
+    const loggedUser = req.user;    
     const productId = req.params.productId;
     CartModel
     .findOneAndUpdate(
-        {_id: cartId},
+        {user: loggedUser._id},
         {$pull: {'products': productId} },
         {new: true}
     )
