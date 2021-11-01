@@ -1,17 +1,28 @@
 
-<!--{{cart$ | async|  json }}-->
-
-<ol>
-    <h1>All Carts</h1>
-    <li *ngFor = "let cart of (cart$| async)">
-        User: {{cart.user?._id}}
-        <br>
-        Products: 
-            <ol>
-                <li *ngFor="let product of cart.products">
-                    {{product?._id}}
+<!--{{(cart$| async) | json}}-->
+ <ng-container *ngIf="(cart$| async) as cart">
+    <p class="title">
+        Shopping Cart: <span style="color: green;">{{cart?.user?.firstName}}</span><span class="price-title">Price</span> 
+    </p>
+    <hr>
+    <div>
+    <ol>
+        <div class="cart-div">
+            <li *ngFor="let product of (cart.products)">
+                <div class="img-des-div">
+                    <img src="{{product?.imgUrl}}" alt="">
+                    {{product?.product_name}}
+                    <label for="quantity">Qty:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="{{(product?.quantity)}}">
                     <button (click)="deleteProductFromCart(product?._id)">Delete</button>
-                </li>
-            </ol>
-    </li>
-</ol>
+                </div>
+                <div class="price-div">
+                    ${{product?.price}}
+                </div>
+                <hr>
+            </li>
+        </div>
+    </ol>
+    </div>
+</ng-container>
+
