@@ -1,6 +1,8 @@
 import * as mongoose from 'mongoose';
+import { Product } from './product.model.js';
+import { User } from './user.model.js';
 
 export interface Cart {
-    user?: mongoose.Types.ObjectId,
-    products: [mongoose.Types.ObjectId];// list of product ids
+    user?: User,
+    products: Product[];// list of product ids
 }
