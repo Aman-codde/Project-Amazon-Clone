@@ -27,23 +27,18 @@ const clientPath = path.join(__dirname, '/dist/client');
 mongoose.connect(`${process.env.MONGO_URI}`)
 .then(() => {
     console.log('Connected to DB Successfully');
-    //ProductModel.find().then(data => console.log(data));
 })
 .catch(err => console.log('Failed to Connect to DB', err))
 
-
 app.use(cors({
     credentials: true,
-    origin: ['http://locahost:4200','http://localhost:3000','http://localhost:8080']
+    origin: ['http://localhost:3000', 'http://localhost:4200', 'http://localhost:3501', 'http://localhost:8080']
 }));
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(clientPath));
 
-
-/* app.get('/', function(req, res) {
-//    res.json({message:'test'});
- });*/
 
 // create/add new product
 app.post('/api/create-product', function(req,res) {
@@ -181,6 +176,15 @@ app.post('/api/create-user', function(req,res){
             new_user
             .save()
             .then(data => res.json({data}))
+            .then(() => {
+                const cart = new CartModel({
+                    user: new_user._id,
+                    products: []
+                    //products: {$push: [{productId}]}
+                });
+                cart
+                .save()
+            })
             .catch(err => res.status(501).json({err}))
         })
     })
@@ -260,10 +264,11 @@ app.get('/api/logout', function(req,res) {
 
 //create cart
 // create cart when clicked on "add to cart" 
-app.post('/api/create-cart', function(req,res) {
-    const userId = "615ee77596fadd70d45456a2";
+app.post('/api/create-cart', authHandler,function(req:any,res) {
+    const user = req.user;
+    console.log("create cart of user = ",user);
     const cart = new CartModel({
-        user: userId,
+        user: user._id,
         products: []
         //products: {$push: [{productId}]}
     });
@@ -277,11 +282,14 @@ app.post('/api/create-cart', function(req,res) {
 })
 
 // show cart collection(requirement: particular cart for logged in user)
-app.get('/api/cart', function(req,res) {
+app.get('/api/cart',authHandler ,function(req: any,res) {
+    const loggedUser = req.user;
+    console.log("logged user:",loggedUser._id);
+    const userId = loggedUser._id;
     CartModel
-    .find()// find({email: from authhandler})
-    //.populate('user','firstName email')
-    .populate(['products'])
+    .findOne({user:userId})
+    .populate('user','firstName email')
+    .populate('products', '-categories')
     .then( data => {
         console.log("Cart: ",data);
         res.json(data)
@@ -303,15 +311,15 @@ app.get('/api/cart', function(req,res) {
 //update cart(push product to cart)
 //1. get cart from userid, 2. add productid to cart
 //(userid,productid) from frontend
-app.put('/api/update-cart/:userId', function(req,res){
-    const _id = req.params.userId;
-    console.log("Add userId: ",_id);
+app.put('/api/update-cart', authHandler ,function(req:any,res){
+    const loggedUser = req.user;
+    console.log("update cart of userId: ", loggedUser._id);
     console.log(req.body);
     const productId = req.body._id;
     console.log("Add productId: ",productId)
     CartModel
     .findOneAndUpdate(
-        {user: _id},
+        {user: loggedUser._id},
         {$push: {products: productId}},
         {$new: true}
     )
@@ -322,7 +330,7 @@ app.put('/api/update-cart/:userId', function(req,res){
 // delete product from cart
 app.delete('/api/delete-from-cart/:productId',function(req,res) {
     const cartId = "617454b89ca441fe8b1c5361";
-    //console.log('pr: ',cartId);
+    
     const productId = req.params.productId;
     CartModel
     .findOneAndUpdate(
