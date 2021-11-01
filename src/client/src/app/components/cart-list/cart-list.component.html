@@ -24,8 +24,14 @@
         </div>
     </ol>
     </div>
-    <p class="cart-summary">
-        Subtotal({{ cart?.count }} {{(totalCount())}}): <span>${{cart?.total_amount}}</span> 
-    </p>
+    <div class="summary">
+        <p class="cart-summary">
+            Subtotal({{ cart?.count }} {{(totalCount())}}): <span>${{cart?.total_amount}}</span> 
+        </p>
+        <p class="checkout">
+            <button class="checkout-button">Proceed to checkout</button>
+        </p>
+    </div>
+    
 </ng-container>
 

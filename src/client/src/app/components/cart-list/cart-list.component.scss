@@ -36,3 +36,18 @@ img {
 .cart-summary span {
     font-weight: bold;
 }
+
+.checkout-button {
+    padding: 10px 25px;
+    border-radius: 20px;
+    background-color: rgb(238, 211, 37);
+}
+
+.checkout-button:hover {
+    cursor: pointer;
+}
+
+.summary {
+    float: right;
+}
+
