@@ -5,4 +5,6 @@ import { User } from './user.model.js';
 export interface Cart {
     user?: User,
     products: Product[];// list of product ids
+    count: number;
+    total_amount: number;
 }
