@@ -9,29 +9,22 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CartService {
-  selectedUserId = '';
-
+ 
   constructor(private api: ApiService) 
   { }
 
-  //postCart(create cart )
+  getCart() {
+    return this.api.get<Cart>('cart');
+  }
 
-  //updateCart
+  //add product to cart
   updateCart(product: Product) {
-    console.log("update cart() is called in cart services");
-    //console.log(user,product);
-    return this.api.put<User,Product>('update-cart', product)
+    return this.api.put<Cart,Product>('update-cart', product)
   }
 
   // delete productId from cart
-  deleteFromCart(productId: any) {
-    console.log("delete cart() is called in cart services");
-    console.log(productId);
-    return this.api.delete<Product>('delete-from-cart/'+productId).subscribe();
-  }
-
-  selectUser(id: string) {
-    this.selectedUserId = id;  
+  deleteFromCart(product: Product) {
+    return this.api.put<Cart,Product>('delete-from-cart/'+product._id,product)
   }
 
 }
