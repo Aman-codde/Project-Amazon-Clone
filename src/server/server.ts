@@ -280,25 +280,28 @@ app.get('/api/cart',authHandler ,function(req: any,res) {
 
 //update cart(push product to cart)
 //1. get cart from userid, 2. add productid to cart
-//(userid,productid) from frontend
+// productid from frontend, userid from auth.middleware
 app.put('/api/update-cart', authHandler ,function(req:any,res){
     const loggedUser = req.user;
-    console.log("update cart of userId: ", loggedUser._id);
-    console.log(req.body);
     const productId = req.body._id;
-    console.log("Add productId: ",productId)
     CartModel
     .findOneAndUpdate(
-        {user: loggedUser._id},
+        {user: loggedUser._id}, 
         {$push: {products: productId}},
-        {$new: true}
+        {new: true},
+        function(err, updateCart) {
+            if(err) {
+                res.send("Error updating user: ");
+            }
+            else {
+                res.json(updateCart);
+            }
+        }
     )
-    .then(data => res.json(data))
-    .catch(err => res.json(err))
 })
 
 // delete product from cart
-app.delete('/api/delete-from-cart/:productId', authHandler,function(req:any,res) {
+app.put('/api/delete-from-cart/:productId', authHandler,function(req:any,res) {
     const loggedUser = req.user;    
     const productId = req.params.productId;
     CartModel
@@ -307,7 +310,7 @@ app.delete('/api/delete-from-cart/:productId', authHandler,function(req:any,res)
         {$pull: {'products': productId} },
         {new: true}
     )
-    .then(data => res.json(data))
+    .then(data => res.json({data}))
     .catch(err => res.json(err))
 })
 
