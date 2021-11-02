@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { ApiService } from 'src/app/services/api.service';
-import { CartService } from 'src/app/services/cart.service';
+import { AppState } from 'src/app/store';
+import { deleteProductFromCart, loadCart } from 'src/app/store/actions/cart/cart.actions';
+import { cartSelector } from 'src/app/store/selectors/cart/cart.selectors';
 import { Cart } from '../../../../../shared/models/cart.model';
+import { Product } from '../../../../../shared/models/product.model';
 
 @Component({
   selector: 'app-cart-list',
@@ -10,31 +13,27 @@ import { Cart } from '../../../../../shared/models/cart.model';
   styleUrls: ['./cart-list.component.scss']
 })
 export class CartListComponent implements OnInit {
-  cart$ : Observable<Cart>;
+  cart$ : Observable<Cart | null>;
   cart: Cart | null = null;
-  amount: string | undefined;
   
   constructor(
-    private apiService: ApiService,
-    private cartService: CartService
+    private store: Store<AppState>,
     ) 
   { 
-    this.cart$ = this.apiService.get<Cart>('cart');
-    //this.amount = this.cart?.total_amount?.toFixed(2);
-
+    this.cart$ = this.store.select(cartSelector)
   }
 
   ngOnInit(): void {
+    this.store.dispatch(loadCart());
     this.cart$.subscribe(data => this.cart = data);
   }
 
-  deleteProductFromCart(id: any) {
-    console.log("product id to be deleted from cart = ",id);
-    this.cartService.deleteFromCart(id);
+  deleteProductFromCart(product: Product) {
+    this.store.dispatch(deleteProductFromCart({data: product}));
   }
 
   totalCount() {
-    if(this.cart?.count == 1)
+    if(this.cart?.count == 1 || this.cart?.count == 0)
       return 'item';
     else 
       return 'items';

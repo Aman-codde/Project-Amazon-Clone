@@ -17,7 +17,7 @@
                     <p>Qty:
                     <input type="number" id="quantity" name="quantity" min="1" max="{{(product?.quantity)}}" placeholder="1">
                     </p>
-                    <button (click)="deleteProductFromCart(product?._id)">Delete</button>
+                    <button (click)="deleteProductFromCart(product)">Delete</button>
                 </div>
                 <div class="price-div">
                     <p>${{product?.price}}</p>
