@@ -24,6 +24,8 @@ import { CategoryEffects } from './store/effects/category/category.effects';
 import * as fromCategory from './store/reducers/category/category.reducer';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { CartEffects } from './store/effects/cart/cart.effects';
+import * as fromCart from './store/reducers/cart/cart.reducer';
 
 @NgModule({
   declarations: [
@@ -47,9 +49,10 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
-    EffectsModule.forRoot([UserEffects, ProductEffects, CategoryEffects]),
+    EffectsModule.forRoot([UserEffects, ProductEffects, CategoryEffects, CartEffects]),
     StoreModule.forFeature(fromProduct.productFeatureKey, fromProduct.reducer),
     StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
+    StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
   ],
   providers: [],
   bootstrap: [AppComponent]
