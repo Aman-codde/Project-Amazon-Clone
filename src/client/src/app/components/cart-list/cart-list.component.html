@@ -7,26 +7,30 @@
     <hr>
     <div>
     <ol>
-        <div class="cart-div">
             <li *ngFor="let product of (cart.products)">
-                <div class="img-des-div">
-                    <img src="{{product?.imgUrl}}" alt="">
-                    {{product?.product_name}}
-                    <label for="quantity">Qty:</label>
-                    <input type="number" id="quantity" name="quantity" min="1" max="{{(product?.quantity)}}">
+                <section id="cart-section">
+                <div class="img-div">
+                    <img src="{{product?.imgUrl}}">
+                </div>
+                <div class="details-div">
+                    <p>{{product?.product_name}}</p>
+                    <p>Qty:
+                    <input type="number" id="quantity" name="quantity" min="1" max="{{(product?.quantity)}}" placeholder="1">
+                    </p>
                     <button (click)="deleteProductFromCart(product?._id)">Delete</button>
                 </div>
                 <div class="price-div">
-                    ${{product?.price}}
+                    <p>${{product?.price}}</p>
                 </div>
-                <hr>
+                </section>
+            <hr>
             </li>
-        </div>
+        
     </ol>
     </div>
     <div class="summary">
         <p class="cart-summary">
-            Subtotal({{ cart?.count }} {{(totalCount())}}): <span>${{cart?.total_amount}}</span> 
+            Subtotal({{ cart?.count }} {{(totalCount())}}): <span>${{cart?.total_amount?.toFixed(2)}}</span> 
         </p>
         <p class="checkout">
             <button class="checkout-button">Proceed to checkout</button>

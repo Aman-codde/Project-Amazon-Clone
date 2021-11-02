@@ -12,18 +12,20 @@ import { Cart } from '../../../../../shared/models/cart.model';
 export class CartListComponent implements OnInit {
   cart$ : Observable<Cart>;
   cart: Cart | null = null;
+  amount: string | undefined;
   
   constructor(
     private apiService: ApiService,
     private cartService: CartService
     ) 
   { 
-    this.cart$ = this.apiService.get<Cart>('cart')
+    this.cart$ = this.apiService.get<Cart>('cart');
+    //this.amount = this.cart?.total_amount?.toFixed(2);
+
   }
 
   ngOnInit(): void {
     this.cart$.subscribe(data => this.cart = data);
-     
   }
 
   deleteProductFromCart(id: any) {

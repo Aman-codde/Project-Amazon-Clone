@@ -1,3 +1,5 @@
+
+
 .title {
     font-size: 20px;
 }
@@ -6,26 +8,33 @@
     float: right;
 }
 
-.cart-div{
-    
+#cart-section{
+   display: flex; 
+}
+
+#cart-section div {
+    padding: 20px;
 }
 
 img {
-    display: inline-block;
     border-radius: 8px;
     width: 80px;
-    padding: 5px;
 }
 
-.img-des-div {
-    overflow: hidden;
-    text-align: left;
-    margin: 10px;
+.img-div {
+    width: 20%;
+}
+
+.details-div {
+    width: 40%;
+    font-size: 20px;
 }
 
 .price-div {
-    text-align: right;
     font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+    width: 40%;
 }
 
 .cart-summary {
