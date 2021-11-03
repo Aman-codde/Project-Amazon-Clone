@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
@@ -18,6 +19,7 @@ export class CartListComponent implements OnInit {
   
   constructor(
     private store: Store<AppState>,
+    private router: Router
     ) 
   { 
     this.cart$ = this.store.select(cartSelector)
@@ -33,9 +35,14 @@ export class CartListComponent implements OnInit {
   }
 
   totalCount() {
-    if(this.cart?.count == 1 || this.cart?.count == 0)
-      return 'item';
-    else 
-      return 'items';
+    let value = "";
+    if(this.cart?.count) {
+      value =  this.cart.count <= 1 ? 'item': 'items';
+    }
+    return value;
+  }
+
+  goToOrder(cart: Cart) {
+    this.router.navigate(['/order']);
   }
 }

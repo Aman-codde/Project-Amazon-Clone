@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
@@ -21,6 +21,7 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
+    private router: Router
   ) 
   { 
     this.product$ = this.store.select(productSelector)
@@ -47,4 +48,8 @@ export class ProductDetailsComponent implements OnInit {
     this.store.dispatch(updateCart({data: product}));
   }
   
+  goToOrder() {
+    return this.router.navigate(['/order']);
+    //return this.router.navigate(['/order/',this.selectedProduct?._id])
+  }
 }

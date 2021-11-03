@@ -33,7 +33,8 @@
             Subtotal({{ cart?.count }} {{(totalCount())}}): <span>${{cart?.total_amount?.toFixed(2)}}</span> 
         </p>
         <p class="checkout">
-            <button class="checkout-button">Proceed to checkout</button>
+            <button class="checkout-button" (click)="goToOrder(cart)">Proceed to checkout</button>
+            
         </p>
     </div>
     

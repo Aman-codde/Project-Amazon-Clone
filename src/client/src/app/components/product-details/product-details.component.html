@@ -15,6 +15,6 @@
         </p>
         <button class="cart" (click)="addToCart()" [disabled]="!checkQuantity()">Add to cart</button>
         <br><br>
-        <button class="buy" [disabled]="!checkQuantity()">Buy Now</button>
+        <button class="buy" [disabled]="!checkQuantity()" (click)="goToOrder()">Buy Now</button>
     </div>
 </div>
