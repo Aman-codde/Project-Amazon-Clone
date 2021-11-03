@@ -35,11 +35,11 @@ app.use(express.static(clientPath));
 // create/add new product
 app.post('/api/create-product', function (req, res) {
     const new_product = new ProductModel(req.body);
-    console.log("new product: ", new_product);
+    //console.log("new product: ", new_product)
     new_product
         .save()
         .then(data => {
-        console.log("Product created: ", { data });
+        //console.log("Product created: ",{data});
         res.json({ data });
     })
         .catch(err => res.status(501).json({ error: err }));
@@ -68,7 +68,7 @@ function productsSort(direction) {
 app.get('/api/productsByPriceDesc', function (req, res) {
     productsSort(-1)
         .then(data => {
-        console.log("sort by price: ", data);
+        //console.log("sort by price: ",data);
         res.json({ data });
     });
 });
@@ -76,7 +76,7 @@ app.get('/api/productsByPriceDesc', function (req, res) {
 app.get('/api/productsByPriceAsc', function (req, res) {
     productsSort(1)
         .then(data => {
-        console.log("sort by price: ", data);
+        //console.log("sort by price: ",data);
         res.json({ data });
     });
 });
@@ -98,19 +98,19 @@ app.get('/api/productsByPriceChoice/:choice', function (req, res) {
         .find(query)
         .sort({ price: 1 })
         .then(data => {
-        console.log(`Price range from ${query}:  ${data}`);
+        //console.log(`Price range from ${query}:  ${data}`)
         res.json({ data });
     })
         .catch(err => { err; });
 });
 // show particular product by id 
 app.post('/api/product/:id', function (req, res) {
-    console.log("ProductId: ", req.params.id);
+    //console.log("ProductId: ",req.params.id);
     ProductModel
         .findById(req.params.id)
         .then(data => res.json(data))
         .catch(err => {
-        console.log("error in app post", err);
+        //console.log("error in app post", err)
         res.status(501).json(err);
     });
 });
@@ -173,12 +173,12 @@ app.delete('/api/delete-user/:id', function (req, res) {
     UserModel
         .findByIdAndDelete(_id)
         .then((data) => {
-        console.log("Deleted user: ", data);
+        //console.log("Deleted user: ",data);
         res.json({ data });
     });
 });
 app.put('/api/update-user/:id', function (req, res) {
-    console.log("Update user");
+    //console.log("Update user");
     UserModel
         .findByIdAndUpdate(req.params.id, {
         $set: { firstName: req.body.firstName, email: req.body.email },
@@ -196,7 +196,7 @@ app.put('/api/update-user/:id', function (req, res) {
 //login
 app.post('/api/login', function (req, res) {
     UserModel
-        .findOne({ email: req.body.email })
+        .findOne({ email: req.body.email }).lean()
         .then((user) => {
         // if no user found with given email
         if (!user) {
@@ -209,8 +209,9 @@ app.post('/api/login', function (req, res) {
             if (result) {
                 const access_token = jwt.sign({ user }, access_secret); // generates json web token as a string
                 res.cookie('jwt', access_token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
-                res.json({ message: 'login route', user, access_token });
-                //res.json({user})
+                //res.json({message: 'login route', user, access_token})
+                delete user.password;
+                res.json({ data: user });
             }
             // if password does NOT matches
             else {
@@ -240,7 +241,7 @@ app.get('/api/cart', authHandler, function (req, res) {
         .populate('user', 'firstName email')
         .populate('products', '-categories')
         .then(data => {
-        console.log("Cart: ", data);
+        //console.log("Cart: ",data);
         res.json(data);
     })
         .catch(err => res.json(err));
@@ -267,7 +268,11 @@ app.put('/api/delete-from-cart/:productId', authHandler, function (req, res) {
     const productId = req.params.productId;
     CartModel
         .findOneAndUpdate({ user: loggedUser._id }, { $pull: { 'products': productId } }, { new: true })
-        .then(data => res.json({ data }))
+        .populate('products')
+        .then(data => {
+        console.log("delete from cart: ", data);
+        res.json({ data });
+    })
         .catch(err => res.json(err));
 });
 app.all("/api/*", function (req, res) {
