@@ -26,6 +26,7 @@ import { CartListComponent } from './components/cart-list/cart-list.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CartEffects } from './store/effects/cart/cart.effects';
 import * as fromCart from './store/reducers/cart/cart.reducer';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import * as fromCart from './store/reducers/cart/cart.reducer';
     ProductDetailsComponent,
     CategoriesListComponent,
     CartListComponent,
-    SignInComponent
+    SignInComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
