@@ -74,9 +74,10 @@ app.get('/api/productsByPriceDesc', function (req, res) {
 });
 //get all products with price high to low
 app.get('/api/productsByPriceAsc', function (req, res) {
+    console.log('reached to server');
     productsSort(1)
         .then(data => {
-        //console.log("sort by price: ",data);
+        console.log("sort by price: ", data);
         res.json({ data });
     });
 });
@@ -153,28 +154,26 @@ app.post('/api/create-user', function (req, res) {
                 email,
                 password: hash
             });
+            console.log(new_user);
             new_user
                 .save()
                 .then(data => res.json({ data }))
-                .then(() => {
-                const cart = new CartModel({
-                    user: new_user._id,
-                    products: []
-                });
-                cart
-                    .save();
-            })
-                .catch(err => res.status(501).json({ err }));
+                .catch(err => {
+                console.log(err);
+                res.status(501).json({ err });
+            });
         });
     });
 });
+// delete user and his/her cart
 app.delete('/api/delete-user/:id', function (req, res) {
-    const _id = req.params.id;
+    const userId = req.params.id;
     UserModel
-        .findByIdAndDelete(_id)
-        .then((data) => {
-        //console.log("Deleted user: ",data);
-        res.json({ data });
+        .findById(userId)
+        .then(user => {
+        user?.remove()
+            .then(data => res.json({ data }))
+            .catch(err => res.sendStatus(501).json(err));
     });
 });
 app.put('/api/update-user/:id', function (req, res) {
