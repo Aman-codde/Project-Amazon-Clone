@@ -42,7 +42,8 @@ export class CartEffects {
       mergeMap((action) => 
       this.cartService.deleteFromCart(action.data)
       .pipe(
-        map(data => deleteProductFromCartSuccess({data})),
+        tap(data => console.log(data)),
+        map(data => deleteProductFromCartSuccess(data)),
         catchError(err => of(deleteProductFromCartFailure({error: err})))
       ))
     )

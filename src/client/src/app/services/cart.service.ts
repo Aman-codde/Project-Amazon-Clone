@@ -24,7 +24,7 @@ export class CartService {
 
   // delete productId from cart
   deleteFromCart(product: Product) {
-    return this.api.put<Cart,Product>('delete-from-cart/'+product._id,product)
+    return this.api.put<{data: Cart},Product>('delete-from-cart/'+product._id,product)
   }
 
 }
