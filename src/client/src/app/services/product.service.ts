@@ -25,4 +25,8 @@ export class ProductService {
     return this.api.post<{data: Product},{_id: string}>('product/'+_id, {_id})
   }
 
+  getProductsbyPriceAsc() {
+    return this.api.get<Product[]>('productsByPriceAsc').subscribe();
+  }
+
 }
