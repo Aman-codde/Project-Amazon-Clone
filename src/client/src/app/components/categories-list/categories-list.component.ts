@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CategoryService } from 'src/app/services/category.service';
+import { ProductService } from 'src/app/services/product.service';
 import { AppState } from 'src/app/store';
 import { loadCategories } from 'src/app/store/actions/category/category.actions';
 import { loadProducts } from 'src/app/store/actions/product/product.actions';
@@ -20,7 +20,7 @@ export class CategoriesListComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private categoryService : CategoryService,
+    private productService : ProductService,
     private route: ActivatedRoute
     ) { 
     this.$categories = this.store.select(categoriesSelector)
@@ -37,6 +37,10 @@ export class CategoriesListComponent implements OnInit {
 
   toggleOnClick() {
     this.showMe = !this.showMe;
+  }
+
+  sortByPrice() {
+    return this.productService.getProductsbyPriceAsc();
   }
 
 }
