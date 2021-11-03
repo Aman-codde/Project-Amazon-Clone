@@ -9,14 +9,13 @@
             <label for="password">Password</label>
             <input type="password" formControlName='password' placeholder="password">
         </div>
-       
         <div class="form-group">
             <button [disabled]='loginUser.invalid' (click)="authUser()">Log In</button>
         </div>
-        <br>
         <div class="form-group">
-            <label class="new">New User?</label>
-            <button (click)="goToSignUp()">Create Your Account</button>
+            <p>New User?
+                <button (click)="goToSignUp()">Create Your Account</button>
+            </p>  
         </div>
         </form>
 </div>
