@@ -1,6 +1,6 @@
 import 'mongoose';
-import '../models/user.model';
-import './product.model';
+import '../models/user.model.js';
+import './product.model.js';
 // items: Item[];
 // interface Item {
 //     product: Product;

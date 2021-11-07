@@ -11,6 +11,8 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import { authHandler } from './middleware/auth.middleware.js';
+import './schemas/order.schema.js';
+import * as OrderProcess from './middleware/order.middleware.js';
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET;
 const app = express();
@@ -208,8 +210,7 @@ app.post('/api/login', function (req, res) {
             if (result) {
                 const access_token = jwt.sign({ user }, access_secret); // generates json web token as a string
                 res.cookie('jwt', access_token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
-                //res.json({message: 'login route', user, access_token})
-                delete user.password;
+                delete user.password; // to not pass password on frontend
                 res.json({ data: user });
             }
             // if password does NOT matches
@@ -223,12 +224,15 @@ app.post('/api/login', function (req, res) {
         return res.sendStatus(404);
     });
 });
+//res.json({message: 'login route', user, access_token})
 // check login
-app.post('/api/check-login', authHandler, function (req, res) {
-    res.json({ message: 'yes' });
+app.get('/api/check-login', authHandler, function (req, res) {
+    res.json(req.user);
 });
 app.get('/api/logout', function (req, res) {
+    console.log("logout called in server");
     res.cookie('jwt', '', { httpOnly: true, maxAge: 0 });
+    res.json({ message: "Successfully Logged out" });
 });
 // show cart collection(requirement: particular cart for logged in user)
 app.get('/api/cart', authHandler, function (req, res) {
@@ -240,7 +244,7 @@ app.get('/api/cart', authHandler, function (req, res) {
         .populate('user', 'firstName email')
         .populate('products', '-categories')
         .then(data => {
-        //console.log("Cart: ",data);
+        console.log("Cart: ", data);
         res.json(data);
     })
         .catch(err => res.json(err));
@@ -274,6 +278,9 @@ app.put('/api/delete-from-cart/:productId', authHandler, function (req, res) {
     })
         .catch(err => res.json(err));
 });
+//(function(){})() IIFE(Immediately Invoked Function Expression)
+//OrderProcess.createOrder()
+app.post('/api/order', OrderProcess.createOrder, OrderProcess.decreaseQuantity, OrderProcess.emptyCart);
 app.all("/api/*", function (req, res) {
     res.sendStatus(404);
 });
