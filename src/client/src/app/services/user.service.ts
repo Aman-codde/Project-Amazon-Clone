@@ -27,10 +27,7 @@ export class UserService {
   }
 
   selectUser(id: string) {
-    this.selectedUserId = id
-;  }
+    this.selectedUserId = id;  
+  }
 
-login(user: Partial<User>) {
-  return this.api.post< {data: User},Partial<User>>('login',user);
-}
 }
