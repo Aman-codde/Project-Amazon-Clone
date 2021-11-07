@@ -1,1 +1,18 @@
-<p>order works!</p>
+<div class="order-div">
+    <h3>Review your order</h3> 
+    Date: {{currentDate()}}
+    <ng-container *ngIf="($cart | async) as cart">
+        <p>Customer: {{cart.user?.firstName}}</p> 
+        <p>Order Summary</p>
+        <ol>
+            <li *ngFor = "let product of (cart.products)">
+            <p>{{product?.product_name}}
+                <span></span>
+                {{product?.price}}</p>  
+            </li>
+        </ol>
+        <p>Total items: {{cart.count}}</p> 
+        <p style="color: rgb(129, 25, 25);">Order total: {{cart.total_amount.toFixed(2)}}</p>
+        <button (click)="makeOrder(cart)">Place your order</button>
+    </ng-container>
+</div>

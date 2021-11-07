@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { CartService } from 'src/app/services/cart.service';
 import { AppState } from 'src/app/store';
+import { cartSelector } from 'src/app/store/selectors/cart/cart.selectors';
 import { Cart } from '../../../../../shared/models/cart.model';
 
 @Component({
@@ -9,15 +12,25 @@ import { Cart } from '../../../../../shared/models/cart.model';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
-  //$cart: Cart;
+  $cart: Observable<Cart | null>;
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private cartService: CartService
   ) 
   { 
-
+    this.$cart = this.store.select(cartSelector);
   }
 
   ngOnInit(): void {
+  }
+
+  currentDate() {
+     const d = new Date();
+     return d.toLocaleDateString();
+  }
+
+  makeOrder(cart: Cart) {
+    return this.cartService.createOrder(cart).subscribe();
   }
 
 }
