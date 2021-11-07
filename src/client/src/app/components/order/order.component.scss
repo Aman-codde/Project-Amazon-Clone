@@ -1,0 +1,45 @@
+
+.order-div {
+    display: block;
+    margin: 40px;
+    padding: 10px 10px;
+    width: 50%;
+    border-style: solid;
+}
+
+.review {
+    text-align: center;
+}
+
+.summary {
+    font-weight: bold;
+}
+
+
+button {
+    align-items: center;
+    padding: 10px 55px;
+    border-radius: 10px;
+    background-color: rgb(238, 211, 37);
+    cursor: pointer;
+}
+
+.left {
+    float: inline-start;
+}
+
+.right {
+    float: inline-end;
+}
+
+.order-total {
+    color: rgb(119, 19, 19);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.amount {
+    color: rgb(119, 19, 19);
+    font-size: 20px;
+    font-weight: bold;
+}

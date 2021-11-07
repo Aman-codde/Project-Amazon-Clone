@@ -1,18 +1,29 @@
+ 
 <div class="order-div">
-    <h3>Review your order</h3> 
-    Date: {{currentDate()}}
+    <h3 class="review">Review your order</h3>
     <ng-container *ngIf="($cart | async) as cart">
-        <p>Customer: {{cart.user?.firstName}}</p> 
-        <p>Order Summary</p>
-        <ol>
-            <li *ngFor = "let product of (cart.products)">
-            <p>{{product?.product_name}}
-                <span></span>
-                {{product?.price}}</p>  
-            </li>
-        </ol>
-        <p>Total items: {{cart.count}}</p> 
-        <p style="color: rgb(129, 25, 25);">Order total: {{cart.total_amount.toFixed(2)}}</p>
+        <table>
+            <tr class="tabletitle">
+                <td class="date">Date: {{currentDate()}}</td>
+                <td class="customer">Customer: <span style="color: blue;">{{cart.user?.firstName}}</span></td>
+            </tr>
+            <tr class="tabletitle">
+                <td class="summary">Order Summary</td>
+            </tr>
+            <tr class="list" *ngFor = "let product of (cart.products)">
+                <td class="product left" >{{product?.product_name}}</td>
+                <td class="price right">${{product?.price}}</td>
+            </tr>
+            <tr class="tabletitle">
+                <td class="items left">items({{cart.count}}):</td>
+                <td class="total right">${{cart.total_amount.toFixed(2)}}</td>
+            </tr>
+            <hr>
+            <tr>
+                <td class="order-total left">Order Total:</td>
+                <td class="amount right">${{cart.total_amount.toFixed(2)}}</td>
+            </tr>
+        </table>
         <button (click)="makeOrder(cart)">Place your order</button>
     </ng-container>
 </div>
