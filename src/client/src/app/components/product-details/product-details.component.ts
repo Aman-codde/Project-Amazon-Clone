@@ -38,9 +38,9 @@ export class ProductDetailsComponent implements OnInit {
 
   checkQuantity(){
     if(this.selectedProduct?.quantity == 0)
-      return false;
-    else
       return true;
+    else
+      return false;
   }
 
   addToCart() {
@@ -50,6 +50,5 @@ export class ProductDetailsComponent implements OnInit {
   
   goToOrder() {
     return this.router.navigate(['/order']);
-    //return this.router.navigate(['/order/',this.selectedProduct?._id])
   }
 }
