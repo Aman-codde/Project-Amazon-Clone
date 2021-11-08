@@ -1,5 +1,5 @@
  
-<div class="order-div">
+<div class="order-div" *ngIf="showOrderDiv">
     <h3 class="review">Review your order</h3>
     <ng-container *ngIf="($cart | async) as cart">
         <table>
@@ -24,6 +24,10 @@
                 <td class="amount right">${{cart.total_amount.toFixed(2)}}</td>
             </tr>
         </table>
-        <button (click)="makeOrder(cart)">Place your order</button>
+        <button (click)="placeOrder(cart)">Place your order</button>
     </ng-container>
+</div>
+
+<div class="orderSuccessMsg" [hidden]="hideOrderMsgDiv">
+    Your Order has been placed!
 </div>

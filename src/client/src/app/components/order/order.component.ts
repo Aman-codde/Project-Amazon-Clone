@@ -13,6 +13,9 @@ import { Cart } from '../../../../../shared/models/cart.model';
 })
 export class OrderComponent implements OnInit {
   $cart: Observable<Cart | null>;
+  hideOrderMsgDiv: boolean = true;
+  showOrderDiv: boolean = true;
+
   constructor(
     private store: Store<AppState>,
     private cartService: CartService
@@ -29,8 +32,11 @@ export class OrderComponent implements OnInit {
      return d.toLocaleDateString();
   }
 
-  makeOrder(cart: Cart) {
-    return this.cartService.createOrder(cart).subscribe();
+  placeOrder(cart: Cart) {
+    this.cartService.createOrder(cart).subscribe();
+    this.showOrderDiv = false;
+    this.hideOrderMsgDiv = false;
+    
   }
 
 }
