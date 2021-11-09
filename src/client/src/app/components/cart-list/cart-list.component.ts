@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { AppState } from 'src/app/store';
 import { deleteProductFromCart, loadCart } from 'src/app/store/actions/cart/cart.actions';
 import { cartSelector } from 'src/app/store/selectors/cart/cart.selectors';
+import { loggedUserSelector } from 'src/app/store/selectors/user/user.selectors';
 import { Cart } from '../../../../../shared/models/cart.model';
 import { Product } from '../../../../../shared/models/product.model';
+import { User } from '../../../../../shared/models/user.model';
 
 @Component({
   selector: 'app-cart-list',
@@ -16,13 +19,18 @@ import { Product } from '../../../../../shared/models/product.model';
 export class CartListComponent implements OnInit {
   cart$ : Observable<Cart | null>;
   cart: Cart | null = null;
+  loggedInUser$! : Observable<User | null>;
+  checkLogin$! : Observable<User | null>;
   
   constructor(
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
     ) 
   { 
-    this.cart$ = this.store.select(cartSelector)
+    this.cart$ = this.store.select(cartSelector);
+    this.loggedInUser$ = this.store.select(loggedUserSelector);
+    this.checkLogin$ = this.authService.checkLogin();
   }
 
   ngOnInit(): void {
@@ -45,4 +53,30 @@ export class CartListComponent implements OnInit {
   goToOrder(cart: Cart) {
     this.router.navigate(['/order']);
   }
+
+  createQtyArray(q: any) {
+    //Array.from("ABCFR");
+    //Array.from({},)
+    const qArr = Array.from({length: q}, (_, index) => index + 1)
+    return qArr;[1,2,3,4,5]
+  }
+
+  changeQty (e:any) {
+    console.log(e.target.value);
+  }
+
+  cartTitle() {
+    if(this.cart?.count != 0)
+      return "Shopping Cart: " + this.cart?.user?.firstName;
+      //style({color: "green"})
+    else
+      return "Your Cart is empty."
+  }
+
+  // getTotalAmount() {
+  //   let total = 0;
+  //   total = this.cart?.total_amount
+  //   return Math.round(total);
+  // }
+
 }

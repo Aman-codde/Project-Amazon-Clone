@@ -1,8 +1,14 @@
+
 <ul>
     <li><a routerLink="/">Home</a></li>
     <li><a routerLink="/add-product">Add Product</a></li> 
     <li><a routerLink="/users">SignUp</a></li>  
-    <li><a routerLink="/login">Log In</a></li>
+    <li>
+        <a *ngIf = "(checkLogin$ | async) === null" routerLink="/login">Log In</a>
+    </li>
+    <li>
+        <a *ngIf = "(checkLogin$ | async) !== null" (click)="logout()">Log Out</a>
+    </li>
     <li><a routerLink="/cart">Cart</a></li>
 </ul>
 

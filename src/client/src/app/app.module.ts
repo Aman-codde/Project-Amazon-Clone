@@ -27,6 +27,9 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CartEffects } from './store/effects/cart/cart.effects';
 import * as fromCart from './store/reducers/cart/cart.reducer';
 import { OrderComponent } from './components/order/order.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import { OrderComponent } from './components/order/order.component';
     CategoriesListComponent,
     CartListComponent,
     SignInComponent,
-    OrderComponent
+    OrderComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

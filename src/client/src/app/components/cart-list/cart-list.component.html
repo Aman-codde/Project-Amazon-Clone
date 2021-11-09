@@ -1,8 +1,10 @@
 
-<!--{{(cart$| async) | json}}-->
+
  <ng-container *ngIf="(cart$| async) as cart">
     <p class="title">
-        Shopping Cart: <span style="color: green;">{{cart?.user?.firstName}}</span><span class="price-title">Price</span> 
+        {{cartTitle()}}
+        <!--Shopping Cart: <span style="color: green;">{{cart?.user?.firstName}}</span>-->
+        <span class="price-title">Price</span> 
     </p>
     <hr>
     <div>
@@ -15,7 +17,9 @@
                 <div class="details-div">
                     <p>{{product?.product_name}}</p>
                     <p>Qty:
-                    <input type="number" id="quantity" name="quantity" min="1" max="{{(product?.quantity)}}" placeholder="1">
+                        <select class="select-qty" (change)="changeQty($event)">
+                            <option *ngFor="let q of createQtyArray(product?.quantity)" [ngValue]="q">{{q}}</option>
+                        </select>
                     </p>
                     <button (click)="deleteProductFromCart(product)">Delete</button>
                 </div>
@@ -30,13 +34,13 @@
     </div>
     <div class="summary">
         <p class="cart-summary">
-            Subtotal({{ cart?.count }} {{(totalCount())}}): <span>${{cart?.total_amount?.toFixed(2)}}</span> 
+            Subtotal({{ cart?.count }} {{(totalCount())}}): 
+            <span>${{ cart?.total_amount?.toFixed(2) }}</span> 
         </p>
         <p class="checkout">
-            <button class="checkout-button" (click)="goToOrder(cart)">Proceed to checkout</button>
+            <button class="checkout-button" (click)="goToOrder(cart)" [disabled]="cart.count === 0">Proceed to checkout</button>
             
         </p>
     </div>
-    
 </ng-container>
 

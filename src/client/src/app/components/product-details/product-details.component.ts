@@ -38,9 +38,9 @@ export class ProductDetailsComponent implements OnInit {
 
   checkQuantity(){
     if(this.selectedProduct?.quantity == 0)
-      return true;
-    else
       return false;
+    else
+      return true;
   }
 
   addToCart() {
