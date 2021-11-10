@@ -13,7 +13,7 @@ export class AuthService {
   { }
 
   login(user: Partial<User>) {
-    return this.api.post< {data: User},Partial<User>>('login',user);
+    return this.api.post<{data: User},Partial<User>>('login',user);
   }
 
   logout() {

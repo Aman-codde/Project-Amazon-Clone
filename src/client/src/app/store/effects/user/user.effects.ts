@@ -17,6 +17,9 @@ import {
   loginUser,
   loginUserFailure,
   loginUserSuccess,
+  logoutUser,
+  logoutUserFailure,
+  logoutUserSuccess,
   updateUser,
   updateUserFailure,
   updateUserSuccess,
@@ -41,7 +44,7 @@ export class UserEffects {
       ofType(loginUser),
       mergeMap((action) => 
         this.authService.login(action.data).pipe(
-          tap(data => console.log("data in effects: ",data)),
+          tap(data => console.log("logged in data in effects: ",data)),
           map((data) => loginUserSuccess(data)),
           catchError((err) => {
             console.log(err);
@@ -50,6 +53,16 @@ export class UserEffects {
         )
       )
     )
+  );
+
+  logoutUser$ = createEffect( () => 
+  this.actions$.pipe(
+    ofType(logoutUser),
+    mergeMap(() => 
+    this.authService.logout().pipe(
+      map(data => logoutUserSuccess({data})),
+      catchError(err => of(logoutUserFailure(err))))
+    ))
   );
 
   updateUsers$ = createEffect(() =>

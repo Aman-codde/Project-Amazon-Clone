@@ -1,6 +1,7 @@
+import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from '../../../../../../shared/models/user.model';
-import { createUserSuccess, deleteUserSuccess, loadUsersSuccess, loginUserSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
+import { createUserSuccess, deleteUserSuccess, loadUsersSuccess, loginUserSuccess, logoutUserSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
 
 
 export const userFeatureKey = 'user';
@@ -39,6 +40,10 @@ export const reducer = createReducer(
   }),
   on(loginUserSuccess, (state,action) => {
     return {...state, loggedUser: action.data}
+  }),
+  
+  on(logoutUserSuccess, (state,action) => {
+    return {...state, loggedUser: null}
   })
 );
 
