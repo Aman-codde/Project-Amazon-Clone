@@ -29,6 +29,8 @@ import * as fromCart from './store/reducers/cart/cart.reducer';
 import { OrderComponent } from './components/order/order.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { UserAccountComponent } from './components/user-account/user-account.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import { FooterComponent } from './components/footer/footer.component';
     OrderComponent,
     HeaderComponent,
     FooterComponent,
+    UserAccountComponent,
+    OrderHistoryComponent,
   ],
   imports: [
     BrowserModule,
