@@ -9,12 +9,14 @@
         <li>
             <a *ngIf = "(loggedUser$ | async)" (click)="logout()">Log Out</a>
         </li>
-        <!--<ng-container *ngIf = "(cart$ | async) as cart">-->
-            <li>
-                <a routerLink="/cart">
-                Cart <!--{{cart?.count}}-->
-            </a></li>
-        <!--</ng-container>-->
+        <li>
+            <a routerLink="/account" *ngIf="(loggedUser$ | async)">Account</a>
+        </li>
+        <li>
+            <a routerLink="/cart" *ngIf="(loggedUser$ | async)">
+                Cart({{cart?.count}})
+            </a>
+        </li>
         <li>
             <a *ngIf = "(loggedUser$ | async) as user">Hello, {{user.firstName}}</a>
         </li>

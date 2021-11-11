@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
 import { deleteProductFromCart, deleteProductFromCartFailure, deleteProductFromCartSuccess, loadCart, loadCartFailure, loadCartSuccess, updateCart, updateCartFailure, updateCartSuccess } from '../../actions/cart/cart.actions';
+import { loginUserSuccess } from '../../actions/user/user.actions';
 
 
 
@@ -21,6 +22,19 @@ export class CartEffects {
       ))
     )
   )
+        // new
+  loadCartOnSignIn$ = createEffect( () => 
+    this.actions$
+    .pipe(
+      ofType(loginUserSuccess),
+      mergeMap(() => this.cartService.getCart()
+      .pipe(
+        map( data => loadCartSuccess({data})),
+        catchError(err => of(loadCartFailure({error: err})))
+      ))
+    )
+  )
+
 
   updateCart$ = createEffect( () => 
     this.actions$
