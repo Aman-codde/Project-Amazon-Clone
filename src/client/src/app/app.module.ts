@@ -31,6 +31,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { UserAccountComponent } from './components/user-account/user-account.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
+import { EditUserProfileComponent } from './components/edit-user-profile/edit-user-profile.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { OrderHistoryComponent } from './components/order-history/order-history.
     FooterComponent,
     UserAccountComponent,
     OrderHistoryComponent,
+    EditUserProfileComponent,
   ],
   imports: [
     BrowserModule,
