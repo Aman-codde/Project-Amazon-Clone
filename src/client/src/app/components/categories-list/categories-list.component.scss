@@ -1,8 +1,30 @@
-span:hover {
-    color: blue;
-    text-decoration: underline;
+*{
+    margin: 0px;
+    padding: 0px;
 }
 
 .byPrice button{
     margin: 10px;
 }
+
+#level:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+.active-li {
+    font-weight: bold;
+}
+
+.current {
+    background-color: red;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li{
+    padding: 5px;
+}
+
