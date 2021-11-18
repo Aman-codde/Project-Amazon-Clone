@@ -10,6 +10,7 @@ import * as fromUser from './reducers/user/user.reducer';
 import * as fromProduct from './reducers/product/product.reducer';
 import * as fromCategory from './reducers/category/category.reducer';
 import * as fromCart from './reducers/cart/cart.reducer';
+import * as fromOrder from './reducers/order/order.reducer';
 
 
 export interface AppState {
@@ -18,6 +19,7 @@ export interface AppState {
   [fromProduct.productFeatureKey]: fromProduct.State;
   [fromCategory.categoryFeatureKey]: fromCategory.State;
   [fromCart.cartFeatureKey]: fromCart.State;
+  [fromOrder.orderFeatureKey]: fromOrder.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -26,6 +28,7 @@ export const reducers: ActionReducerMap<AppState> = {
   [fromProduct.productFeatureKey]: fromProduct.reducer,
   [fromCategory.categoryFeatureKey]: fromCategory.reducer,
   [fromCart.cartFeatureKey]: fromCart.reducer,
+  [fromOrder.orderFeatureKey]: fromOrder.reducer,
 };
 
 
