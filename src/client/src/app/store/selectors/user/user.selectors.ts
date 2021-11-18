@@ -22,7 +22,7 @@ export const loggedUserSelector = createSelector(
 
 export const loginUserMessageSelector = createSelector(
   userFeatureSelector,
-  (state) => state.loginMessage
+  (state) => state.invalidLoginMsg
 )
 
 

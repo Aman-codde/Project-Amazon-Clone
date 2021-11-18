@@ -48,7 +48,7 @@ export class UserEffects {
           map((data) => loginUserSuccess(data)),
           catchError((err) => {
             console.log(err);
-            return of(loginUserFailure(err))
+            return of(loginUserFailure({err}))
           })
         )
       )

@@ -1,7 +1,7 @@
 import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from '../../../../../../shared/models/user.model';
-import { createUserSuccess, deleteUserSuccess, loadUsersSuccess, loginUserSuccess, logoutUserSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
+import { createUserSuccess, deleteUserSuccess, loadUsersSuccess, loginUserFailure, loginUserSuccess, logoutUserSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
 
 
 export const userFeatureKey = 'user';
@@ -10,12 +10,14 @@ export interface State {
   users: User[];
   selectedUser: User | null;
   loggedUser: User|null;
+  invalidLoginMsg: String
 }
 
 export const initialState: State = {
   users: [],
   selectedUser: null,
-  loggedUser: null
+  loggedUser: null,
+  invalidLoginMsg: ''
 };
 
 
@@ -44,6 +46,11 @@ export const reducer = createReducer(
   
   on(logoutUserSuccess, (state,action) => {
     return {...state, loggedUser: null}
+  }),
+  
+  on(loginUserFailure, (state,action) => {
+    console.log("login fails: ",action.err.message);
+    return {...state, invalidLoginMsg: action.err.message}
   })
 );
 
