@@ -1,0 +1,38 @@
+*{
+    padding: 0px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.back {
+    margin: 30px 50px;
+}
+
+.profile {
+    display: block;
+    margin: auto;
+    padding: 10px;
+    border: 1px solid grey;
+    width: 350px;
+    height: 350px;
+}
+
+hr {
+    padding: 0px;
+}
+
+.edit-div {
+    height: 150px;
+    background-color: #f2f2f2;
+}
+
+button {
+    margin: 10px;
+}
+
+
+p button {
+    float:right
+}

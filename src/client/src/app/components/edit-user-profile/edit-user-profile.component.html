@@ -1,0 +1,40 @@
+<div class="back">
+    <button (click)="backToAccount()">Back</button>
+</div>
+<div class="profile" *ngIf="(user$ | async) as user" >
+    <label>Name:</label>
+    <p>
+        {{user.firstName}} {{user.lastName}}
+        <button (click)="onToggleName()">Edit</button><!--if clicked, open div to change name-->
+    </p>
+    <div *ngIf="showName" class="edit-div">
+        <hr>
+        <form action="">
+            <div>
+                <label>New name</label>
+                <input type="text" placeholder="first name">
+                <input type="text" placeholder="last name">
+            </div>
+            <button>Save changes</button>
+        </form>
+    </div>
+    <hr>
+    <label>Email:</label>
+    <p>
+        {{user.email}}
+        <button (click)="onToggleEmail()">Edit</button><!--if clicked, open div to change email-->
+    </p> 
+    <div *ngIf="showEmail">
+        <form action="" class="edit-div">
+            <hr>
+            <div>
+                <label>New email</label>
+                <input type="text" placeholder="email">
+            </div>
+            <button>Save changes</button>
+        </form>
+    </div>
+    <hr>
+    <button>Delete Account</button>   
+</div>
+
