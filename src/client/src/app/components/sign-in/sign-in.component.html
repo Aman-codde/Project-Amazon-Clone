@@ -13,6 +13,9 @@
         <div class="form-group">
             <button [disabled]='loginUser.invalid' (click)="authUser()">Log In</button>
         </div>
+        <div *ngIf="(invalidMsg$ | async)">
+            <label for="" class="invalid">Invalid username or password</label>
+        </div>
         <div class="form-group">
             <p>New User?
                 <button (click)="goToSignUp()">Create Your Account</button>

@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { Error } from 'mongoose';
 import { User } from '../../../../../../shared/models/user.model';
 
 export const loadUsers = createAction(
