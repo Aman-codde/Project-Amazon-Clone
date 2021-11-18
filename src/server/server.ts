@@ -332,6 +332,17 @@ app.post('/api/order',
     OrderProcess.emptyCart
 );
 
+// show all orders of logged user (using "$in")
+app.get('/api/orders', authHandler,function(req: any,res) {
+    OrderModel
+    .find({user: { $in: [req.user._id] }})
+    .then(data => {
+        console.log("orders",data)
+        res.json({data})
+    })
+    .catch(err => res.json(err))
+})
+
 app.all("/api/*", function(req,res) {
     res.sendStatus(404);
 })
