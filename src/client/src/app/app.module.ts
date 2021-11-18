@@ -32,6 +32,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { UserAccountComponent } from './components/user-account/user-account.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { EditUserProfileComponent } from './components/edit-user-profile/edit-user-profile.component';
+import { OrderEffects } from './store/effects/order/order.effects';
+import * as fromOrder from './store/reducers/order/order.reducer';
 
 
 @NgModule({
@@ -62,10 +64,11 @@ import { EditUserProfileComponent } from './components/edit-user-profile/edit-us
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
-    EffectsModule.forRoot([UserEffects, ProductEffects, CategoryEffects, CartEffects]),
+    EffectsModule.forRoot([UserEffects, ProductEffects, CategoryEffects, CartEffects, OrderEffects]),
     StoreModule.forFeature(fromProduct.productFeatureKey, fromProduct.reducer),
     StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
     StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
+    StoreModule.forFeature(fromOrder.orderFeatureKey, fromOrder.reducer),
   ],
   providers: [],
   bootstrap: [AppComponent]
