@@ -1,6 +1,6 @@
-<div class="back">
-    <button (click)="backToAccount()">Back</button>
-</div>
+
+<button class="back-button" (click)="backToAccount()">Back</button>
+
 <div class="profile" *ngIf="(user$ | async) as user" >
     <label>Name:</label>
     <p>
