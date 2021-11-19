@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import { authHandler } from './middleware/auth.middleware.js';
-import './schemas/order.schema.js';
+import { OrderModel } from './schemas/order.schema.js';
 import * as OrderProcess from './middleware/order.middleware.js';
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET;
@@ -281,6 +281,17 @@ app.put('/api/delete-from-cart/:productId', authHandler, function (req, res) {
 //(function(){})() IIFE(Immediately Invoked Function Expression)
 //OrderProcess.createOrder()
 app.post('/api/order', OrderProcess.createOrder, OrderProcess.decreaseQuantity, OrderProcess.emptyCart);
+// show all orders of logged user (using "$in")
+app.get('/api/orders', authHandler, function (req, res) {
+    OrderModel
+        .find({ user: { $in: [req.user._id] } })
+        .populate('products')
+        .then(data => {
+        console.log("orders", data);
+        res.json(data);
+    })
+        .catch(err => res.json(err));
+});
 app.all("/api/*", function (req, res) {
     res.sendStatus(404);
 });
