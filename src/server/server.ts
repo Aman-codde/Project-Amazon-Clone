@@ -336,9 +336,10 @@ app.post('/api/order',
 app.get('/api/orders', authHandler,function(req: any,res) {
     OrderModel
     .find({user: { $in: [req.user._id] }})
+    .populate('products')
     .then(data => {
         console.log("orders",data)
-        res.json({data})
+        res.json(data)
     })
     .catch(err => res.json(err))
 })
