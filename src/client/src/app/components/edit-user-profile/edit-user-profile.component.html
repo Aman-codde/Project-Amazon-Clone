@@ -2,39 +2,38 @@
 <button class="back-button" (click)="backToAccount()">Back</button>
 
 <div class="profile" *ngIf="(user$ | async) as user" >
-    <label>Name:</label>
-    <p>
-        {{user.firstName}} {{user.lastName}}
+    <div class="info-div">
+        <p><b>Name:</b></p>
+        <p>{{user.firstName}} {{user.lastName}}</p>
         <button (click)="onToggleName()">Edit</button><!--if clicked, open div to change name-->
-    </p>
+    </div>
+    <hr>
     <div *ngIf="showName" class="edit-div">
-        <hr>
-        <form action="">
+        <p class="title">Change Your Name</p>
+        <form [formGroup]="editUserName">
             <div>
                 <label>New name</label>
-                <input type="text" placeholder="first name">
-                <input type="text" placeholder="last name">
+                <input type="text" placeholder="first name" formControlName="firstName">
+                <input type="text" placeholder="last name" formControlName="lastName">
             </div>
-            <button>Save changes</button>
+            <button (click)="updateName()" [disabled]="editUserName.invalid">Save changes</button>
         </form>
     </div>
-    <hr>
-    <label>Email:</label>
-    <p>
-        {{user.email}}
+    <div class="info-div">
+        <p><b>Email:</b></p>
+        <p>{{user.email}}</p>
         <button (click)="onToggleEmail()">Edit</button><!--if clicked, open div to change email-->
-    </p> 
-    <div *ngIf="showEmail">
-        <form action="" class="edit-div">
-            <hr>
+    </div> 
+    <div *ngIf="showEmail" class="edit-div">
+        <p class="title">Change Your Email</p>
+        <form [formGroup]="editUserEmail">
             <div>
                 <label>New email</label>
-                <input type="text" placeholder="email">
+                <input type="text" placeholder="email" formControlName="email">
             </div>
-            <button>Save changes</button>
+            <button (click)="updateEmail()" [disabled]="editUserEmail.invalid">Save changes</button>
         </form>
     </div>
-    <hr>
-    <button>Delete Account</button>   
+    <hr>   
 </div>
 

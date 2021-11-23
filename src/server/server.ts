@@ -201,13 +201,19 @@ app.delete('/api/delete-user/:id', function(req, res) {
         })        
 })
 
-app.put('/api/update-user/:id', function(req, res) {
-    //console.log("Update user");
+app.put('/api/update-user/:id', authHandler ,function(req: any, res) {
+    let updateUserQuery = {};
+    if(req.body.firstName) {
+        updateUserQuery = { firstName: req.body.firstName, lastName: req.body.lastName }
+    }
+    if(req.body.email) {
+        updateUserQuery = {email: req.body.email}
+    }
     UserModel
     .findByIdAndUpdate(
-        req.params.id,
+        req.user._id,
         {
-            $set: { firstName: req.body.firstName, email: req.body.email },
+            $set: updateUserQuery,
         },
         {
             new: true,
@@ -217,6 +223,7 @@ app.put('/api/update-user/:id', function(req, res) {
                 res.send("Error updating user");
             }
             else{
+                console.log("updated user:",updateUser);
                 res.json(updateUser);
             }
         }
@@ -338,7 +345,36 @@ app.get('/api/orders', authHandler,function(req: any,res) {
     .find({user: { $in: [req.user._id] }})
     .populate('products')
     .then(data => {
-        console.log("orders",data)
+        res.json(data)
+    })
+    .catch(err => res.json(err))
+})
+
+// show all orders of logged user for choosen date/year 
+app.get('/api/orders-by-date', function(req: any,res) {
+    console.log("hi @orders by date");
+    var d = new Date();
+    d.setMonth(d.getMonth() - 3); //last 3 months
+    d.setMonth(d.getMonth() - 1);// 1 month ago
+    d.setFullYear(2021)// for one year
+    let choice = Number(req.params.choice);
+    let query = {}
+    switch(choice){
+        case 1:
+            query = {$eq: d}
+            break;
+        case 2:
+            query = {$gte: d}
+            break;
+    }
+    OrderModel
+    .find({
+        //user: { $in: [req.user._id] } 
+        createdAt: query
+    })
+    //.populate('products')
+    .then(data => {
+        console.log("orders by date",data)
         res.json(data)
     })
     .catch(err => res.json(err))
