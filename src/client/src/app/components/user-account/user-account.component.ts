@@ -25,7 +25,7 @@ export class UserAccountComponent implements OnInit {
   }
 
   deleteAccount() {
-    return this.router.navigate(['/edit-profile']);
+    // return this.router.navigate(['/edit-profile']);
   }
 
 }
