@@ -4,6 +4,7 @@
 <div>
     <p class="title">Your Orders</p>
     <p class="total-orders">Total orders placed = {{(orders$|async)?.length}}</p>
+    <button (click)="getOrdersByDate()">Date</button>
         <li *ngFor="let order of (orders$|async)">
             <div class= "orders-div">
                 <div class="order-title-div">

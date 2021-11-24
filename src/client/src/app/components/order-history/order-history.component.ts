@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { OrderService } from 'src/app/services/order.service';
 import { AppState } from 'src/app/store';
 import { loadOrders } from 'src/app/store/actions/order/order.actions';
 import { ordersSelector } from 'src/app/store/selectors/order/order.selectors';
@@ -16,7 +17,8 @@ export class OrderHistoryComponent implements OnInit {
   orders$!: Observable<Order[]> 
   constructor(
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private orderService: OrderService
   ) 
   { 
     this.store.dispatch(loadOrders())
@@ -32,6 +34,10 @@ export class OrderHistoryComponent implements OnInit {
 
   getDateFormat( dateString: any) {
     return new Date(dateString).toLocaleDateString()
+  }
+
+  getOrdersByDate() {
+    return this.orderService.getOrdersByDate();
   }
 
 }

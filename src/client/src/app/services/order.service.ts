@@ -15,4 +15,9 @@ export class OrderService {
   getOrders() {
     return this.api.get<Order[]>('orders');
   }
+
+  getOrdersByDate() {
+    console.log('orders by date');
+    return this.api.get<Order[]>('orders-by-date');
+  }
 }
