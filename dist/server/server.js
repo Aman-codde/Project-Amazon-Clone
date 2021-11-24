@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import { authHandler } from './middleware/auth.middleware.js';
-import './schemas/order.schema.js';
+import { OrderModel } from './schemas/order.schema.js';
 import * as OrderProcess from './middleware/order.middleware.js';
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET;
@@ -178,11 +178,17 @@ app.delete('/api/delete-user/:id', function (req, res) {
             .catch(err => res.sendStatus(501).json(err));
     });
 });
-app.put('/api/update-user/:id', function (req, res) {
-    //console.log("Update user");
+app.put('/api/update-user/:id', authHandler, function (req, res) {
+    let updateUserQuery = {};
+    if (req.body.firstName) {
+        updateUserQuery = { firstName: req.body.firstName, lastName: req.body.lastName };
+    }
+    if (req.body.email) {
+        updateUserQuery = { email: req.body.email };
+    }
     UserModel
-        .findByIdAndUpdate(req.params.id, {
-        $set: { firstName: req.body.firstName, email: req.body.email },
+        .findByIdAndUpdate(req.user._id, {
+        $set: updateUserQuery,
     }, {
         new: true,
     }, function (err, updateUser) {
@@ -190,6 +196,7 @@ app.put('/api/update-user/:id', function (req, res) {
             res.send("Error updating user");
         }
         else {
+            console.log("updated user:", updateUser);
             res.json(updateUser);
         }
     });
@@ -281,6 +288,45 @@ app.put('/api/delete-from-cart/:productId', authHandler, function (req, res) {
 //(function(){})() IIFE(Immediately Invoked Function Expression)
 //OrderProcess.createOrder()
 app.post('/api/order', OrderProcess.createOrder, OrderProcess.decreaseQuantity, OrderProcess.emptyCart);
+// show all orders of logged user (using "$in")
+app.get('/api/orders', authHandler, function (req, res) {
+    OrderModel
+        .find({ user: { $in: [req.user._id] } })
+        .populate('products')
+        .then(data => {
+        res.json(data);
+    })
+        .catch(err => res.json(err));
+});
+// show all orders of logged user for choosen date/year 
+app.get('/api/orders-by-date', function (req, res) {
+    console.log("hi @orders by date");
+    var d = new Date();
+    d.setMonth(d.getMonth() - 3); //last 3 months
+    d.setMonth(d.getMonth() - 1); // 1 month ago
+    d.setFullYear(2021); // for one year
+    let choice = Number(req.params.choice);
+    let query = {};
+    switch (choice) {
+        case 1:
+            query = { $eq: d };
+            break;
+        case 2:
+            query = { $gte: d };
+            break;
+    }
+    OrderModel
+        .find({
+        //user: { $in: [req.user._id] } 
+        createdAt: query
+    })
+        //.populate('products')
+        .then(data => {
+        console.log("orders by date", data);
+        res.json(data);
+    })
+        .catch(err => res.json(err));
+});
 app.all("/api/*", function (req, res) {
     res.sendStatus(404);
 });

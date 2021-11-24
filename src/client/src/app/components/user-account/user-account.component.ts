@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-account',
@@ -7,21 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserAccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) 
+  { }
 
   ngOnInit(): void {
   }
 
   getOrderHistory() {
-
+    return this.router.navigate(['/order-history']);
   }
 
   updateProfile() {
-    
+    return this.router.navigate(['/edit-profile']);
   }
 
   deleteAccount() {
-
+    // return this.router.navigate(['/edit-profile']);
   }
 
 }

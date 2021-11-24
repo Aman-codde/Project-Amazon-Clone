@@ -9,6 +9,7 @@ export interface Order {
     itemCount?: number;  
     amount_paid?: number;
     shippingAddress?: Address
+    createdAt?: Date
 }
 
 // items: Item[];

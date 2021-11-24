@@ -1,1 +1,38 @@
-<p>order-history works!</p>
+<div class="main">
+    <button class="back-button" (click)="backToAccount()">Back</button>
+
+<div>
+    <p class="title">Your Orders</p>
+    <p class="total-orders">Total orders placed = {{(orders$|async)?.length}}</p>
+    <button (click)="getOrdersByDate()">Date</button>
+        <li *ngFor="let order of (orders$|async)">
+            <div class= "orders-div">
+                <div class="order-title-div">
+                    <table class="b">
+                        <tr>
+                            <td>ORDER PLACED</td>
+                            <td>TOTAL</td>
+                            <td>ITEMS</td>
+                        </tr>
+                        <tr>
+                            <td>{{getDateFormat(order.createdAt)}}</td>
+                            <td>${{order.amount_paid}}</td>
+                            <td>{{order.itemCount}}</td>
+                        </tr>
+                    </table>
+                </div>
+                    <li *ngFor="let product of order.products">
+                    <div class="order-details-div">
+                        <div class="product-img-div">
+                            <img src="{{product?.imgUrl}}">
+                        </div>
+                        <div class="product-name-div">
+                            <p>{{product.product_name}}</p>
+                        </div>
+                    </div>
+                    </li>
+                </div>
+        </li>
+</div>
+
+</div>
