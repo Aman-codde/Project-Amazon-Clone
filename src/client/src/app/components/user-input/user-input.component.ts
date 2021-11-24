@@ -20,11 +20,10 @@ import { User } from '../../../../../shared/models/user.model';
   templateUrl: './user-input.component.html',
   styleUrls: ['./user-input.component.scss'],
 })
-export class UserInputComponent implements OnInit, OnChanges {
-  
-  
+export class UserInputComponent implements OnInit {
   addUser: FormGroup;
   @Input() selectedUser: User | null = null;
+
   constructor(
     private fb: FormBuilder, 
     private store: Store<AppState>,
@@ -47,22 +46,8 @@ export class UserInputComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes?.selectedUser?.currentValue) {
-      const user = changes?.selectedUser?.currentValue;
-      this.addUser.get('firstName')?.setValue(user.firstName);
-      this.addUser.get('lastName')?.setValue(user.lastName);
-      this.addUser.get('email')?.setValue(user.email);
-      this.addUser.updateValueAndValidity();
-    }
-  }
-
-  postUser(selectedUser: User | null) {
-    !selectedUser
-      ? this.store.dispatch(createUser({ data: this.addUser.value }))
-      : this.store.dispatch(
-          updateUser({ data: { ...selectedUser, ...this.addUser.value } })
-        );
+  postUser() {
+    this.store.dispatch(createUser({ data: this.addUser.value }))
     this.addUser.reset();
   }
 

@@ -23,7 +23,7 @@
         </div>-->
         <p>Complete the form to enable button</p>
         <div class="form-group">
-            <button (click)='postUser(selectedUser)' [disabled]='addUser.invalid'>{{(selectedUser) ? 'Update User' : 'Create Account'}}</button>
+            <button (click)='postUser()' [disabled]='addUser.invalid'>Create Account</button>
         </div>
         <div class="form-group">
             <p>Already have an account? 
