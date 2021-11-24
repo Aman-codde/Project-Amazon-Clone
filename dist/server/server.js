@@ -11,7 +11,6 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import { authHandler } from './middleware/auth.middleware.js';
-import './schemas/order.schema.js';
 import * as OrderProcess from './middleware/order.middleware.js';
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET;
