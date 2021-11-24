@@ -2,10 +2,8 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    //background-color: #dddddd;
     overflow: hidden;
     background-color: rgb(28, 29, 41);
-    //background-color: #333;
 }
 
 p {
@@ -14,7 +12,6 @@ p {
 }
 
 li {
-    //display: inline;
     float: left;
 }
   
@@ -32,6 +29,11 @@ li a:hover {
 
 }
 
-.active {
-    background-color: #04AA6D;
+.active-user {
+    padding: 15px 7px;
+    color: white;
+}
+
+.active-list {
+    border:  1px solid white;
 }

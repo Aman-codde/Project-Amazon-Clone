@@ -5,6 +5,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
 import { loginUser } from 'src/app/store/actions/user/user.actions';
+import { loggedUserSelector, loginUserMessageSelector } from 'src/app/store/selectors/user/user.selectors';
+import { User } from '../../../../../shared/models/user.model';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,8 +14,9 @@ import { loginUser } from 'src/app/store/actions/user/user.actions';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
-  loggedUser$!: Observable<any>
+  loggedUser: User | null = null;
   loginUser: FormGroup;
+  invalidMsg$: Observable<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -24,6 +27,11 @@ export class SignInComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     })
+
+    this.invalidMsg$ = this.store.select(loginUserMessageSelector);
+
+    this.loggedUser = JSON.parse(localStorage.getItem('token') || '{}');
+    console.log(">>>>",this.loggedUser);
    }
 
   ngOnInit(): void {
@@ -31,8 +39,9 @@ export class SignInComponent implements OnInit {
 
   authUser() {
     this.store.dispatch(loginUser({data: this.loginUser.value}));
+    
     this.loginUser.reset();
-    //this.loggedUser$ = this.store.select(loggedUserSelector)
+    
   }
 
   goToSignUp() {

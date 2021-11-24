@@ -5,10 +5,14 @@
         <input type="text" formControlName="product_name">
 
         <label for="price">Price:</label>
-        <input type="number" formControlName="price">
+        <input type="number" min="0" 
+            onkeypress="return (event.charCode === 46) || event.charCode >= 48 && event.charCode <= 57"
+            formControlName="price">
 
         <label for="quantity">Quantity:</label>
-        <input type="number" formControlName="quantity">
+        <input type="number" min="0" 
+            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            formControlName="quantity">
 
         <label for="image">Image Url:</label>
         <input type="text" formControlName="imgUrl">

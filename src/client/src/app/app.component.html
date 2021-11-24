@@ -1,24 +1,27 @@
 
     <ul>
-        <li><a routerLink="/">Home</a></li>
-        <li><a routerLink="/add-product">Add Product</a></li> 
-        <li><a routerLink="/users">SignUp</a></li>  
         <li>
-            <a *ngIf = "!(loggedUser$ | async)" routerLink="/login">Log In</a>
+            <a routerLink="/" routerLinkActive="active-list">Home</a>
         </li>
         <li>
-            <a *ngIf = "(loggedUser$ | async)" (click)="logout()">Log Out</a>
+            <a routerLink="/add-product" routerLinkActive="active-list">Add Product</a>
+        </li>  
+        <li>
+            <a *ngIf = "!(loggedUser$ | async)" routerLink="/login" routerLinkActive="active-list">Log In</a>
         </li>
         <li>
-            <a routerLink="/account" *ngIf="(loggedUser$ | async)">Account</a>
+            <a *ngIf = "(loggedUser$ | async)" (click)="logout()" routerLinkActive="active-list">Log Out</a>
         </li>
         <li>
-            <a routerLink="/cart" *ngIf="(loggedUser$ | async)">
+            <a routerLink="/account" *ngIf="(loggedUser$ | async)" routerLinkActive="active-list">Account</a>
+        </li>
+        <li>
+            <a routerLink="/cart" *ngIf="(loggedUser$ | async)" routerLinkActive="active-list">
                 Cart({{cart?.count}})
             </a>
         </li>
-        <li>
-            <a *ngIf = "(loggedUser$ | async) as user">Hello, {{user.firstName}}</a>
+        <li  class="active-user" *ngIf = "(loggedUser$ | async) as user">
+            Hello, {{user.firstName}}
         </li>
     </ul>
 <router-outlet></router-outlet>

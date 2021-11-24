@@ -1,35 +1,48 @@
-<h3>List of Categories</h3> 
-<ng-container *ngIf="($categories | async) as categories">
-    <ol>
-        <ng-container *ngFor = "let category of categories">
-            <li *ngIf="!category.parent_category" (click)="toggleOnClick()">
-                <span [routerLink]="['/products']" [queryParams]="{categories: category._id}">{{category.category_name}}</span>
-                <ol *ngIf="showMe">
-                    <ng-container *ngFor= "let subCategory of categories">
-                        <li *ngIf = "subCategory.parent_category?._id === category._id" (click)="toggleOnClick()">
-                            <span [routerLink]="['/products']" [queryParams]="{categories: subCategory._id}">{{subCategory.category_name}}</span>
-                            <ol *ngIf="showMe">
-                                <ng-container *ngFor= "let subSubCategory of categories">
-                                    <li *ngIf="subSubCategory.parent_category?._id === subCategory._id" (click)="toggleOnClick()">
-                                        <span [routerLink]="['/products']" [queryParams]="{categories: subSubCategory._id}">{{subSubCategory.category_name}}</span>
-                                        <ol *ngIf="showMe">
-                                            <ng-container *ngFor= "let superSubSubCategory of categories">
-                                                <li *ngIf="superSubSubCategory.parent_category?._id === subSubCategory._id">
-                                                    <span [routerLink]="['/products']" [queryParams]="{categories: superSubSubCategory?._id}">{{superSubSubCategory.category_name}}</span>
-                                                </li>
-
-                                            </ng-container>
-                                        </ol>
-                                    </li>
-                                </ng-container>
-                            </ol>
-                        </li>
-                    </ng-container>
-                </ol>
-            </li>
-        </ng-container>
-    </ol>
-</ng-container>
+<ul>
+    <ng-container *ngIf="($categories | async) as categories">
+        <!--level 1-->
+        <li>
+            <span id="level" routerLinkActive="active-li" [routerLink]="['/products']" [queryParams]="{categories: ''}">All</span> 
+        </li>
+        <!--level 1 ends-->
+        <ul>
+                <ng-container *ngFor = "let category of categories">
+                    <!--level 2-->
+                    <li *ngIf="!category.parent_category" (click)="toggleOnClick()">
+                        <span id="level" routerLinkActive="active-li" [routerLink]="['/products']" [queryParams]="{categories: category._id}">{{category.category_name}}</span>
+                        <ul *ngIf="showMe">
+                            <ng-container *ngFor= "let subCategory of categories">
+                                <!--level 3-->
+                                <li *ngIf = "subCategory.parent_category?._id === category._id" (click)="toggleOnClick()">
+                                    <span id="level" routerLinkActive="active-li"  [routerLink]="['/products']" [queryParams]="{categories: subCategory._id}">{{subCategory.category_name}}</span>
+                                    <ul *ngIf="showMe">
+                                        <ng-container *ngFor= "let subSubCategory of categories">
+                                            <!--level 4-->
+                                            <li *ngIf="subSubCategory.parent_category?._id === subCategory._id" (click)="toggleOnClick()">
+                                                <span routerLinkActive="active-li" id="level"  [routerLink]="['/products']" [queryParams]="{categories: subSubCategory._id}">{{subSubCategory.category_name}}</span>
+                                                <ul *ngIf="showMe">
+                                                    <ng-container *ngFor= "let superSubSubCategory of categories">
+                                                        <!--level 5-->
+                                                        <li *ngIf="superSubSubCategory.parent_category?._id === subSubCategory._id">
+                                                            <span id="level" routerLinkActive="active-li" [routerLink]="['/products']" [queryParams]="{categories: superSubSubCategory?._id}">{{superSubSubCategory.category_name}}</span>
+                                                        </li>
+                                                        <!--level 5 ends-->
+                                                    </ng-container>
+                                                </ul>
+                                            </li>
+                                            <!--level 4 ends-->
+                                        </ng-container>
+                                    </ul>
+                                </li>
+                                <!--level 3 ends-->
+                            </ng-container>
+                        </ul>
+                    </li>
+                    <!--level 2 ends-->
+                </ng-container>
+        </ul>
+    </ng-container>
+</ul>
 <!--
 <div class="byPrice">
     <h3>Shop by Price</h3>
