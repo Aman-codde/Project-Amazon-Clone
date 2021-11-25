@@ -48,6 +48,10 @@ img {
     background-color: rgb(216, 144, 9);
 }
 
+.noHover {
+    pointer-events: none;
+}
+
 .cart {
     padding: 10px 25px;
     border-radius: 20px;
