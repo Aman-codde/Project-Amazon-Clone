@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { map } from 'rxjs/operators';
 import { User } from '../../../../shared/models/user.model';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,10 @@ export class UserService {
 
   selectedUserId = '';
 
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    private router: Router
+    ) {}
 
   getUsers() {
     return this.api.get<{ data: User[] }>('users').pipe(map(res => res.data));
@@ -28,6 +33,14 @@ export class UserService {
 
   selectUser(id: string) {
     this.selectedUserId = id;  
+  }
+
+  NavigateOnLogin() {
+    return of(this.router.navigate(['']));
+  }
+
+  NavigateOnSignUp() {
+    return of(this.router.navigate(['/login']));
   }
 
 }

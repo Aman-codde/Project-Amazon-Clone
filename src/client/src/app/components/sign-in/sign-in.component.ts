@@ -39,9 +39,7 @@ export class SignInComponent implements OnInit {
 
   authUser() {
     this.store.dispatch(loginUser({data: this.loginUser.value}));
-    
     this.loginUser.reset();
-    
   }
 
   goToSignUp() {
