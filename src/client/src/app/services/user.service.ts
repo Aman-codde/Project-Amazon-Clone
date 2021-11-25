@@ -43,4 +43,8 @@ export class UserService {
     return of(this.router.navigate(['/login']));
   }
 
+  NavigateOnUpdateUser() {
+    return of(this.router.navigate(['/account']))
+  }
+
 }

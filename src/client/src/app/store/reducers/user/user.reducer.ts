@@ -30,7 +30,7 @@ export const reducer = createReducer(
     return { ...state, selectedUser: action.data }
   }),
   on(updateUserSuccess, (state, action) => {
-    return {...state, users: state.users.map(user => user._id === action.data._id ? action.data : user)}
+    return {...state, loggedUser: action.data}
   }),
   on(deleteUserSuccess, (state, action) => {
     return {...state, users: state.users.filter(user => user._id !== action.data._id)}

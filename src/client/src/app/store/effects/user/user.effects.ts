@@ -22,6 +22,7 @@ import {
   logoutUserSuccess,
   NavigateOnLoginSuccess,
   NavigateOnSignUpSuccess,
+  NavigateOnUpdateUserSuccess,
   updateUser,
   updateUserFailure,
   updateUserSuccess,
@@ -72,6 +73,7 @@ export class UserEffects {
       ofType(updateUser),
       mergeMap((action) =>
         this.userService.updateUser(action.data).pipe(
+          tap(data => console.log("updated user:",data)),
           map((data) => updateUserSuccess({ data })),
           catchError((error) => of(updateUserFailure({ error })))
         )
@@ -121,6 +123,16 @@ export class UserEffects {
         map(() => NavigateOnSignUpSuccess())
       ))
     )
+  ); 
+
+  navigateOnUpdateUser$ = createEffect(() => 
+        this.actions$.pipe(
+          ofType(updateUserSuccess),
+          mergeMap(() => 
+          this.userService.NavigateOnUpdateUser().pipe(
+            map(()=> NavigateOnUpdateUserSuccess())
+          ))
+        )
   );
 
   constructor(
