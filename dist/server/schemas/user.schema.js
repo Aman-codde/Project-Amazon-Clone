@@ -7,7 +7,8 @@ const userSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String },
     email: { type: String, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    active: { type: Boolean, default: true }
 });
 userSchema.pre('save', function (next) {
     //this.id = this.email;
