@@ -16,7 +16,7 @@ export interface State {
 export const initialState: State = {
   users: [],
   selectedUser: null,
-  loggedUser: null,
+  loggedUser: JSON.parse(localStorage.getItem('user token') || '{}'),
   invalidLoginMsg: ''
 };
 
@@ -41,10 +41,12 @@ export const reducer = createReducer(
     return {...state, users}
   }),
   on(loginUserSuccess, (state,action) => {
+    localStorage.setItem('user token', JSON.stringify(action.data))
     return {...state, loggedUser: action.data}
   }),
   
   on(logoutUserSuccess, (state,action) => {
+    localStorage.removeItem('user token');
     return {...state, loggedUser: null}
   }),
   
