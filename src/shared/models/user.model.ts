@@ -13,6 +13,7 @@ export interface User {
     lastName?:string,
     email:string,// how to use id as email _id: email
     password: string,
+    active?: boolean,
     billingAddress?: Address,
     shippingAddress?: Address
 }
