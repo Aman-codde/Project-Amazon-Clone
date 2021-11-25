@@ -105,3 +105,7 @@ export const NavigateOnSignUpSuccess = createAction(
 export const NavigateOnUpdateUserSuccess = createAction(
   '[User] Navigate On Update User Success'
 );
+
+export const NavigateOnLogoutSuccess = createAction(
+  '[User] Navigate On Logout Success'
+);

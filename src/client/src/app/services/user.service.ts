@@ -47,4 +47,8 @@ export class UserService {
     return of(this.router.navigate(['/account']))
   }
 
+  NavigateOnLogout() {
+    return of(this.router.navigate(['/login']));
+  }
+
 }

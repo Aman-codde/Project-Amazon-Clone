@@ -21,6 +21,7 @@ import {
   logoutUserFailure,
   logoutUserSuccess,
   NavigateOnLoginSuccess,
+  NavigateOnLogoutSuccess,
   NavigateOnSignUpSuccess,
   NavigateOnUpdateUserSuccess,
   updateUser,
@@ -134,6 +135,14 @@ export class UserEffects {
           ))
         )
   );
+
+  navigateOnLogout$ = createEffect(() => 
+  this.actions$.pipe(
+    ofType(logoutUserSuccess),
+    mergeMap(() => this.userService.NavigateOnLogout().pipe(
+      map(() => NavigateOnLogoutSuccess())
+    ))
+  ))
 
   constructor(
     private actions$: Actions, 
