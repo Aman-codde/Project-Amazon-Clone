@@ -45,3 +45,7 @@ export const deleteProductFromCartFailure = createAction(
   '[Cart] Delete Product From Cart Failure',
   props<{error: Error}>()
 );
+
+export const navigateOnUpdateCartSuccess = createAction(
+  '[Cart] Navigate on Update Cart Success'
+);

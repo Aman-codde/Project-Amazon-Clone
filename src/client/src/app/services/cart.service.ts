@@ -5,13 +5,18 @@ import { User } from '../../../../shared/models/user.model';
 import { Product } from '../../../../shared/models/product.model';
 import {Order} from '../../../../shared/models/order.model'
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
  
-  constructor(private api: ApiService) 
+  constructor(
+    private api: ApiService,
+    private router: Router
+    ) 
   { }
 
   getCart() {
@@ -30,6 +35,10 @@ export class CartService {
 
   createOrder(cart: Cart) {
     return this.api.post<Order,Cart>('order',cart);
+  }
+
+  navigateOnUpdateCart() {
+    return of(this.router.navigate(['/cart']));
   }
 
 }
