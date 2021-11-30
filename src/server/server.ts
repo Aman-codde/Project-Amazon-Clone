@@ -287,17 +287,21 @@ app.get('/api/cart',authHandler ,function(req: any,res) {
 // productid from frontend, userid from auth.middleware
 app.put('/api/update-cart', authHandler ,function(req:any,res){
     const loggedUser = req.user;
-    const productId = req.body._id;
+    const productId = req.body.product._id;
+    const quantity = req.body.selected_qty;
+    console.log("loggedUser: ",loggedUser);
+    console.log("cart data to be updated", req.body.product._id,"----",req.body.selected_qty);
     CartModel
     .findOneAndUpdate(
         {user: loggedUser._id}, 
-        {$push: {products: productId}},
+        {$push: {"products": {product: productId, selected_quantity: quantity}}},
         {new: true},
         function(err, updateCart) {
             if(err) {
                 res.send("Error updating user: ");
             }
             else {
+                console.log("cart updated: ", updateCart);
                 res.json(updateCart);
             }
         }

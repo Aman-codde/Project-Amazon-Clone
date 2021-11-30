@@ -3,7 +3,12 @@ import { User } from './user.model.js';
 
 export interface Cart {
     user?: User,
-    products: Product[];// list of product ids
+    products: [
+        {
+        product: Product,
+        selected_quantity: number
+        }
+    ];// list of product ids and selected quantity
     count: number;
     total_amount: number;
 }
