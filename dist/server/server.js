@@ -309,7 +309,7 @@ app.post('/api/order', OrderProcess.createOrderAndDecreaseQuantity, OrderProcess
 app.get('/api/orders', authHandler, function (req, res) {
     OrderModel
         .find({ user: { $in: [req.user._id] } })
-        .populate('products')
+        .populate('products.product')
         .then(data => {
         res.json(data);
     })
