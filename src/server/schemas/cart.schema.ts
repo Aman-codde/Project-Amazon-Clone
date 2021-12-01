@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { Cart } from '../../shared/models/cart.model.js';
-import { Product } from '../../shared/models/product.model.js';
 
 const {model,Schema} = mongoose;
 
@@ -9,19 +8,26 @@ const cartSchema = new Schema<Cart>({
     products: [
         {
             product: {type: mongoose.Types.ObjectId, ref:'Product'},
-            selected_quantity: {type: Number, required: true}
+            selected_quantity: {type: Number, required: true},
+            _id: false
         }
     ]
 });
 
 cartSchema.virtual('count').get(function (this: Cart) {
-    return this.products.length;
+    let items_count = 0;
+    this.products.map(i => {
+        items_count += i.selected_quantity
+    } );
+    return items_count;
 });
 
 cartSchema.virtual('total_amount').get(function(this: Cart) {
-    return this?.products?.reduce((a: number, c: {product: Product, selected_quantity: number}) => {
-        return a + (c.product.price * c.selected_quantity)
-    },0)
+    let amount = 0;
+    this.products.map(i => {
+        amount += (i.product.price * i.selected_quantity)
+    } );
+    return amount;
 })
 
 cartSchema.set(`toObject`, { virtuals: true });
