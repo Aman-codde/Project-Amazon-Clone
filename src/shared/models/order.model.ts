@@ -5,7 +5,12 @@ import { Product } from './product.model.js';
 export interface Order {
     _id?: mongoose.Types.ObjectId;
     user?: User;
-    products: Product[];
+    products: [
+        {
+            product: Product;
+            selected_quantity: number;
+        }
+    ];
     itemCount?: number;  
     amount_paid?: number;
     shippingAddress?: Address

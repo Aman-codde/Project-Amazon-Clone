@@ -45,7 +45,8 @@ export class ProductDetailsComponent implements OnInit {
 
   addToCart() {
     const product = this.selectedProduct!;
-    this.store.dispatch(updateCart({data: product}));
+    const default_qty = 1;
+    this.store.dispatch(updateCart({ data: product, selected_qty: default_qty} ));
   }
   
   goToOrder() {

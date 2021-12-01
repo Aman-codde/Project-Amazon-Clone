@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppState } from 'src/app/store';
-import { deleteProductFromCart, loadCart } from 'src/app/store/actions/cart/cart.actions';
+import { deleteProductFromCart, loadCart, updateCart } from 'src/app/store/actions/cart/cart.actions';
 import { cartSelector } from 'src/app/store/selectors/cart/cart.selectors';
 import { loggedUserSelector } from 'src/app/store/selectors/user/user.selectors';
 import { Cart } from '../../../../../shared/models/cart.model';
@@ -55,13 +55,16 @@ export class CartListComponent implements OnInit {
   }
 
   createQtyArray(q: any) {
-    //Array.from("ABCFR");
-    //Array.from({},)
-    const qArr = Array.from({length: q}, (_, index) => index + 1)
+    let qArr = [];
+    for (let i = 1; i<=q; i++) {
+      qArr.push(i);
+    }
+    //const qArr = Array.from({length: q}, (_, index) => index + 1)
     return qArr;[1,2,3,4,5]
   }
 
-  changeQty (e:any) {
+  changeQty (p: Product,e:any) {
+    this.store.dispatch(updateCart({data: p, selected_qty: e.target.value}))
     console.log(e.target.value);
   }
 

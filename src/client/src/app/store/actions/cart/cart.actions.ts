@@ -18,7 +18,7 @@ export const loadCartFailure = createAction(
 
 export const updateCart = createAction(
   '[Cart] Update Cart',
-  props<{data: Product}>()
+  props<{data: Product, selected_qty: number}>()
 );
 
 export const updateCartSuccess = createAction(

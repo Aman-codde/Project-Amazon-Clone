@@ -9,22 +9,22 @@
     <hr>
     <div>
     <ol>
-            <li *ngFor="let product of (cart.products)">
+            <li *ngFor="let product_info of (cart.products)">
                 <section id="cart-section">
                 <div class="img-div">
-                    <img src="{{product?.imgUrl}}">
+                    <img src="{{product_info?.product?.imgUrl}}">
                 </div>
                 <div class="details-div">
-                    <p>{{product?.product_name}}</p>
+                    <p>{{product_info?.product?.product_name}}</p>
                     <p>Qty:
-                        <select class="select-qty" (change)="changeQty($event)">
-                            <option *ngFor="let q of createQtyArray(product?.quantity)" [ngValue]="q">{{q}}</option>
+                        <select class="select-qty" (change)="changeQty(product_info.product,$event)">
+                            <option *ngFor="let q of createQtyArray(product_info?.product?.quantity)" [ngValue]="q">{{q}}</option>
                         </select>
                     </p>
-                    <button (click)="deleteProductFromCart(product)">Delete</button>
+                    <button (click)="deleteProductFromCart(product_info.product)">Delete</button>
                 </div>
                 <div class="price-div">
-                    <p>${{product?.price}}</p>
+                    <p>${{product_info?.product?.price}}</p>
                 </div>
                 </section>
             <hr>

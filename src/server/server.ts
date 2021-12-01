@@ -12,7 +12,6 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import {authHandler} from './middleware/auth.middleware.js';
-import { OrderModel } from './schemas/order.schema.js';
 import * as OrderProcess from './middleware/order.middleware.js';
 
 
@@ -282,7 +281,13 @@ app.get('/api/cart',authHandler ,function(req: any,res) {
     CartModel
     .findOne({user:userId}, "count total_amount")   
     .populate('user','firstName email')
-    .populate('products', '-categories')
+    .populate(
+        {
+            path: 'products', 
+            populate: {
+                path: 'product'
+            }
+        })
     .then(data => {
         console.log("Cart: ",data);
         res.json(data);
@@ -295,21 +300,43 @@ app.get('/api/cart',authHandler ,function(req: any,res) {
 // productid from frontend, userid from auth.middleware
 app.put('/api/update-cart', authHandler ,function(req:any,res){
     const loggedUser = req.user;
-    const productId = req.body._id;
+    const productId = req.body.product._id;
+    const selected_qty = req.body.selected_qty;
     CartModel
-    .findOneAndUpdate(
-        {user: loggedUser._id}, 
-        {$push: {products: productId}},
-        {new: true},
-        function(err, updateCart) {
-            if(err) {
-                res.send("Error updating user: ");
+    .findOne(
+        {user: loggedUser._id},
+        "count total_amount"
+    )
+    .populate('products.product') 
+    .then(cart => {
+        console.log("....cart: ", cart);
+        if(cart) {
+            const product = cart.products.find(p => p.product._id == productId);
+            if(product) {
+                product.selected_quantity = selected_qty
             }
             else {
-                res.json(updateCart);
+                cart.products.push({product: productId, selected_quantity: selected_qty})
             }
+            cart.save()
+            .then(updatedCart => {
+                console.log("updated cart: ->  ",updatedCart);
+                res.json(updatedCart)
+            })
         }
-    )
+    })
+    //     {$push: {"products": {product: productId, selected_quantity: selected_qty}}},
+    //     {new: true},
+    //     function(err, updateCart) {
+    //         if(err) {
+    //             res.send("Error updating user: ");
+    //         }
+    //         else {
+    //             console.log("cart updated: ", updateCart);
+    //             res.json(updateCart);
+    //         }
+    //     }
+    // )
 })
 
 // delete product from cart
@@ -319,7 +346,7 @@ app.put('/api/delete-from-cart/:productId', authHandler,function(req:any,res) {
     CartModel
     .findOneAndUpdate(
         {user: loggedUser._id},
-        {$pull: {'products': productId} },
+        {$pull: {'products': {product: productId} } },
         {new: true}
     )
     .populate('products')
