@@ -326,18 +326,6 @@ app.put('/api/update-cart', authHandler ,function(req:any,res){
             })
         }
     })
-    //     {$push: {"products": {product: productId, selected_quantity: selected_qty}}},
-    //     {new: true},
-    //     function(err, updateCart) {
-    //         if(err) {
-    //             res.send("Error updating user: ");
-    //         }
-    //         else {
-    //             console.log("cart updated: ", updateCart);
-    //             res.json(updateCart);
-    //         }
-    //     }
-    // )
 })
 
 // delete product from cart
@@ -362,8 +350,7 @@ app.put('/api/delete-from-cart/:productId', authHandler,function(req:any,res) {
 //OrderProcess.createOrder()
 
 app.post('/api/order', 
-    OrderProcess.createOrder,
-    OrderProcess.decreaseQuantity,
+    OrderProcess.createOrderAndDecreaseQuantity,
     OrderProcess.emptyCart
 );
 
