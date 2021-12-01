@@ -1,14 +1,33 @@
-div {
+.main-div {
+    display: flex; 
+}
+
+.categories-div {
+    margin: 10px;
+    padding-right: 20px;
+    border-right: 1px solid lightgray;
+}
+
+.products-container-div {
+    display: block;
+}
+
+.products-div {
     display: inline-block;
     padding: 20px;
     margin: 2px;
-    //border: 1px solid black;
     text-align: left;
+}
+
+.product-details-div {
+    width: 200px;
+    word-wrap: break-word;
 }
 
 img {
     border-radius: 8px;
     width: 200px;
+    height: 280px;
 }
 
 .price {
@@ -16,12 +35,13 @@ img {
 }
 
 .productName {
-    color: blue;
-    text-decoration: underline;
+    color: rgb(66, 143, 120); 
 }
 
 .productName:hover {
     cursor: pointer;
+    color:rgb(175, 58, 47);
+    text-decoration: underline; 
 }
 
 button {

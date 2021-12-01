@@ -1,11 +1,16 @@
-<app-categories-list ></app-categories-list>
-<div *ngFor="let product of (products$ | async)!">
-    <div>
-        <img src={{product.imgUrl}}>
-        <p (click) = "selectProduct(product,selectedProduct)" class="productName">
-                {{product.product_name}}
-        </p>
-        <p class="price">$ <strong>{{product.price}}</strong><p>
+<div class="main-div">
+    <div class="categories-div">
+        <app-categories-list ></app-categories-list>
+    </div>
+    <div class="products-container-div">
+        <div class="products-div" *ngFor="let product of (products$ | async)!">
+            <div class="product-details-div">
+                <img src={{product.imgUrl}}>
+                <p (click) = "selectProduct(product,selectedProduct)" class="productName">
+                        {{product.product_name}}
+                </p>
+                <p class="price">$ <strong>{{product.price}}</strong><p>
+            </div>
+        </div>    
     </div>
 </div>
-
