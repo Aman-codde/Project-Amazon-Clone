@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import {authHandler} from './middleware/auth.middleware.js';
 import * as OrderProcess from './middleware/order.middleware.js';
+import { OrderModel } from './schemas/order.schema.js';
 
 
 dotenv.config();
