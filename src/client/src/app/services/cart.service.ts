@@ -19,8 +19,8 @@ export class CartService {
   }
 
   //add product to cart
-  updateCart(product: Product) {
-    return this.api.put<Cart,Product>('update-cart', product)
+  updateCart(product: Product, selected_qty: number) {
+    return this.api.put<Cart,{product:Product,selected_qty:number}>('update-cart', {product,selected_qty})
   }
 
   // delete productId from cart

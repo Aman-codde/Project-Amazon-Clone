@@ -41,7 +41,7 @@ export class CartEffects {
     .pipe(
       ofType(updateCart),
       mergeMap((action) => 
-        this.cartService.updateCart(action.data)
+        this.cartService.updateCart(action.data,action.selected_qty)
         .pipe(
           map(data => updateCartSuccess({data})),
           catchError((err) => of(updateCartFailure({error: err})))
