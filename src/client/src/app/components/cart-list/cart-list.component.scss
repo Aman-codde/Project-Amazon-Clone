@@ -52,7 +52,7 @@ img {
     background-color: rgb(238, 211, 37);
 }
 
-.checkout-button:hover {
+.checkout-button:hover:enabled {
     cursor: pointer;
     background-color: rgba(210, 184, 15, 0.896);
 }
