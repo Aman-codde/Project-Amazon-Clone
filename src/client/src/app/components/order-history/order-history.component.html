@@ -21,13 +21,13 @@
                         </tr>
                     </table>
                 </div>
-                    <li *ngFor="let product of order.products">
+                    <li *ngFor="let product_info of order.products">
                     <div class="order-details-div">
                         <div class="product-img-div">
-                            <img src="{{product?.imgUrl}}">
+                            <img src="{{product_info?.product?.imgUrl}}">
                         </div>
                         <div class="product-name-div">
-                            <p>{{product.product_name}}</p>
+                            <p>{{product_info.product.product_name}}</p>
                         </div>
                     </div>
                     </li>
