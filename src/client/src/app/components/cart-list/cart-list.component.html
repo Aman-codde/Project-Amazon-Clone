@@ -16,8 +16,10 @@
                 </div>
                 <div class="details-div">
                     <p>{{product_info?.product?.product_name}}</p>
+                    <!-- <p>Selected Qty: {{product_info?.selected_quantity}}</p> -->
                     <p>Qty:
                         <select class="select-qty" (change)="changeQty(product_info.product,$event)">
+                            <option value="product_info?.selected_quantity">{{product_info?.selected_quantity}}</option>
                             <option *ngFor="let q of createQtyArray(product_info?.product?.quantity)" [ngValue]="q">{{q}}</option>
                         </select>
                     </p>
