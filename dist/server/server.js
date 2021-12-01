@@ -288,18 +288,6 @@ app.put('/api/update-cart', authHandler, function (req, res) {
             });
         }
     });
-    //     {$push: {"products": {product: productId, selected_quantity: selected_qty}}},
-    //     {new: true},
-    //     function(err, updateCart) {
-    //         if(err) {
-    //             res.send("Error updating user: ");
-    //         }
-    //         else {
-    //             console.log("cart updated: ", updateCart);
-    //             res.json(updateCart);
-    //         }
-    //     }
-    // )
 });
 // delete product from cart
 app.put('/api/delete-from-cart/:productId', authHandler, function (req, res) {
@@ -316,7 +304,7 @@ app.put('/api/delete-from-cart/:productId', authHandler, function (req, res) {
 });
 //(function(){})() IIFE(Immediately Invoked Function Expression)
 //OrderProcess.createOrder()
-app.post('/api/order', OrderProcess.createOrder, OrderProcess.decreaseQuantity, OrderProcess.emptyCart);
+app.post('/api/order', OrderProcess.createOrderAndDecreaseQuantity, OrderProcess.emptyCart);
 // show all orders of logged user (using "$in")
 app.get('/api/orders', authHandler, function (req, res) {
     OrderModel

@@ -2,7 +2,7 @@ import "express";
 import { CartModel } from "../schemas/cart.schema.js";
 import { OrderModel } from "../schemas/order.schema.js";
 import { ProductModel } from "../schemas/product.schema.js";
-export function createOrder(req, res, next) {
+export function createOrderAndDecreaseQuantity(req, res, next) {
     console.log("order req: ", req.body);
     const new_order = new OrderModel({
         user: req.body.user,
@@ -13,30 +13,32 @@ export function createOrder(req, res, next) {
     new_order
         .save()
         .then(data => {
-        next();
         console.log("new_order created: ", data);
+        // Step-2: Decrease quantity (which is bought/ ordered) from product model
+        //fetch each product and selected quantity and update quantity in product model
+        data.products.forEach(p => {
+            ProductModel
+                .findByIdAndUpdate({
+                _id: p.product._id
+            }, {
+                $inc: { quantity: -p.selected_quantity }
+            }, {
+                new: true
+            }, function (err, updateProduct) {
+                if (err) {
+                    console.log("error decreasing quantity", err);
+                    res.send("Error updating product");
+                }
+                else {
+                    console.log("quantity decresed");
+                    next();
+                }
+            });
+        });
     })
         .catch(err => {
         console.log("Error creating new Order", err);
         res.json(err);
-    });
-}
-export function decreaseQuantity(req, res, next) {
-    ProductModel
-        .updateMany(// use update many query to change quantity of products
-    { _id: { $in: req.body.products } }, {
-        $inc: { quantity: -1 },
-    }, {
-        new: true
-    }, function (err, updateProduct) {
-        if (err) {
-            console.log("error decreasing quantity", err);
-            res.send("Error updating product");
-        }
-        else {
-            console.log("quantity decresed");
-            next();
-        }
     });
 }
 export function emptyCart(req, res, next) {
