@@ -6,7 +6,13 @@ const {Schema, model} = mongoose;
 
 const orderSchema = new Schema<Order>({
     user: { type: mongoose.Types.ObjectId, ref: 'User'},
-    products: [{ type: mongoose.Types.ObjectId, ref: 'Product'}],
+    products: [
+        {
+            product: { type: mongoose.Types.ObjectId, ref: 'Product'},
+            selected_quantity: {type: Number},
+            _id: 0
+        }
+    ],
     itemCount: {type:Number},
     amount_paid: {type: Number},
 },
