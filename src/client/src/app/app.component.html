@@ -23,9 +23,9 @@
         <li  class="active-user" *ngIf = "(loggedUser$ | async) as user">
             Hello, {{user.firstName}}
         </li>
-        <li class="active-user">
+        <!-- <li class="active-user">
             {{(loggedUser$ | async) | json}}
-        </li>
+        </li> -->
     </ul>
 <router-outlet></router-outlet>
 
