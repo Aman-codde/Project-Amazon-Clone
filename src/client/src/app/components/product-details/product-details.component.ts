@@ -50,6 +50,6 @@ export class ProductDetailsComponent implements OnInit {
   }
   
   goToOrder() {
-    return this.router.navigate(['/order']);
+    //return this.router.navigate(['/order']);
   }
 }
