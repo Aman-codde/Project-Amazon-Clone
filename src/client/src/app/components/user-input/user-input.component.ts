@@ -21,7 +21,7 @@ import { User } from '../../../../../shared/models/user.model';
   styleUrls: ['./user-input.component.scss'],
 })
 export class UserInputComponent implements OnInit {
-  addUser: FormGroup;
+  addUserForm: FormGroup;
   @Input() selectedUser: User | null = null;
 
   constructor(
@@ -30,7 +30,7 @@ export class UserInputComponent implements OnInit {
     private router: Router
     ) 
     {
-    this.addUser = this.fb.group({
+    this.addUserForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: [''],
       email: [
@@ -47,8 +47,8 @@ export class UserInputComponent implements OnInit {
   ngOnInit(): void {}
 
   postUser() {
-    this.store.dispatch(createUser({ data: this.addUser.value }))
-    this.addUser.reset();
+    this.store.dispatch(createUser({ data: this.addUserForm.value }))
+    this.addUserForm.reset();
   }
 
   goToSignIn() {
