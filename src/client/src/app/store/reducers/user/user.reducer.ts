@@ -16,7 +16,7 @@ export interface State {
 export const initialState: State = {
   users: [],
   selectedUser: null,
-  loggedUser: JSON.parse(localStorage.getItem('user token') || '{}'),
+  loggedUser: JSON.parse(localStorage.getItem('user token') || '{}') ,
   invalidLoginMsg: ''
 };
 

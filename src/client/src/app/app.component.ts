@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
   constructor(
     private store: Store<AppState>
   ) 
-  { 
+  {          
     this.loggedUser$ = this.store.select(loggedUserSelector);
     this.cart$ = this.store.select(cartSelector);
   }
