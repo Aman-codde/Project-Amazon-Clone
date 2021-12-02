@@ -1,7 +1,7 @@
 
 <div class="form-div">
     <h2>Sign In</h2>
-    <form [formGroup] = 'loginUser'>
+    <form [formGroup] = 'loginUserForm'>
         <div class="form-group">
             <label for="email">Email</label>
             <input type="text" formControlName='email' placeholder="email">
@@ -11,9 +11,9 @@
             <input type="password" formControlName='password' placeholder="password">
         </div>
         <div class="form-group">
-            <button [disabled]='loginUser.invalid' (click)="authUser()">Log In</button>
+            <button [disabled]='loginUserForm.invalid' (click)="authUser()">Log In</button>
         </div>
-        <div *ngIf="(invalidMsg$ | async)">
+        <div *ngIf="(invalidMsg$ | async) && !(loginUserForm.get('email')?.dirty) && !(loginUserForm.get('password')?.dirty)">
             <label class="invalid">Invalid username or password</label>
         </div>
         <div class="form-group">

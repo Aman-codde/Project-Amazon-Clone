@@ -15,7 +15,7 @@ import { User } from '../../../../../shared/models/user.model';
 })
 export class SignInComponent implements OnInit {
   loggedUser: User | null = null;
-  loginUser: FormGroup;
+  loginUserForm: FormGroup;
   invalidMsg$: Observable<any>;
 
   constructor(
@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit {
     private store: Store<AppState>,
     private router: Router
     ) {
-    this.loginUser = this.fb.group({
+    this.loginUserForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
     })
@@ -38,8 +38,8 @@ export class SignInComponent implements OnInit {
   }
 
   authUser() {
-    this.store.dispatch(loginUser({data: this.loginUser.value}));
-    this.loginUser.reset();
+    this.store.dispatch(loginUser({data: this.loginUserForm.value}));
+    this.loginUserForm.reset();
   }
 
   goToSignUp() {
