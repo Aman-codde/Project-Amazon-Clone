@@ -60,7 +60,7 @@ export class CartListComponent implements OnInit {
       qArr.push(i);
     }
     //const qArr = Array.from({length: q}, (_, index) => index + 1)
-    return qArr;[1,2,3,4,5]
+    return qArr;//[1,2,3,4,5]
   }
 
   changeQty (p: Product,e:any) {
@@ -71,15 +71,7 @@ export class CartListComponent implements OnInit {
   cartTitle() {
     if(this.cart?.count != 0)
       return "Shopping Cart: " + this.cart?.user?.firstName;
-      //style({color: "green"})
     else
       return "Your Cart is empty."
   }
-
-  // getTotalAmount() {
-  //   let total = 0;
-  //   total = this.cart?.total_amount
-  //   return Math.round(total);
-  // }
-
 }

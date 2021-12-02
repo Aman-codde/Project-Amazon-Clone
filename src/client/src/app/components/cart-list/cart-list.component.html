@@ -37,7 +37,7 @@
     <div class="summary">
         <p class="cart-summary">
             Subtotal({{ cart?.count }} {{(totalCount())}}): 
-            <span>${{ cart?.total_amount?.toFixed(2) }}</span> 
+            <span>${{ cart?.total_amount}}</span> 
         </p>
         <p class="checkout">
             <button class="checkout-button" (click)="goToOrder(cart)" [disabled]="cart.count === 0">Proceed to checkout</button>
