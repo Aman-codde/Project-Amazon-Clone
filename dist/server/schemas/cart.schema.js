@@ -23,7 +23,7 @@ cartSchema.virtual('total_amount').get(function () {
     this.products.map(i => {
         amount += (i.product.price * i.selected_quantity);
     });
-    return amount;
+    return Math.round(amount * 100) / 100;
 });
 cartSchema.set(`toObject`, { virtuals: true });
 cartSchema.set('toJSON', { virtuals: true });
