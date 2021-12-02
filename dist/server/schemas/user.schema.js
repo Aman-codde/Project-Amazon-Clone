@@ -38,5 +38,9 @@ userSchema.post('remove', function (user, next) {
         }
     });
 });
+userSchema.path('email').validate(async (email) => {
+    const emailCount = await mongoose.models.User?.countDocuments({ email });
+    return !emailCount;
+}, 'Email already exists');
 export const UserModel = model('User', userSchema);
 //# sourceMappingURL=user.schema.js.map
