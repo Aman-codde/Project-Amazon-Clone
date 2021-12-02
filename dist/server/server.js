@@ -270,7 +270,8 @@ app.put('/api/update-cart', authHandler, function (req, res) {
     const selected_qty = req.body.selected_qty;
     CartModel
         .findOne({ user: loggedUser._id }, "count total_amount")
-        .populate('products.product')
+        .populate('user')
+        .populate('products.product products.selected_quantity')
         .then(cart => {
         console.log("....cart: ", cart);
         if (cart) {
@@ -295,7 +296,8 @@ app.put('/api/delete-from-cart/:productId', authHandler, function (req, res) {
     const productId = req.params.productId;
     CartModel
         .findOneAndUpdate({ user: loggedUser._id }, { $pull: { 'products': { product: productId } } }, { new: true })
-        .populate('products')
+        .populate('user')
+        .populate('products.product')
         .then(data => {
         console.log("delete from cart: ", data);
         res.json({ data });
