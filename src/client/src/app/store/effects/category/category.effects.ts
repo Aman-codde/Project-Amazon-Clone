@@ -3,10 +3,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { CategoryService } from 'src/app/services/category.service';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { loadCategories, loadCategoriesFailure, loadCategoriesSuccess } from '../../actions/category/category.actions';
+import { createCategory, createCategoryFailure, createCategorySuccess, loadCategories, loadCategoriesFailure, loadCategoriesSuccess } from '../../actions/category/category.actions';
 
 @Injectable()
 export class CategoryEffects {
+
   loadCategories$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCategories),
@@ -19,6 +20,16 @@ export class CategoryEffects {
     )
   );
 
+  createCategory$ = createEffect( () => 
+    this.actions$.pipe(
+      ofType(createCategory),
+      mergeMap( (action) => 
+      this.categoryService.createCategory(action.data).pipe(
+        map(data => createCategorySuccess({data})),
+        catchError(error => of(createCategoryFailure(error)))
+      ))
+    )
+  );
 
   constructor(
     private actions$: Actions,
