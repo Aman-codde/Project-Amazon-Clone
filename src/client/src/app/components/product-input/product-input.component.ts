@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
 import { createProduct } from 'src/app/store/actions/product/product.actions';
@@ -14,7 +15,9 @@ export class ProductInputComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<AppState>) 
+    private store: Store<AppState>,
+    private router: Router
+  ) 
   { 
     this.addProductForm = this.fb.group({
       product_name : ['', Validators.required],
@@ -30,5 +33,9 @@ export class ProductInputComponent implements OnInit {
   addProduct() {
     this.store.dispatch(createProduct({data: this.addProductForm.value}));
     this.addProductForm.reset();
+  }
+
+  addNewCategory() {
+    this.router.navigate(['add-category']);
   }
 }

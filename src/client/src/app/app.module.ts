@@ -34,6 +34,7 @@ import { OrderHistoryComponent } from './components/order-history/order-history.
 import { EditUserProfileComponent } from './components/edit-user-profile/edit-user-profile.component';
 import { OrderEffects } from './store/effects/order/order.effects';
 import * as fromOrder from './store/reducers/order/order.reducer';
+import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import * as fromOrder from './store/reducers/order/order.reducer';
     UserAccountComponent,
     OrderHistoryComponent,
     EditUserProfileComponent,
+    AddNewCategoryComponent,
   ],
   imports: [
     BrowserModule,

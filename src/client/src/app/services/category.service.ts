@@ -13,4 +13,9 @@ export class CategoryService {
   getCategories() {
     return this.api.get<{data: Category[]}>('categories').pipe(map(res => res.data));
   }
+
+  createCategory(category: Category) {
+    console.log("new category data in services: ", category);
+    return this.api.post<Category,Category>('create-category',category);
+  }
 }
