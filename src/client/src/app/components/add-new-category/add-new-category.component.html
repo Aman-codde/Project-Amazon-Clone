@@ -1,0 +1,17 @@
+<div>
+    <ng-container *ngIf = "(categories$ | async) as categories">
+        <h2>Add New Category Form</h2>
+        <form [formGroup] = 'addCategoryForm' class="addCategoryForm">
+            <input type="text" formControlName="category_name" placeholder="category name">
+
+            <select class="custom-select" (change)="changeCategory($event)" formControlName="parent_category">
+                <option value="">Choose Parent category</option>
+                <option *ngFor="let category of categories" [ngValue]="category?._id">{{category.category_name}}</option>
+            </select>
+
+            <label></label>
+            <br><br>
+            <button (click)="addNewCategory()" [disabled]="addCategoryForm.invalid">Add Category</button>
+        </form>
+    </ng-container>
+</div>
