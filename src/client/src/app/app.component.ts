@@ -35,9 +35,4 @@ export class AppComponent implements OnInit{
   logout() {
     this.store.dispatch(logoutUser());
   }
-
-  
-
-  
-
 }
