@@ -149,6 +149,26 @@ app.get('/api/categories', function(req,res) {
     .catch(err => res.status(501).json(err))
 })
 
+// create new category
+app.post('/api/create-category', function(req,res) {
+    console.log("create new category:", req.body);
+    if(req.body.parent_category == '') {
+        req.body = {category_name: req.body.category_name}
+        console.log("new category without parent:", req.body);
+    }
+    const new_category = new CategoryModel(req.body)
+    new_category
+    .save()
+    .then(data => {
+        console.log('new category created', {data});
+        res.json({data})
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(501).json(err)
+    })
+});
+
 
 app.get('/api/users', function(req,res){
     UserModel

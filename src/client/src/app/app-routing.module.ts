@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { EditUserProfileComponent } from './components/edit-user-profile/edit-user-profile.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'account', component:UserAccountComponent},
   {path: 'order-history', component: OrderHistoryComponent},
   {path: 'edit-profile', component: EditUserProfileComponent},
+  {path: 'add-category', component: AddNewCategoryComponent}
 ];
 
 @NgModule({
