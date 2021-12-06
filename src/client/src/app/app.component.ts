@@ -3,9 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Cart } from '../../../shared/models/cart.model';
 import { User } from '../../../shared/models/user.model';
-import { AuthService } from './services/auth.service';
 import { AppState } from './store';
-import { logoutUser } from './store/actions/user/user.actions';
+import { loginUserSuccess, logoutUser } from './store/actions/user/user.actions';
 import { cartSelector } from './store/selectors/cart/cart.selectors';
 import { loggedUserSelector } from './store/selectors/user/user.selectors';
 
@@ -29,15 +28,18 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
+
+    const loggedInUserToken = localStorage.getItem('user token');
+
+    if(loggedInUserToken) {
+      this.store.dispatch(loginUserSuccess({data: JSON.parse(loggedInUserToken)}));
+    }
+
     this.cart$.subscribe(data => this.cart = data);
   }
 
   logout() {
     this.store.dispatch(logoutUser());
   }
-
   
-
-  
-
 }
