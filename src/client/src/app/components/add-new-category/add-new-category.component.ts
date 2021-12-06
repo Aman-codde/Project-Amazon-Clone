@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
+import { AppState } from 'src/app/store';
+import { createCategory } from 'src/app/store/actions/category/category.actions';
+import { categoriesSelector } from 'src/app/store/selectors/category/category.selectors';
 import { Category } from '../../../../../shared/models/category.model';
 
 @Component({
@@ -14,12 +18,12 @@ export class AddNewCategoryComponent implements OnInit {
   addCategoryForm: FormGroup
 
   constructor(
-    private categoryService: CategoryService,
+    private store: Store<AppState>,
     private fb: FormBuilder
   ) 
   { 
-    this.categories$ = this.categoryService.getCategories();
-
+    this.categories$ = this.store.select(categoriesSelector);
+    
     this.addCategoryForm = this.fb.group({
       category_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       parent_category: ['']
@@ -34,7 +38,8 @@ export class AddNewCategoryComponent implements OnInit {
   }
 
   addNewCategory() {
-    return this.categoryService.createCategory(this.addCategoryForm.value).subscribe();
+    this.store.dispatch(createCategory({data: this.addCategoryForm.value}));
+    this.addCategoryForm.reset();
   }
 
 }

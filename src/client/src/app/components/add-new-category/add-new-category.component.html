@@ -9,7 +9,6 @@
                 <option *ngFor="let category of categories" [ngValue]="category?._id">{{category.category_name}}</option>
             </select>
 
-            <label></label>
             <br><br>
             <button (click)="addNewCategory()" [disabled]="addCategoryForm.invalid">Add Category</button>
         </form>
