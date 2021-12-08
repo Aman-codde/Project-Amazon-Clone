@@ -12,6 +12,9 @@
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" formControlName='email' placeholder="email">
+            <small class="invalid" *ngIf="addUserForm.controls['email'].invalid && (addUserForm.controls['email'].touched || addUserForm.controls['email'].dirty)">
+            <p>Minimum length should be 7 and Email should be unique</p>
+            </small>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
@@ -25,10 +28,6 @@
         <div class="form-group">
             <button (click)='postUser()' [disabled]='addUserForm.invalid'>Create Account</button>
         </div>
-        <!-- <div class="invalid" 
-        *ngIf="addUserForm.get('email')?. && (addUserForm.touched)">
-            <p>Email already exists</p>
-        </div> -->
         <div class="form-group">
             <p>Already have an account? 
                 <button (click)="goToSignIn()">Sign-in</button>
