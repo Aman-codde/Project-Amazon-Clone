@@ -57,12 +57,23 @@ li {
 
 
 .product-img-div {
+    position: relative;
     width: 20%;
 }
 
 img {
     border-radius: 8px;
     width: 80px;
+}
+
+.bottom-right {
+    position: absolute;
+    top: 5px;
+    left: 90px;
+    padding: 3px 6px;
+    border-radius: 50%;
+    color: white;
+    background-color: black;
 }
 
 .product-name-div {
