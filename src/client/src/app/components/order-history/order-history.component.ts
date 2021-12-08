@@ -32,10 +32,6 @@ export class OrderHistoryComponent implements OnInit {
     this.router.navigate(['/account']);
   }
 
-  getDateFormat( dateString: any) {
-    return new Date(dateString).toLocaleDateString()
-  }
-
   getOrdersByDate() {
     return this.orderService.getOrdersByDate();
   }
