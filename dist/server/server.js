@@ -329,7 +329,7 @@ app.post('/api/order', OrderProcess.createOrderAndDecreaseQuantity, OrderProcess
 // show all orders of logged user (using "$in")
 app.get('/api/orders', authHandler, function (req, res) {
     OrderModel
-        .find({ user: { $in: [req.user._id] } })
+        .find({ user: { $in: [req.user._id] } }).sort({ createdAt: -1 })
         .populate('products.product')
         .then(data => {
         res.json(data);
