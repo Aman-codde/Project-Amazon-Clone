@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CartService } from 'src/app/services/cart.service';
@@ -18,7 +19,8 @@ export class OrderComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) 
   { 
     this.$cart = this.store.select(cartSelector);
@@ -35,8 +37,11 @@ export class OrderComponent implements OnInit {
   placeOrder(cart: Cart) {
     this.cartService.createOrder(cart).subscribe();
     this.showOrderDiv = false;
-    this.hideOrderMsgDiv = false;
-    
+    this.hideOrderMsgDiv = false; 
+  }
+
+  navigateToOrders() {
+    this.router.navigate(['/order-history']);
   }
 
 }
