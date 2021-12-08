@@ -4,7 +4,7 @@
             <a routerLink="/products" routerLinkActive="active-list">Home</a>
         </li>
         <li>
-            <a *ngIf = "!(loggedUser$ | async)" routerLink="/add-product" routerLinkActive="active-list">Add Product</a>
+            <a *ngIf = "(loggedUser$ | async)" routerLink="/add-product" routerLinkActive="active-list">Add Product</a>
         </li>  
         <li>
             <a *ngIf = "!(loggedUser$ | async)" routerLink="/login" routerLinkActive="active-list">Log In</a>
