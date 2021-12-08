@@ -30,6 +30,20 @@ img {
     font-size: 20px;
 }
 
+.details-div button {
+    background-color: black;
+    color: white;
+    width: 70px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.details-div button:hover {
+    background-color: rgb(65, 60, 60);
+}
+
 .price-div {
     font-size: 20px;
     font-weight: bold;
