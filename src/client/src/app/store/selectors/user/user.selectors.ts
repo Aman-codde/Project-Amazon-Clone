@@ -23,7 +23,12 @@ export const loggedUserSelector = createSelector(
 export const loginUserMessageSelector = createSelector(
   userFeatureSelector,
   (state) => state.invalidLoginMsg
-)
+);
+
+export const createUserMessageSelector = createSelector(
+  userFeatureSelector,
+  (state) => state.createUserFailureMsg
+);
 
 
 
