@@ -8,11 +8,13 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
 import {
   createUser,
   updateUser,
 } from 'src/app/store/actions/user/user.actions';
+import { createUserMessageSelector } from 'src/app/store/selectors/user/user.selectors';
 import { User } from '../../../../../shared/models/user.model';
 
 @Component({
@@ -23,6 +25,7 @@ import { User } from '../../../../../shared/models/user.model';
 export class UserInputComponent implements OnInit {
   addUserForm: FormGroup;
   @Input() selectedUser: User | null = null;
+  createUserFailureMsg: any
 
   constructor(
     private fb: FormBuilder, 
@@ -42,6 +45,8 @@ export class UserInputComponent implements OnInit {
         Validators.compose([Validators.required, Validators.minLength(5)]),
       ],
     });
+
+    this.store.select(createUserMessageSelector).subscribe(data => this.createUserFailureMsg = data);
   }
 
   ngOnInit(): void {}
