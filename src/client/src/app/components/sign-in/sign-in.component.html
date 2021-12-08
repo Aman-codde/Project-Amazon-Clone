@@ -13,7 +13,7 @@
         <div class="form-group">
             <button [disabled]='loginUserForm.invalid' (click)="authUser()">Log In</button>
         </div>
-        <div *ngIf="(invalidMsg$ | async) && !(loginUserForm.get('email')?.dirty) && !(loginUserForm.get('password')?.dirty)">
+        <div *ngIf="(invalidMsg$ | async) && (!(loginUserForm?.dirty) || !(loginUserForm?.touched))">
             <label class="invalid">Invalid username or password</label>
         </div>
         <div class="form-group">
