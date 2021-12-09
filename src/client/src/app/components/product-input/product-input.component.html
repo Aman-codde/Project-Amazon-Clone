@@ -2,7 +2,7 @@
     <button (click)="addNewCategory()">Add New Category</button>
 </div>
 <div>
-    <h2>Add Product Form</h2>
+    <h2>Create Product Form</h2>
     <form [formGroup]="addProductForm">
         <label for="name">Product Name:</label>
         <input type="text" formControlName="product_name">
@@ -21,7 +21,7 @@
         <input type="text" formControlName="imgUrl">
 
         <p>Complete the form to enable button</p>
-        <button [disabled]="addProductForm.invalid" (click)="addProduct()" >Add Product</button>
+        <button [disabled]="addProductForm.invalid" (click)="addProduct()" >Create Product</button>
     </form>
 </div>
 
