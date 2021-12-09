@@ -1,4 +1,6 @@
-
+.shopping-div {
+    margin: 10px 0;
+}
 
 .title {
     font-size: 25px;
@@ -60,13 +62,13 @@ img {
     font-weight: bold;
 }
 
-.checkout-button {
+.button-1 {
     padding: 10px 25px;
     border-radius: 20px;
     background-color: rgb(238, 211, 37);
 }
 
-.checkout-button:hover:enabled {
+.button-1:hover:enabled {
     cursor: pointer;
     background-color: rgba(210, 184, 15, 0.896);
 }

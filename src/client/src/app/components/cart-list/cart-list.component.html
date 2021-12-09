@@ -1,4 +1,6 @@
-
+<div class="shopping-div">
+    <button class="button-1" (click)="navigateToHome()">Continue Shopping</button>
+</div>
 
  <ng-container *ngIf="(cart$| async) as cart">
     <p class="title">
@@ -40,7 +42,7 @@
             <span>${{ cart?.total_amount}}</span> 
         </p>
         <p class="checkout">
-            <button class="checkout-button" (click)="goToOrder(cart)" [disabled]="cart.count === 0">Proceed to checkout</button>
+            <button class="button-1" (click)="goToOrder(cart)" [disabled]="cart.count === 0">Proceed to checkout</button>
             
         </p>
     </div>

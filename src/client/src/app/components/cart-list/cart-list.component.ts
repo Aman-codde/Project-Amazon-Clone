@@ -74,4 +74,8 @@ export class CartListComponent implements OnInit {
     else
       return "Your Cart is empty."
   }
+
+  navigateToHome() {
+    this.router.navigate(['/products']);
+  }
 }
