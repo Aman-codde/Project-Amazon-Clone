@@ -5,8 +5,6 @@ import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { ProductService } from 'src/app/services/product.service';
 import { createProduct, createProductFailure, createProductSuccess, loadProduct,loadProductSuccess, loadProductFailure, loadProducts, loadProductsFailure, loadProductsSuccess } from '../../actions/product/product.actions';
 
-
-
 @Injectable()
 export class ProductEffects {
 

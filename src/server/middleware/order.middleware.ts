@@ -4,9 +4,7 @@ import { OrderModel } from "../schemas/order.schema.js";
 import { ProductModel } from "../schemas/product.schema.js";
 
 export function createOrderAndDecreaseQuantity(req: Request,res: Response, next: NextFunction){
-    
-    console.log("order req: ",req.body)
-    
+    console.log("order req: ",req.body);
     const new_order = new OrderModel({
         user: req.body.user,
         products: req.body.products,
@@ -35,6 +33,7 @@ export function createOrderAndDecreaseQuantity(req: Request,res: Response, next:
                     if(err) {
                         console.log("error decreasing quantity", err);
                         res.send("Error updating product");
+                        return;
                     }
                     else{
                         console.log("quantity decresed");
@@ -42,12 +41,12 @@ export function createOrderAndDecreaseQuantity(req: Request,res: Response, next:
                     }
                 }
             )
-        })
-        
+        })  
     })
     .catch(err => {
         console.log("Error creating new Order", err);
         res.json(err);
+        return;
     })
 }
         
