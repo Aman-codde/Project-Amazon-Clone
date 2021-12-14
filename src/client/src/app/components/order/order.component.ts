@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CartService } from 'src/app/services/cart.service';
+import { OrderService } from 'src/app/services/order.service';
 import { AppState } from 'src/app/store';
+import { createOrder } from 'src/app/store/actions/order/order.actions';
 import { cartSelector } from 'src/app/store/selectors/cart/cart.selectors';
 import { Cart } from '../../../../../shared/models/cart.model';
 
@@ -19,7 +20,7 @@ export class OrderComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private cartService: CartService,
+    private orderService: OrderService,
     private router: Router
   ) 
   { 
@@ -35,7 +36,8 @@ export class OrderComponent implements OnInit {
   }
 
   placeOrder(cart: Cart) {
-    this.cartService.createOrder(cart).subscribe();
+    //this.orderService.createOrder(cart).subscribe();
+    this.store.dispatch(createOrder({data: cart}));
     this.showOrderDiv = false;
     this.hideOrderMsgDiv = false; 
   }

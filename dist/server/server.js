@@ -325,7 +325,7 @@ app.put('/api/delete-from-cart/:productId', authHandler, function (req, res) {
 });
 //(function(){})() IIFE(Immediately Invoked Function Expression)
 //OrderProcess.createOrder()
-app.post('/api/order', OrderProcess.createOrderAndDecreaseQuantity, OrderProcess.emptyCart);
+app.post('/api/create-order', OrderProcess.createOrderAndDecreaseQuantity, OrderProcess.emptyCart);
 // show all orders of logged user (using "$in")
 app.get('/api/orders', authHandler, function (req, res) {
     OrderModel
