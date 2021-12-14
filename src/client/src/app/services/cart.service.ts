@@ -33,10 +33,6 @@ export class CartService {
     return this.api.put<{data: Cart},Product>('delete-from-cart/'+product._id,product)
   }
 
-  createOrder(cart: Cart) {
-    return this.api.post<Order,Cart>('order',cart);
-  }
-
   navigateOnUpdateCart() {
     return of(this.router.navigate(['/cart']));
   }
