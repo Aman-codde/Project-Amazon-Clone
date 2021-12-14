@@ -28,6 +28,7 @@ export function createOrderAndDecreaseQuantity(req, res, next) {
                 if (err) {
                     console.log("error decreasing quantity", err);
                     res.send("Error updating product");
+                    return;
                 }
                 else {
                     console.log("quantity decresed");
@@ -39,6 +40,7 @@ export function createOrderAndDecreaseQuantity(req, res, next) {
         .catch(err => {
         console.log("Error creating new Order", err);
         res.json(err);
+        return;
     });
 }
 export function emptyCart(req, res, next) {
