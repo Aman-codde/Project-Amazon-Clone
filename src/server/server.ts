@@ -371,7 +371,7 @@ app.put('/api/delete-from-cart/:productId', authHandler,function(req:any,res) {
 //(function(){})() IIFE(Immediately Invoked Function Expression)
 //OrderProcess.createOrder()
 
-app.post('/api/order', 
+app.post('/api/create-order', 
     OrderProcess.createOrderAndDecreaseQuantity,
     OrderProcess.emptyCart
 );
