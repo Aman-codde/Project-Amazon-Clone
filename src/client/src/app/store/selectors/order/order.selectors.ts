@@ -8,3 +8,7 @@ export const ordersSelector = createSelector(
     orderFeatureSelector, (state) => state.orders
 );
 
+export const orderSelector = createSelector(
+    orderFeatureSelector, (state) => state.order
+);
+
