@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from 'src/app/store';
+import { productsSelector } from 'src/app/store/selectors/product/product.selectors';
+import { Product } from '../../../../../shared/models/product.model';
 
 @Component({
   selector: 'app-update-product',
@@ -6,10 +12,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./update-product.component.scss']
 })
 export class UpdateProductComponent implements OnInit {
-
-  constructor() { }
+  products$: Observable<Product[]>;
+  constructor(
+    private store:Store<AppState>,
+    private router: Router
+  ) 
+  {
+    this.products$ = this.store.select(productsSelector);  
+  }
 
   ngOnInit(): void {
+  }
+
+  editProduct(product: Product) {
+    
   }
 
 }
