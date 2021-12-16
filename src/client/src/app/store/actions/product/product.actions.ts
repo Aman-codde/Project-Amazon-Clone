@@ -53,4 +53,10 @@ export const loadProductFailure = createAction(
 export const selectProductAction = createAction(
   '[Product] Select Product',
   props<{ data: Product | null }>()
-)
+);
+
+//seledted Product to be updated
+export const selectProductToUpdateAction = createAction(
+  '[Product] Select Product To Update',
+  props<{ data: Product | null }>()
+);

@@ -29,4 +29,4 @@ export const createCategorySuccess = createAction(
 export const createCategoryFailure = createAction(
   '[Category] Create Category Failure',
   props<{error: Error}>()
-)
+);
