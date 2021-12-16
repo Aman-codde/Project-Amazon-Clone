@@ -373,7 +373,7 @@ app.put('/api/delete-from-cart/:productId', authHandler,function(req:any,res) {
 
 app.post('/api/create-order', 
     OrderProcess.createOrderAndDecreaseQuantity,
-    OrderProcess.emptyCart
+    OrderProcess.emptyCart,
 );
 
 // show all orders of logged user (using "$in")
