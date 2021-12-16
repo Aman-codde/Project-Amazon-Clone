@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
+import { selectProductToUpdateAction } from 'src/app/store/actions/product/product.actions';
 import { productsSelector } from 'src/app/store/selectors/product/product.selectors';
 import { Product } from '../../../../../shared/models/product.model';
 
@@ -25,7 +26,8 @@ export class UpdateProductComponent implements OnInit {
   }
 
   editProduct(product: Product) {
-    
+    this.router.navigate([`/edit-product/${product._id}`]);
+    this.store.dispatch(selectProductToUpdateAction({data: product}))
   }
 
 }
