@@ -14,6 +14,7 @@ export function createOrderAndDecreaseQuantity(req, res, next) {
         .save()
         .then(data => {
         console.log("new_order created: ", data);
+        res.json({ data });
         // Step-2: Decrease quantity (which is bought/ ordered) from product model
         //fetch each product and selected quantity and update quantity in product model
         data.products.forEach(p => {
@@ -55,8 +56,9 @@ export function emptyCart(req, res, next) {
             res.send("Error updating cart");
         }
         else {
-            console.log("cart empty");
-            res.json(emptyCart);
+            console.log("cart empty", emptyCart);
+            //req.emptyCart = emptyCart;
+            //res.json(emptyCart);
         }
     });
 }
