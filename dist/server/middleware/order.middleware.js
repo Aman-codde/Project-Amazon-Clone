@@ -57,7 +57,6 @@ export function emptyCart(req, res, next) {
         }
         else {
             console.log("cart empty", emptyCart);
-            //req.emptyCart = emptyCart;
             //res.json(emptyCart);
         }
     });
