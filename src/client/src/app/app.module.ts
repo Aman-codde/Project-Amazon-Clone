@@ -35,6 +35,7 @@ import { EditUserProfileComponent } from './components/edit-user-profile/edit-us
 import { OrderEffects } from './store/effects/order/order.effects';
 import * as fromOrder from './store/reducers/order/order.reducer';
 import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
+import { UpdateProductComponent } from './components/update-product/update-product.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { AddNewCategoryComponent } from './components/add-new-category/add-new-c
     OrderHistoryComponent,
     EditUserProfileComponent,
     AddNewCategoryComponent,
+    UpdateProductComponent,
   ],
   imports: [
     BrowserModule,
