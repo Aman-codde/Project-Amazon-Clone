@@ -36,6 +36,7 @@ import { OrderEffects } from './store/effects/order/order.effects';
 import * as fromOrder from './store/reducers/order/order.reducer';
 import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
 import { UpdateProductComponent } from './components/update-product/update-product.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { UpdateProductComponent } from './components/update-product/update-produ
     EditUserProfileComponent,
     AddNewCategoryComponent,
     UpdateProductComponent,
+    EditProductComponent,
   ],
   imports: [
     BrowserModule,
