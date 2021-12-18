@@ -1,4 +1,11 @@
-div {
+.back-button {
+  width: 100px;
+  height: 35px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.category-div {
   display: block;
   text-align: center;
   margin: 40px;
