@@ -1,4 +1,8 @@
-<div>
+<div class="main">
+    <button class="back-button" (click)="backToCreateProductPage()">Back</button>
+</div>
+
+<div class="category-div">
     <ng-container *ngIf = "(categories$ | async) as categories">
         <h2>Add New Category Form</h2>
         <form [formGroup] = 'addCategoryForm' class="addCategoryForm">

@@ -1,0 +1,47 @@
+<div>
+    <button class="back-button" (click)="backToCreateProductPage()">Back</button>
+</div>
+<div class="products-div">
+    <table id="products">
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity(In Stock)</th>
+                <th>Categories</th>
+                <th>Update Product</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let product of (products$ | async); let i = index">
+                <tr class="products-details-row">
+                    <td>
+                        {{i+1}}
+                    </td>
+                    <td class="product-img-column">
+                        <img src="{{product?.imgUrl}}">
+                    </td>
+                    <td class="product-name-column">
+                        <p>{{product.product_name}}</p>
+                    </td>
+                    <td class="product-price-column">
+                        <p>{{product.price}}</p>
+                    </td>
+                    <td class="product-stock-column">
+                        <p>{{product.quantity}}</p>
+                    </td>
+                    <td>
+                        <p *ngFor="let category of product.categories">
+                            {{category.category_name}}
+                        </p>
+                    </td>
+                    <td>
+                        <button (click)="editProduct(product)">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+</div>

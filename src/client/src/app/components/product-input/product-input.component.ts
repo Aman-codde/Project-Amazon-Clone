@@ -38,4 +38,8 @@ export class ProductInputComponent implements OnInit {
   addNewCategory() {
     this.router.navigate(['add-category']);
   }
+
+  showProducts() {
+    this.router.navigate(['update-products']);
+  }
 }

@@ -1,6 +1,12 @@
-<div>
-    <button (click)="addNewCategory()">Add New Category</button>
+<div class="update-div">
+    <div>
+        <button (click)="addNewCategory()">Add New Category</button>
+    </div>
+    <div>
+        <button (click)="showProducts()">Update Product</button>
+    </div>
 </div>
+
 <div>
     <h2>Create Product Form</h2>
     <form [formGroup]="addProductForm">

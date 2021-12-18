@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
@@ -19,7 +20,8 @@ export class AddNewCategoryComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) 
   { 
     this.categories$ = this.store.select(categoriesSelector);
@@ -40,6 +42,10 @@ export class AddNewCategoryComponent implements OnInit {
   addNewCategory() {
     this.store.dispatch(createCategory({data: this.addCategoryForm.value}));
     this.addCategoryForm.reset();
+  }
+
+  backToCreateProductPage() {
+    this.router.navigate(['/add-product']);
   }
 
 }

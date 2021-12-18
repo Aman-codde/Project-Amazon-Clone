@@ -1,7 +1,7 @@
 <div class="form-div">
     <h2>Create Account</h2>
     <div *ngIf="createUserFailureMsg && (!addUserForm.dirty)" class="invalid invalid-div">
-        <b>ERROR: {{createUserFailureMsg.error.err.errors.email.message | json}}
+        <b>ERROR: {{createUserFailureMsg.error.errors.email.message}}
         </b> 
     </div>
     <form [formGroup] = 'addUserForm'>

@@ -1,0 +1,49 @@
+.back-button {
+    width: 100px;
+    height: 35px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.products-div {
+    margin: 40px;
+}
+
+#products {
+    width: 80%;
+    margin-left: 10px;
+}
+
+#products th, #products td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#products tr:hover {
+    background-color: #ddd;
+}
+
+#products button {
+    background-color: black;
+    color: white;
+    width: 80px;
+    border-radius: 5px;
+}
+
+#products button:hover {
+    cursor: pointer;
+}
+
+#products th {
+    background-color: black;
+    color: white;
+}
+
+.product-img-div {
+    width: 20%;
+}
+
+img {
+    border-radius: 8px;
+    width: 80px;
+}

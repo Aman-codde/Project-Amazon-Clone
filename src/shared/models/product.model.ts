@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { Category } from './category.model.js';
 
 export interface Product {
     _id?: mongoose.Types.ObjectId,
@@ -6,5 +7,6 @@ export interface Product {
     price: number,
     quantity: number,
     imgUrl: string,
-    categories?: [mongoose.Types.ObjectId]
+    categories?: Category[],
+    category_name?: string
 }

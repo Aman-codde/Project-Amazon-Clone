@@ -1,0 +1,36 @@
+<div>
+    <button class="back-button" (click)="backToProductList()">Back</button>
+</div>
+<div class="product">
+    <h3>Update Product</h3>
+    <div *ngIf="(updateProduct$ | async) as product">
+        <img src="{{product.imgUrl}}" >
+        {{product.product_name}}
+        <p>
+            Quantity Available: {{product.quantity}}
+        </p> 
+        <p>
+            Price: {{product.price}}
+        </p>
+        <p>Categories:
+            <span *ngFor="let category of product.categories">
+                {{category.category_name}},
+            </span>
+        </p>
+        <div class="form">
+            <form [formGroup]='updateProductCategoryForm'>
+                <label>Select one or multiple category:</label>
+                <div class="category-div" *ngFor=" let category of (categories$ | async)">
+                    <label>
+                        <input type="checkbox" [value]="category._id" (change)="onCheckboxChange($event)">
+                        {{category.category_name}}
+                    </label>
+                </div>
+                <button (click)="addProductCategory(product)">Add Category to Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
