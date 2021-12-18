@@ -58,6 +58,7 @@ app.post('/api/products', function (req, res) {
     }
     ProductModel
         .find(query)
+        .populate('categories')
         .then((data) => res.json({ data }))
         .catch(err => res.status(501).json(err));
 });
@@ -111,11 +112,28 @@ app.post('/api/product/:id', function (req, res) {
     //console.log("ProductId: ",req.params.id);
     ProductModel
         .findById(req.params.id)
+        .populate('categories')
         .then(data => res.json(data))
         .catch(err => {
         //console.log("error in app post", err)
         res.status(501).json(err);
     });
+});
+// update product category/ies
+app.put('/api/update-product-categories/:id', function (req, res) {
+    console.log("product id: ", req.params.id, "categories: ", req.body.categoryIds.categoryIdArray);
+    const _id = req.params.id;
+    ProductModel
+        .findByIdAndUpdate(_id, {
+        $addToSet: {
+            categories: { $each: req.body.categoryIds.categoryIdArray }
+        }
+    }, { new: true })
+        .then((data) => {
+        console.log('Product Category updated: ', { data });
+        res.json({ data });
+    })
+        .catch(err => res.json(err));
 });
 //show category collection 
 app.get('/api/categories', function (req, res) {
@@ -181,7 +199,7 @@ app.post('/api/create-user', function (req, res) {
                 .then(data => res.json({ data }))
                 .catch(err => {
                 console.log(err);
-                res.status(501).json({ err });
+                res.status(501).json(err);
             });
         });
     });
