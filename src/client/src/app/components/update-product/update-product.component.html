@@ -1,3 +1,6 @@
+<div>
+    <button class="back-button" (click)="backToCreateProductPage()">Back</button>
+</div>
 <div class="products-div">
     <table id="products">
         <thead>
@@ -7,6 +10,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Quantity(In Stock)</th>
+                <th>Categories</th>
                 <th>Update Product</th>
             </tr>
         </thead>
@@ -26,6 +30,11 @@
                     </td>
                     <td class="product-stock-column">
                         <p>{{product.quantity}}</p>
+                    </td>
+                    <td>
+                        <p *ngFor="let category of product.categories">
+                            {{category.category_name}}
+                        </p>
                     </td>
                     <td>
                         <button (click)="editProduct(product)">

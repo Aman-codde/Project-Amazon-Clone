@@ -30,4 +30,8 @@ export class UpdateProductComponent implements OnInit {
     this.store.dispatch(selectProductToUpdateAction({data: product}))
   }
 
+  backToCreateProductPage() {
+    this.router.navigate(['/add-product']);
+  }
+
 }
