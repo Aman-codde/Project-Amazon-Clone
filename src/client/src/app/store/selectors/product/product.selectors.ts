@@ -17,3 +17,6 @@ export const productSelector = createSelector(
      productFeatureSelector, (state) => state.selectedProduct
  );
 
+ export const selectedProductToUpdateSelector = createSelector(
+    productFeatureSelector, (state) => state.selectedProductToUpdate
+);
