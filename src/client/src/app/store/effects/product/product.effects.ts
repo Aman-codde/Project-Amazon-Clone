@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { ProductService } from 'src/app/services/product.service';
-import { createProduct, createProductFailure, createProductSuccess, loadProduct,loadProductSuccess, loadProductFailure, loadProducts, loadProductsFailure, loadProductsSuccess } from '../../actions/product/product.actions';
+import { createProduct, createProductFailure, createProductSuccess, loadProduct,loadProductSuccess, loadProductFailure, loadProducts, loadProductsFailure, loadProductsSuccess, updateProduct, updateProductSuccess, updateProductFailure } from '../../actions/product/product.actions';
 
 @Injectable()
 export class ProductEffects {
@@ -48,6 +48,20 @@ export class ProductEffects {
       )
     )
   )
+
+  updateProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateProduct),
+      mergeMap((action) =>
+        this.productService.addCategoriesToProduct(action.product,action.data).pipe(
+          tap(data => console.log("updated Product:",data)),
+          map((data) => updateProductSuccess(data)),
+          catchError((error) => of(updateProductFailure({ error })))
+        )
+      )
+    )
+  );
+
 
   constructor(
     private actions$: Actions,

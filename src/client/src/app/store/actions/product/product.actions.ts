@@ -60,3 +60,21 @@ export const selectProductToUpdateAction = createAction(
   '[Product] Select Product To Update',
   props<{ data: Product | null }>()
 );
+
+
+export const updateProduct = createAction(
+  '[Product] Update Product',
+  props<{data: string[], product: Product}>()
+);
+
+export const updateProductSuccess = createAction(
+  '[Product] Update Product Success',
+  props<{ data: Product }>()
+);
+
+export const updateProductFailure = createAction(
+  '[Product] Update Product Failure',
+  props<{ error: Error }>()
+);
+
+

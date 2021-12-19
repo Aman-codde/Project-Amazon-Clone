@@ -136,17 +136,18 @@ app.post('/api/product/:id', function(req,res) {
 
 // update product category/ies
 app.put('/api/update-product-categories/:id', function(req, res) {
-    console.log("product id: ", req.params.id, "categories: ", req.body.categoryIds.categoryIdArray)
+    console.log("product id: ", req.params.id, "categories: ", req.body.categoryIds.categories)
     const _id= req.params.id;
     ProductModel
     .findByIdAndUpdate(
         _id,
         {
             $addToSet: {
-                categories: {$each: req.body.categoryIds.categoryIdArray}
+                categories: {$each: req.body.categoryIds.categories}
             }
         },
         {new: true})
+    .populate('categories')
     .then((data) => {
         console.log('Product Category updated: ', {data})
         res.json({data})})

@@ -31,7 +31,7 @@ export class ProductService {
 
   addCategoriesToProduct(product: Product,categoryIds: string[]) {
     console.log("services:",product._id,categoryIds)
-    return this.api.put<{data: Product},{categoryIds: string[]}>('update-product-categories/'+product._id,{categoryIds}).subscribe();
+    return this.api.put<{data: Product},{categoryIds: string[]}>('update-product-categories/'+product._id,{categoryIds});
   }
 
 }
