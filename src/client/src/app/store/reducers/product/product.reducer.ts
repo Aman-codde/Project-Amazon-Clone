@@ -1,7 +1,6 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { Product } from '../../../../../../shared/models/product.model';
-import { createProductSuccess, loadProductsSuccess, loadProductSuccess, selectProductAction, selectProductToUpdateAction } from '../../actions/product/product.actions';
-
+import { createProductSuccess, loadProductsSuccess, loadProductSuccess, selectProductAction, selectProductToUpdateAction, updateProductSuccess } from '../../actions/product/product.actions';
 
 export const productFeatureKey = 'product';
 
@@ -38,6 +37,11 @@ export const reducer = createReducer(
   }),
   on(selectProductToUpdateAction, (state,action) => {
     return {...state, selectedProductToUpdate: action.data}
+  }),
+  on(updateProductSuccess, (state, action) => {
+    const products =[...state.products];
+    products.push(action.data)
+    return {...state, selectedProductToUpdate: action.data, products}
   })
 );
 
