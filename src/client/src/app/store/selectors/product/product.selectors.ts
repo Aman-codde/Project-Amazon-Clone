@@ -5,8 +5,7 @@ import * as fromProduct from '../../reducers/product/product.reducer'
 const productFeatureSelector = createFeatureSelector<AppState, fromProduct.State>(fromProduct.productFeatureKey);
 
 export const productsSelector = createSelector(
-    productFeatureSelector,
-    (state) => state.products
+    productFeatureSelector, (state) => state.products
 );
 
 export const productSelector = createSelector(
