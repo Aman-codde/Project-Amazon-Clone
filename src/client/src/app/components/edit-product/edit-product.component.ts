@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 import { AppState } from 'src/app/store';
+import { updateProduct } from 'src/app/store/actions/product/product.actions';
 import { categoriesSelector } from 'src/app/store/selectors/category/category.selectors';
 import { selectedProductToUpdateSelector } from 'src/app/store/selectors/product/product.selectors';
 import { Category } from '../../../../../shared/models/category.model';
@@ -28,7 +29,7 @@ export class EditProductComponent implements OnInit {
   ) 
   { 
     this.updateProductCategoryForm = this.fb.group({
-      categoryIdArray: this.fb.array([])
+      categories: this.fb.array([])
     });
 
     this.categories$ = this.store.select(categoriesSelector);
@@ -42,15 +43,15 @@ export class EditProductComponent implements OnInit {
   onCheckboxChange(e:any) {
     console.log(e.target.value);
 
-    const categoryIdArray: FormArray = this.updateProductCategoryForm.get('categoryIdArray') as FormArray;
+    const categories: FormArray = this.updateProductCategoryForm.get('categories') as FormArray;
     if(e.target.checked) {
-      categoryIdArray.push(new FormControl(e.target.value));
+      categories.push(new FormControl(e.target.value));
     }
     else {
       let i: number = 0;
-      categoryIdArray.controls.forEach((item) => {
+      categories.controls.forEach((item) => {
         if(item.value == e.target.value) {
-          categoryIdArray.removeAt(i);
+          categories.removeAt(i);
           return;
         }
         i++;
@@ -60,7 +61,9 @@ export class EditProductComponent implements OnInit {
   addProductCategory(product: Product) {
     console.log(" Product ",product._id);
     console.log("-------->",this.updateProductCategoryForm.value,)
-    this.productService.addCategoriesToProduct(product,this.updateProductCategoryForm.value);
+    // this.productService.addCategoriesToProduct(product,this.updateProductCategoryForm.value);
+    this.store.dispatch(updateProduct({data: this.updateProductCategoryForm.value, product: product}))
+    this.updateProductCategoryForm.reset();
   }
 
   backToProductList() {
