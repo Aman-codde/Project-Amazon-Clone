@@ -13,8 +13,8 @@
                    <b>Name:</b> {{product.product_name}}
                 </p>
                 <p>
-                    <b>Quantity Available:</b> {{product.quantity}}
-                    <a>Edit</a>
+                    <b>Quantity(In Stock):</b> {{product.quantity}}
+                    <a (click)="onToggleEdit()">Edit</a>
                 </p> 
                 <p>
                     <b>Price: </b> {{product.price}}
@@ -28,7 +28,21 @@
                 </p>
             </div>
         </div>
-        <div class="category-form-div" *ngIf="showAddForm">
+
+        <div class="update-form-div" *ngIf="showEditForm">
+            <h3>Update Product Quantity</h3>
+            <form [formGroup]='updateProductForm'>
+                <label for="quantity">Quantity:</label>
+                <input type="number" min="0" 
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                formControlName="quantity">
+                <p>
+                    <button [disabled]="updateProductForm.invalid" (click)="updateQuantity(product)">Update</button>
+                </p>
+            </form>
+        </div>
+
+        <div class="update-form-div" *ngIf="showAddForm">
             <h3>Update Product Category</h3>
             <form [formGroup]='updateProductCategoryForm'>
                 <label><b>Select one or multiple category:</b></label>
@@ -38,10 +52,13 @@
                         {{category.category_name}}
                     </label>
                 </div>
-                <button (click)="addProductCategory(product)">Add Category to Product</button>
+                <p>
+                    <button (click)="addProductCategory(product)" [disabled]="updateProductCategoryForm.invalid">Add Category to Product</button>
+                </p>
             </form>
         </div>
-        <div class="category-form-div" *ngIf="showDeleteForm">
+
+        <div class="update-form-div" *ngIf="showDeleteForm">
             <h3>Delete Product Category</h3>
             <form [formGroup]='deleteProductCategoryForm'>
                 <label><b>Select one or multiple category:</b></label>
@@ -52,7 +69,7 @@
                     </label>
                 </div>
                 <p>
-                    <button (click)="deleteProductCategory(product)">Delete Category from Product</button>
+                    <button (click)="deleteProductCategory(product)" [disabled]="deleteProductCategoryForm.invalid">Delete Category from Product</button>
                 </p>
             </form>
         </div>

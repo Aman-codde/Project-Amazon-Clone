@@ -24,7 +24,7 @@ export class UserService {
       return this.api.post<{data: User},User>('create-user', user).pipe(map(res => res.data));
   }
   updateUser(user: User) {
-      return this.api.put<User,User>('update-user/' + user._id, user);
+    return this.api.put<User,User>('update-user/' + user._id, user);
   }
 
   deleteUser(user: User) {

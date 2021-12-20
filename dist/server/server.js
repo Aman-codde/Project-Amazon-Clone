@@ -119,32 +119,27 @@ app.post('/api/product/:id', function (req, res) {
         res.status(501).json(err);
     });
 });
-// update product category/ies
-app.put('/api/update-product-categories/:id', function (req, res) {
-    console.log("product id: ", req.params.id, "categories: ", req.body.categoryIds.categories);
+// update product category/ies(add or delete), update product quantity
+app.put('/api/update-product/:id', function (req, res) {
+    console.log("hi...update");
+    console.log("product id: ", req.params.id, "body: ", req.body);
+    let query = {};
+    if (req.body.categories) {
+        query = { $addToSet: { categories: { $each: req.body.categories } }
+        };
+    }
+    if (req.body.del_categories) {
+        query = { $pull: { "categories": { $in: req.body.del_categories } }
+        };
+    }
+    if (req.body.quantity) {
+        query = {
+            $set: { quantity: req.body.quantity }
+        };
+    }
     const _id = req.params.id;
     ProductModel
-        .findByIdAndUpdate(_id, {
-        $addToSet: {
-            categories: { $each: req.body.categoryIds.categories }
-        }
-    }, { new: true })
-        .populate('categories')
-        .then((data) => {
-        console.log('Product Category updated: ', { data });
-        res.json({ data });
-    })
-        .catch(err => res.json(err));
-});
-app.put('/api/delete-product-categories/:id', function (req, res) {
-    console.log("product id: ", req.params.id, "categories: ", req.body.categoryIds.del_categories);
-    const _id = req.params.id;
-    ProductModel
-        .findByIdAndUpdate(_id, {
-        $pull: {
-            "categories": { $in: req.body.categoryIds.del_categories }
-        }
-    }, { new: true })
+        .findByIdAndUpdate(_id, query, { new: true })
         .populate('categories')
         .then((data) => {
         console.log('Product Category updated: ', { data });

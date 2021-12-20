@@ -29,14 +29,9 @@ export class ProductService {
     return this.api.get<Product[]>('productsByPriceAsc').subscribe();
   }
 
-  addCategoriesToProduct(product: Product,categoryIds: string[]) {
-    console.log("services:",product._id,categoryIds)
-    return this.api.put<{data: Product},{categoryIds: string[]}>('update-product-categories/'+product._id,{categoryIds});
-  }
-
-  deleteCategoriesFromProduct(product: Product,categoryIds: string[]) {
-    console.log("services:",product._id,categoryIds)
-    return this.api.put<{data: Product},{categoryIds: string[]}>('delete-product-categories/'+product._id,{categoryIds});
+  updateProduct(product: Product, p: Product) {
+    console.log("services:",p._id,product)
+    return this.api.put<{data: Product},Product>('update-product/'+p._id,product);
   }
 
 }
