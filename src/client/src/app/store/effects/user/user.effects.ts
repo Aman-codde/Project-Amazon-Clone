@@ -50,9 +50,9 @@ export class UserEffects {
         this.authService.login(action.data).pipe(
           tap(data => console.log("logged in data in effects: ",data)),
           map((data) => loginUserSuccess(data)),
-          catchError((err) => {
-            console.log(err);
-            return of(loginUserFailure({err}))
+          catchError((error) => {
+            console.log(error);
+            return of(loginUserFailure(error))
           })
         )
       )

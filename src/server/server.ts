@@ -299,7 +299,8 @@ app.post('/api/login', function(req,res) {
         // if no user found with given email
         if(!user) {
             console.log('Invalid Email');
-            return res.sendStatus(500);;
+            res.status(500).send("Invalid Email");
+            return;
         }
         bcrypt.compare(req.body.password,`${user?.password}`, function(err, result){
             // if password matches
@@ -314,7 +315,7 @@ app.post('/api/login', function(req,res) {
             // if password does NOT matches
             else {
                 console.log("Invalid password");
-                res.sendStatus(403);
+                res.status(403).send("Incorrect password");
             }
         }) 
     })

@@ -1,5 +1,4 @@
-import { state } from '@angular/animations';
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { User } from '../../../../../../shared/models/user.model';
 import { createUserFailure, createUserSuccess, deleteUserSuccess, loadUsersSuccess, loginUserFailure, loginUserSuccess, logoutUserSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
 
@@ -10,7 +9,7 @@ export interface State {
   users: User[];
   selectedUser: User | null;
   loggedUser: User|null;
-  invalidLoginMsg: String;
+  invalidLoginMsg: Error|null;
   createUserFailureMsg: Error | null;
 }
 
@@ -18,7 +17,7 @@ export const initialState: State = {
   users: [],
   selectedUser: null,
   loggedUser: null ,
-  invalidLoginMsg: '',
+  invalidLoginMsg: null,
   createUserFailureMsg: null
 };
 
@@ -58,8 +57,8 @@ export const reducer = createReducer(
   }),
   
   on(loginUserFailure, (state,action) => {
-    console.log("login fails: ",action.err.message);
-    return {...state, invalidLoginMsg: action.err.message}
+    console.log("login fails: ",action.error);
+    return {...state, invalidLoginMsg: action.error}
   })
 );
 
