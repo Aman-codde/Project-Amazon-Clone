@@ -136,6 +136,22 @@ app.put('/api/update-product-categories/:id', function (req, res) {
     })
         .catch(err => res.json(err));
 });
+app.put('/api/delete-product-categories/:id', function (req, res) {
+    console.log("product id: ", req.params.id, "categories: ", req.body.categoryIds.del_categories);
+    const _id = req.params.id;
+    ProductModel
+        .findByIdAndUpdate(_id, {
+        $pull: {
+            "categories": { $in: req.body.categoryIds.del_categories }
+        }
+    }, { new: true })
+        .populate('categories')
+        .then((data) => {
+        console.log('Product Category updated: ', { data });
+        res.json({ data });
+    })
+        .catch(err => res.json(err));
+});
 //show category collection 
 app.get('/api/categories', function (req, res) {
     CategoryModel

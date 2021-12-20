@@ -14,7 +14,7 @@
                 </p>
                 <p>
                     <b>Quantity Available:</b> {{product.quantity}}
-                    <button>Edit</button>
+                    <a>Edit</a>
                 </p> 
                 <p>
                     <b>Price: </b> {{product.price}}
@@ -23,10 +23,12 @@
                     <span *ngFor="let category of product.categories">
                         {{category.category_name}},
                     </span>
+                    <a (click)="onToggleAdd()">Add</a>
+                    <a (click)="onToggleDelete()" *ngIf="product.categories?.length">Delete</a>
                 </p>
             </div>
         </div>
-        <div class="category-form-div">
+        <div class="category-form-div" *ngIf="showAddForm">
             <h3>Update Product Category</h3>
             <form [formGroup]='updateProductCategoryForm'>
                 <label><b>Select one or multiple category:</b></label>
@@ -37,6 +39,21 @@
                     </label>
                 </div>
                 <button (click)="addProductCategory(product)">Add Category to Product</button>
+            </form>
+        </div>
+        <div class="category-form-div" *ngIf="showDeleteForm">
+            <h3>Delete Product Category</h3>
+            <form [formGroup]='deleteProductCategoryForm'>
+                <label><b>Select one or multiple category:</b></label>
+                <div class="category-div" *ngFor=" let category of product.categories">
+                    <label>
+                        <input type="checkbox" [value]="category._id" (change)="onCheckboxChange2($event)">
+                        {{category.category_name}}
+                    </label>
+                </div>
+                <p>
+                    <button (click)="deleteProductCategory(product)">Delete Category from Product</button>
+                </p>
             </form>
         </div>
     </div>

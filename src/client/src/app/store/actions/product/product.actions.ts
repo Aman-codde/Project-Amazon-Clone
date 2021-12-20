@@ -61,7 +61,6 @@ export const selectProductToUpdateAction = createAction(
   props<{ data: Product | null }>()
 );
 
-
 export const updateProduct = createAction(
   '[Product] Update Product',
   props<{data: string[], product: Product}>()
@@ -76,5 +75,21 @@ export const updateProductFailure = createAction(
   '[Product] Update Product Failure',
   props<{ error: Error }>()
 );
+
+export const deleteProduct = createAction(
+  '[Product] Delete Product',
+  props<{data: string[], product: Product}>()
+);
+
+export const deleteProductSuccess = createAction(
+  '[Product] Delete Product Success',
+  props<{ data: Product }>()
+);
+
+export const deleteProductFailure = createAction(
+  '[Product] Delete Product Failure',
+  props<{ error: Error }>()
+);
+
 
 
