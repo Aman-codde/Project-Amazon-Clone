@@ -259,17 +259,24 @@ app.delete('/api/delete-user/:id', function(req, res) {
 app.put('/api/update-user/:id', authHandler ,function(req: any, res) {
     let updateUserQuery = {};
     if(req.body.firstName) {
-        updateUserQuery = { firstName: req.body.firstName, lastName: req.body.lastName }
+        updateUserQuery = {
+            $set: { firstName: req.body.firstName, lastName: req.body.lastName }
+        }
     }
     if(req.body.email) {
-        updateUserQuery = {email: req.body.email}
+        updateUserQuery = {
+            $set: {email: req.body.email}
+        }
+    }
+    if(req.body.fullName || req.body.city) {
+        updateUserQuery = {
+            $push: {addresses: req.body }
+        }
     }
     UserModel
     .findByIdAndUpdate(
         req.user._id,
-        {
-            $set: updateUserQuery,
-        },
+        updateUserQuery,
         {
             new: true,
         },
