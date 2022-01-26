@@ -1,9 +1,12 @@
 import * as mongoose from 'mongoose';
 export interface Address {
+    fullName: string,
+    phone: number,
     street: string,
     city:string,
     state:string,
-    zipcode: string
+    zipcode: string,
+    country: string
 }
 
 export interface User {
@@ -14,6 +17,5 @@ export interface User {
     email:string,// how to use id as email _id: email
     password: string,
     active?: boolean,
-    billingAddress?: Address,
-    shippingAddress?: Address
+    addresses?: Address[]
 }

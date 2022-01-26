@@ -10,7 +10,20 @@ const userSchema = new Schema<User>({
     lastName: {type: String},
     email: {type: String, required: true},
     password: {type: String, required:true},
-    active: {type:Boolean, default: true}
+    active: {type:Boolean, default: true},
+    addresses: [
+        {
+            fullName: {type: String, required: true},
+            phone: {type: Number, required: true},
+            street: {type: String, required: true},
+            city: {type: String, required: true},
+            state: {type: String, required: true},
+            zipcode: {type: String, required: true},
+            country: {type: String, required: true},
+            _id: 0
+        }
+    ]
+    
 })
 
 userSchema.pre('save', function(next) { 
