@@ -1,35 +1,91 @@
- 
-<div class="order-div" *ngIf="showOrderDiv">
-    <h3 class="review">Review your order</h3>
-    <ng-container *ngIf="($cart | async) as cart">
-        <table>
-            <tr class="tabletitle">
-                <td class="date">Date: {{currentDate()}}</td>
-                <td class="customer">Customer: <span style="color: blue;">{{cart.user?.firstName}}</span></td>
-            </tr>
-            <tr class="tabletitle">
-                <td class="summary">Order Summary</td>
-            </tr>
-            <tr class="list" *ngFor = "let product_info of (cart.products)">
-                <td class="product left" >{{product_info?.product?.product_name}}</td>
-                <td class="price right">${{product_info?.product?.price}}</td>
-            </tr>
-            <tr class="tabletitle">
-                <td class="items left">items({{cart.count}}):</td>
-                <td class="total right">${{cart.total_amount.toFixed(2)}}</td>
-            </tr>
-            <hr>
-            <tr>
-                <td class="order-total left">Order Total:</td>
-                <td class="amount right">${{cart.total_amount.toFixed(2)}}</td>
-            </tr>
-        </table>
-        <button (click)="placeOrder(cart)">Place your order</button>
-    </ng-container>
+<div class="main">
+    <div class="show-addresses-div">
+        <ng-container *ngIf="($user | async) as user">
+            <h3 class="review">Choose a Shipping address</h3>
+            <div *ngFor="let address of user.addresses">
+                <p><b>{{address.fullName}}</b></p>
+                <p>{{address.street}}</p>
+                <p>{{address.city}}, {{address.state}} {{address.zipcode}}</p>
+                <p>{{address.country}}</p>
+                <p>Phone: {{address.phone}}</p>
+                <p><button>Deliver to this address</button></p>
+            </div>
+        </ng-container>
+    </div>
+    <div class="order-div" *ngIf="showOrderDiv">
+        <h3 class="review">Review your order</h3>
+        <ng-container *ngIf="($cart | async) as cart">
+            <table>
+                <tr class="tabletitle">
+                    <td class="date">Date: {{currentDate()}}</td>
+                    <td class="customer">Customer: <span style="color: blue;">{{cart.user?.firstName}}</span></td>
+                </tr>
+                <tr class="tabletitle">
+                    <td class="summary">Order Summary</td>
+                </tr>
+                <tr class="list" *ngFor = "let product_info of (cart.products)">
+                    <td class="product left" >{{product_info?.product?.product_name}}</td>
+                    <td class="price right">${{product_info?.product?.price}}</td>
+                </tr>
+                <tr class="tabletitle">
+                    <td class="items left">items({{cart.count}}):</td>
+                    <td class="total right">${{cart.total_amount.toFixed(2)}}</td>
+                </tr>
+                <hr>
+                <tr>
+                    <td class="order-total left">Order Total:</td>
+                    <td class="amount right">${{cart.total_amount.toFixed(2)}}</td>
+                </tr>
+            </table>
+            <button (click)="placeOrder(cart)">Place your order</button>
+        </ng-container>
+    </div>
+    <div class="address-div">
+        <h2>Add a new address</h2>
+        <form [formGroup]="createAddressForm">
+                <label for="name">Country</label>
+                <input type="text" formControlName="country">
+            
+                <label for="name">Full Name(First and Last Name)</label>
+                <br>
+                <input type="text" formControlName="fullName">
+            
+                <label for="address">Address:</label>
+                <br>
+                <input type="text" formControlName="street" placeholder="Street address or P.O. Box">
+                <br>
+                <input type="text" formControlName="street" placeholder="Apt, suite, unit, building etc.">
+
+                <label for="phone">Phone</label>
+                <br>
+                <input type="number" formControlName="phone">
+            
+                <div class="city-div">
+                    <div>
+                        <label for="city">City</label>
+                        <input type="text" formControlName="city">  
+                    </div>
+                    
+                    <div>
+                        <label for="state">State</label>
+                        <input type="text" formControlName="state"> 
+                    </div>
+                    
+                    <div>
+                        <label for="zipcode">ZIP Code</label>
+                        <input type="text" formControlName="zipcode">
+                    </div> 
+                </div>
+            
+            <button [disabled]="createAddressForm.invalid" (click)="createAddress()" >Use this Address</button>
+        </form>
+    </div>
 </div>
+
 
 <div class="orderSuccessMsg" [hidden]="hideOrderMsgDiv">
     Your Order has been placed!
     <br><br>
     <button (click)="navigateToOrders()">View your orders</button>
 </div>
+
