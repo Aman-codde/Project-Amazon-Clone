@@ -12,6 +12,7 @@ import { ProductsListComponent } from './components/products-list/products-list.
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { UserAccountComponent } from './components/user-account/user-account.component';
+import { AuthGuard } from './guards/auth.guard';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
 
 const routes: Routes = [
@@ -19,16 +20,16 @@ const routes: Routes = [
   {path: 'products', component: ProductsListComponent},
   {path: 'users', component: PageUsersComponent},
   {path: 'login', component: SignInComponent},
-  {path:'add-product', component: ProductInputComponent},
+  {path:'add-product', component: ProductInputComponent, canActivate: [AuthGuard]},
   {path: 'product/:id', component: ProductDetailsComponent},
-  {path: 'cart', component: CartListComponent},
-  {path: 'order', component: OrderComponent},
-  {path: 'account', component:UserAccountComponent},
-  {path: 'order-history', component: OrderHistoryComponent},
-  {path: 'edit-profile', component: EditUserProfileComponent},
-  {path: 'add-category', component: AddNewCategoryComponent},
-  {path: 'update-products', component: UpdateProductComponent},
-  {path: 'edit-product/:id', component: EditProductComponent}
+  {path: 'cart', component: CartListComponent, canActivate: [AuthGuard]},
+  {path: 'order', component: OrderComponent, canActivate: [AuthGuard]},
+  {path: 'account', component:UserAccountComponent, canActivate: [AuthGuard]},
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
+  {path: 'edit-profile', component: EditUserProfileComponent, canActivate: [AuthGuard]},
+  {path: 'add-category', component: AddNewCategoryComponent, canActivate: [AuthGuard]},
+  {path: 'update-products', component: UpdateProductComponent, canActivate: [AuthGuard]},
+  {path: 'edit-product/:id', component: EditProductComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

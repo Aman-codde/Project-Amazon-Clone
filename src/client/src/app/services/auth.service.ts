@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
 import { User } from '../../../../shared/models/user.model';
 import { ApiService } from './api.service';
 
@@ -23,6 +24,14 @@ export class AuthService {
 
   checkLogin() {
     return this.api.get<User>('check-login');
+  }
+  
+  isAuthenticated() {
+    return this.api.get<{message: string}>('isLogin')
+    .pipe(
+      tap(data => console.log("tap: ", data)),
+      map( data => data.message == "yes")
+    )
   }
 
 }
