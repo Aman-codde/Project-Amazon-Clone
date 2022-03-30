@@ -324,6 +324,10 @@ app.get('/api/check-login', authHandler, function(req: any,res) {
     res.json(req.user);
 })
 
+app.get('/api/isLogin', authHandler, function(req: any,res) {
+    res.json({message: "yes"});
+})
+
 app.get('/api/logout', function(req,res) {
     console.log("logout called in server");
     res.cookie('jwt','',{httpOnly: true, maxAge:0});
