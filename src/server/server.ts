@@ -11,7 +11,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
-import {authHandler} from './middleware/auth.middleware.js';
+import {authHandler, isLoggedInHandle} from './middleware/auth.middleware.js';
 import * as OrderProcess from './middleware/order.middleware.js';
 import { OrderModel } from './schemas/order.schema.js';
 
@@ -324,8 +324,8 @@ app.get('/api/check-login', authHandler, function(req: any,res) {
     res.json(req.user);
 })
 
-app.get('/api/isLogin', authHandler, function(req: any,res) {
-    res.json({message: "yes"});
+app.get('/api/isLogin', isLoggedInHandle, function(req: any,res) {
+    res.json({message: req.user ? "yes" : "no" });
 })
 
 app.get('/api/logout', function(req,res) {
